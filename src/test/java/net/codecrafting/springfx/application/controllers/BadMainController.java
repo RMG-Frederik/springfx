@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.application;
+package net.codecrafting.springfx.application.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -8,8 +8,8 @@ import javafx.scene.layout.AnchorPane;
 import net.codecrafting.springfx.annotation.ViewController;
 import net.codecrafting.springfx.controls.StageContext;
 
-@ViewController
-public class MainController extends StageContext 
+@ViewController(name="bad")
+public class BadMainController extends StageContext
 {
 	@FXML
 	private AnchorPane mainNode;

@@ -29,7 +29,7 @@ import com.sun.javafx.application.PlatformImpl;
 import javafx.stage.Stage;
 import net.codecrafting.springfx.application.AnnotatedTestApplication;
 import net.codecrafting.springfx.application.EmptyApplication;
-import net.codecrafting.springfx.application.MainController;
+import net.codecrafting.springfx.application.controllers.MainController;
 import net.codecrafting.springfx.utils.DialogBuilder;
 
 @SuppressWarnings("restriction")

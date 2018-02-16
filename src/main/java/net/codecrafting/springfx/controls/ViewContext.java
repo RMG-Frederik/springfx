@@ -15,10 +15,9 @@ public abstract class ViewContext implements Initializable
 	protected String viewName;
 	protected String viewTitle;
 	protected ViewStage viewStage;
-	protected Intent intent;
 	private final AnimationBuilder animationBuilder = new AnimationBuilder(.4).percentage(.2).interpolator(EaseInterpolator.EASE_OUT);
-	public static final String UPPER_CAMEL_REGEX = "([a-z])([A-Z]+)";
-	public static final String UPPER_CAMEL_REPLACEMENT = "$1_$2";
+	private static final String UPPER_CAMEL_REGEX = "([a-z])([A-Z]+)";
+	private static final String UPPER_CAMEL_REPLACEMENT = "$1_$2";
 	
 	public ViewContext()
 	{
@@ -68,14 +67,9 @@ public abstract class ViewContext implements Initializable
 	
 	public Intent getIntent()
 	{
-		return intent;
+		return viewStage.getIntent();
 	}
 	
-	public void setIntent(Intent intent)
-	{
-		this.intent = intent;
-	}
-
 	protected void swapAnimation(final Node content)
 	{
 		animationBuilder.fadeInLeft(content).play();
