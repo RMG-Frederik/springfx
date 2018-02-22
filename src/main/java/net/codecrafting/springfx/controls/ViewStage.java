@@ -343,6 +343,7 @@ public class ViewStage extends Stage
 		String viewFilePath = viewPath+stageContext.getViewName()+".fxml";
 		URL viewURL = getResourceURL(viewFilePath);
 		if(viewURL != null) {
+			initialized = true;
 			FXMLLoader loader = new FXMLLoader(viewURL);
 			loader.setController(stageContext);
 			stageContext.setViewStage(this);
@@ -350,6 +351,7 @@ public class ViewStage extends Stage
 			try {
 				rootNode = loader.load();
 			} catch (Exception e) {
+				initialized = false;
 				throw new RuntimeException(e);
 			}
 			ObservableList<String> styles = FXCollections.observableArrayList(rootNode.getStylesheets());
@@ -358,7 +360,6 @@ public class ViewStage extends Stage
 			rootNode.setCache(true);
 			rootNode.setCacheHint(CacheHint.SPEED);
 			setScene(new Scene(rootNode));
-			initialized = true;
 		} else {
 			throw new IllegalStateException("Could not initialize with \""+viewFilePath+"\"");
 		}
