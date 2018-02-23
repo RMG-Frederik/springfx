@@ -33,8 +33,8 @@ repositories {
 
 dependencies {
 	implementation "commons-io:commons-io:2.6"
-	implementation "org.hibernate:hibernate-validator:5.0.3.Final"
-	implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+	api "org.hibernate:hibernate-validator:5.0.3.Final"
+	api "org.springframework.boot:spring-boot-starter:${springBootVersion}"
 	
 	testImplementation "junit:junit:4.12"
 	testImplementation "org.hamcrest:hamcrest-junit:2.0.0.0"
@@ -50,14 +50,14 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        xml.enabled false
+        xml.enabled true
         csv.enabled false
     }
 }
 
 javadoc {
 	description = "Generates aggregated Javadocs"
-	title = "SpringFX ${version} API"	
+	title = "SpringFX API (${version})"	
     options.tags = [ "defaultValue" ]
     options.stylesheetFile rootProject.file("src/javadoc/stylesheet.css")
     options.author = true
