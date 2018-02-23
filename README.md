@@ -1,6 +1,6 @@
-# SpringFX
-
 ![SpringFX](/images/springfx-logo.png)
+
+# SpringFX
 
 SpringFX it's a small framework that allow you to use [Spring Boot][1] framework with [JavaFX][2] to build desktop Java applications. Not only facilitating the use of Spring features on JavaFX, the framework also provide the following functionalities:
 
