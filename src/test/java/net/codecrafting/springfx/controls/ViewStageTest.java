@@ -32,6 +32,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import net.codecrafting.springfx.application.EmptyApplication;
 import net.codecrafting.springfx.application.controllers.BadMainController;
 import net.codecrafting.springfx.application.controllers.BadTestController;
@@ -68,7 +69,7 @@ public class ViewStageTest
 	@Before
 	public void init()
 	{
-		springContext = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false).run(new String[0]);
+		springContext = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false).run();
 	}
 	
 	@Test
@@ -293,8 +294,8 @@ public class ViewStageTest
 			viewStage.close();
 			AnchorPane root = new AnchorPane();
 			root.setPrefSize(200, 200);
-			root.setMinSize(AnchorPane.USE_PREF_SIZE, AnchorPane.USE_PREF_SIZE);
-			root.setMaxSize(AnchorPane.USE_COMPUTED_SIZE, AnchorPane.USE_COMPUTED_SIZE);
+			root.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+			root.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 			viewStage.setScene(new Scene(root, 200, 200));
 			viewStage.show(true);
 		}));

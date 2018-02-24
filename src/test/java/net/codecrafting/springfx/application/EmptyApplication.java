@@ -9,5 +9,5 @@ import net.codecrafting.springfx.core.SpringFXApplication;
 public class EmptyApplication extends SpringFXApplication
 {
 	@Override
-	public void start(ViewStage viewStage) throws Exception {}
+	public void start(ViewStage viewStage) {}
 }

@@ -22,30 +22,30 @@ public interface SpringFXContext
 	 * Get a {@link ApplicationContext} instance. Only call this method after a successful {@link #run(String[])}
 	 * @return {@link ConfigurableApplicationContext} instance. Can return null.
 	 */
-	public ConfigurableApplicationContext getSpringContext();
+    ConfigurableApplicationContext getSpringContext();
 
 	/**
 	 * Get a {@link SpringFXApplication} instance. This is the user application, can be casted to that class.
 	 * Only call this method after a successful {@link #run(String[])}.
 	 * @return {@link SpringFXApplication} instance. Can return null.
 	 */
-	public SpringFXApplication getApplication();
+    SpringFXApplication getApplication();
 
 	/**
 	 * Get a {@link Environment} instance. Spring context Environment.
 	 * Only call this method after a successful {@link #run(String[])}.
 	 * @return {@link Environment} instance. Can return null.
 	 */
-	public Environment getEnvironment();
+    Environment getEnvironment();
 	
 	/**
 	 * Executes and initialize a {@link ApplicationContext}. This is the moment that Spring Boot is initialized.
 	 * @param args arguments to pass to Spring Boot initialization.
 	 */
-	public void run(String args[]);
+    void run(String args[]);
 	
 	/**
 	 * Stop SpringFXContext for preparing the application to exit.
 	 */
-	public void stop();
+    void stop();
 }

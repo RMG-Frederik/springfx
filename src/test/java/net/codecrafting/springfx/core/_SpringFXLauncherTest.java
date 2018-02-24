@@ -1,4 +1,5 @@
 package net.codecrafting.springfx.core;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -47,7 +48,7 @@ public class _SpringFXLauncherTest
 		SpringFXLauncher.setRelaunchable(true);
 		this.thrown.expect(IllegalArgumentException.class);
 		this.thrown.expectMessage("SpringFXContext must not be null");
-		new SpringFXLauncher((SpringFXContext) null).launch(new String[0]);
+		new SpringFXLauncher(null).launch(new String[0]);
 	}
 	
 	@Test
@@ -235,8 +236,7 @@ public class _SpringFXLauncherTest
 	}
 	
 	@Test
-	public void springFXContextMustNotBeEmpty() throws Exception
-	{
+	public void springFXContextMustNotBeEmpty() {
 		//THROW with all null
 		SpringFXLauncher.setRelaunchable(true);
 		try {

@@ -31,7 +31,7 @@ import net.codecrafting.springfx.utils.Mipmap;
 public class BootstrapApplication extends Application
 {
 	/**
-	 * Last running BoostrapApplication
+	 * Last running BootstrapApplication
 	 */
 	private static BootstrapApplication instance;
 	

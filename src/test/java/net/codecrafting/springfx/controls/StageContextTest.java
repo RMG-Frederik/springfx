@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Region;
 
 public class StageContextTest 
 {
@@ -157,7 +158,7 @@ public class StageContextTest
 		assertNotNull("viewController main node not found", context.getMainNode().lookup("#view-main-node"));
 		Mockito.verify(viewController, Mockito.times(1)).swapAnimation(ArgumentMatchers.any());
 		pane.setVisible(false);
-		pane.setMaxSize(FlowPane.USE_COMPUTED_SIZE, FlowPane.USE_COMPUTED_SIZE);
+		pane.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 		pane.setPrefSize(250, 250);
 		context.swapContent(viewController);
 		assertEquals(1, context.getMainNode().getChildren().size());

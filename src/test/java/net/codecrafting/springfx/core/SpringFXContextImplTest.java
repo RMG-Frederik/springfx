@@ -21,7 +21,7 @@ public class SpringFXContextImplTest
 	{
 		this.thrown.expect(IllegalArgumentException.class);
 		this.thrown.expectMessage("Application class must not be null");
-		new SpringFXContextImpl((Class<? extends SpringFXApplication>) null);
+		new SpringFXContextImpl(null);
 	}
 	
 	@Test

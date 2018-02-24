@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface ValidationListener 
 {
-	public void onValidationSucceeded();
-	public void onValidationFailed(List<ValidationError> violations);
+	void onValidationSucceeded();
+	void onValidationFailed(List<ValidationError> violations);
 }

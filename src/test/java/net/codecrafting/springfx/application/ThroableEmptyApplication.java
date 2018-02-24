@@ -13,20 +13,17 @@ public class ThroableEmptyApplication extends SpringFXApplication
 	public boolean throwStop = false;
 
 	@Override
-	public void init() throws Exception 
-	{
+	public void init() {
 		if(throwInit) throw new NullPointerException("Null Init");
 	}
 
 	@Override
-	public void start(ViewStage viewStage) throws Exception 
-	{
+	public void start(ViewStage viewStage) {
 		if(throwStart) throw new NullPointerException("Null start");
 	}
 
 	@Override
-	public void stop() throws Exception 
-	{
+	public void stop() {
 		if(throwStop) throw new NullPointerException("Null stop");
 	}
 

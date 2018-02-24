@@ -21,17 +21,17 @@ public class Intent
 	/**
 	 * The caller context or the previous controller that is calling for a new {@link ViewContext}
 	 */
-	private ViewContext callerContext;
+	private final ViewContext callerContext;
 	
 	/**
 	 * The {@link ViewContext} JavaFX controller class that will be loaded
 	 */
-	private Class<? extends ViewContext> viewClass;
+	private final Class<? extends ViewContext> viewClass;
 	
 	/**
 	 * Map to hold the parameters of the transaction to the new {@link ViewContext}
 	 */
-	private Map<String, Object> extraData;
+	private final Map<String, Object> extraData;
 	
 	/**
 	 * Create a new instance of {@link Intent}. The extra data will be initialized

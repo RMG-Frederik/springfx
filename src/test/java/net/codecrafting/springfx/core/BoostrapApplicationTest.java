@@ -59,7 +59,7 @@ public class BoostrapApplicationTest
 	}
 	
 	@Before
-	public void init() throws Exception
+	public void init() throws Exception 
 	{
 		DialogBuilder.init();
 		dialogTestProps = new Properties(DialogBuilder.DEFAULT_PROPS);
