@@ -1,12 +1,15 @@
 package net.codecrafting.springfx.application;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import net.codecrafting.springfx.annotation.ValidationBind;
+import net.codecrafting.springfx.validation.ValidationError;
 import net.codecrafting.springfx.validation.ValidationModel;
 
-public class FormModel implements ValidationModel
+public class LoginForm implements ValidationModel
 {
 	public static final String PASS_FIELD_NAME = "passField";
 	public static final String PASS_FIELD_MSG = "The field pass must not be empty";
@@ -54,5 +57,8 @@ public class FormModel implements ValidationModel
 	}
 
 	@Override
-	public void update() {}
+	public void setValidation(List<ValidationError> errors) 
+	{
+
+	}
 }

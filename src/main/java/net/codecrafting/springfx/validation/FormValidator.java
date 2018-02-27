@@ -19,7 +19,7 @@ import net.codecrafting.springfx.annotation.ValidationBind;
  * This class is used to help validate JavaFX UI elements. The implementation uses Hibernate Validator to validate
  * a implementation of {@link ValidationModel}, which represents the actual data that could be retrieved from UI. The
  * validation model can contain annotations for set constraints about the attributes on the model. Each
- * {@link FormValidator} has to be a type of implementation of {@link ValidationModel}. The form validator can register a
+ * {@link FormValidator} has to be a type of implementation of {@link FormModel}. The form validator can register a
  * {@link ValidationListener} which act as listener helper for calling {@link ValidationListener#onValidationFailed(List)}
  * passing the errors if failed or {@link ValidationListener#onValidationSucceeded()} if succeeded.
  *
@@ -28,7 +28,7 @@ import net.codecrafting.springfx.annotation.ValidationBind;
  * @see #setValidationListener(ValidationListener)
  * @see #validate()
  *
- * @param <T> The validator implementation of {@link ValidationModel}
+ * @param <T> The validator implementation of {@link FormModel}
  */
 public class FormValidator<T>
 {
@@ -94,7 +94,8 @@ public class FormValidator<T>
 	 * errors the list will be empty. If a {@link ValidationListener} is present this method will call
 	 * {@link ValidationListener#onValidationFailed(List)} passing the errors if failed
 	 * or {@link ValidationListener#onValidationSucceeded()} if succeeded. This method also will call for the
-	 * {@link ValidationModel#update()} as a point to update or refresh the JavaFX UI.
+	 * {@link ValidationModel#setValidation(List)} (before the {@link ValidationListener} methods) as a point to 
+	 * update or refresh the JavaFX UI.
 	 *
 	 * <br><b>NOTE:</b>If the {@link ValidationModel} has {@link ValidationBind} the {@link ValidationError#field} name
 	 * will be the value informed on these annotations.
@@ -104,7 +105,7 @@ public class FormValidator<T>
 	{
 		Set<ConstraintViolation<ValidationModel>> violations = validator.validate(model);
 		List<ValidationError> errors = new ArrayList<ValidationError>();
-		for (ConstraintViolation<ValidationModel> violation : violations) 
+		for (ConstraintViolation<ValidationModel> violation : violations)
 		{
 			String field = violation.getPropertyPath().toString();
 			try {
@@ -117,7 +118,7 @@ public class FormValidator<T>
 			}
 			errors.add(new ValidationError(field, violation.getMessage(), violation.getInvalidValue()));
 		}
-		model.update();
+		model.setValidation(errors);
 		if(validationListener != null) {
 			if(violations.isEmpty()) {
 				validationListener.onValidationSucceeded();

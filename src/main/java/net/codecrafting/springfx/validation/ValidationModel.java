@@ -1,6 +1,8 @@
 package net.codecrafting.springfx.validation;
 
+import java.util.List;
+
 public interface ValidationModel 
 {
-	void update();
+	public abstract void setValidation(List<ValidationError> errors);
 }
