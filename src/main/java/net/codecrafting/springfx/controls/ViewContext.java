@@ -174,12 +174,6 @@ public abstract class ViewContext implements Initializable
 	public abstract Node getMainNode();
 	
 	/**
-	 * The implementation that is called on every time that this context is called by {@link ViewStage#loadIntent(Intent)}.
-	 * Use this to perform any action every time that a view its swapped.
-	 */
-	protected abstract void onStart();
-	
-	/**
 	 * The implementation that is called every time that a new context is called by {@link ViewStage#loadIntent(Intent)}.
 	 * If the view context its not cached by {@link ViewStage} this method will be called before {@link #onStart()}. 
 	 * Have in mind that the state of JavaFX controller its maintained by the {@link ViewStage} cache, so use this
@@ -189,6 +183,12 @@ public abstract class ViewContext implements Initializable
 	 * @param resources used to localize the root object, or {@literal null} if the root object was not localized.
 	 */
 	protected abstract void onCreate(URL location, ResourceBundle resources);
+	
+	/**
+	 * The implementation that is called on every time that this context is called by {@link ViewStage#loadIntent(Intent)}.
+	 * Use this to perform any action every time that a view its swapped.
+	 */
+	protected abstract void onStart();
 	
 	//Load any ViewController annotation and set the viewName and viewTitle.
 	private void loadAnnotations()

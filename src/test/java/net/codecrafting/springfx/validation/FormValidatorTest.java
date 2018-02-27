@@ -13,7 +13,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
-import net.codecrafting.springfx.application.LoginForm;
+import net.codecrafting.springfx.application.models.LoginForm;
 
 public class FormValidatorTest 
 {
@@ -25,14 +25,14 @@ public class FormValidatorTest
 	{
 		this.thrown.expect(IllegalArgumentException.class);
 		this.thrown.expectMessage("model must not be null");
-		new FormValidator<FormModel>(null);
+		new FormValidator<ValidationModel>(null);
 	}
 	
 	@Test
 	public void instantiation()
 	{
-		FormModel mockModel = Mockito.mock(FormModel.class);
-		FormValidator<FormModel> validator = new FormValidator<FormModel>(mockModel);
+		ValidationModel mockModel = Mockito.mock(ValidationModel.class);
+		FormValidator<ValidationModel> validator = new FormValidator<ValidationModel>(mockModel);
 		assertNotNull("validation model is null", validator.getModel());
 	}
 	
@@ -41,16 +41,16 @@ public class FormValidatorTest
 	{
 		this.thrown.expect(IllegalArgumentException.class);
 		this.thrown.expectMessage("validationListener must not be null");
-		FormModel mockModel = Mockito.mock(FormModel.class);
-		FormValidator<FormModel> validator = new FormValidator<FormModel>(mockModel);
+		ValidationModel mockModel = Mockito.mock(ValidationModel.class);
+		FormValidator<ValidationModel> validator = new FormValidator<ValidationModel>(mockModel);
 		validator.setValidationListener(null);
 	}
 	
 	@Test
 	public void validatorListenerCall()
 	{
-		FormModel mockModel = Mockito.mock(FormModel.class);
-		FormValidator<FormModel> validator = new FormValidator<FormModel>(mockModel);
+		ValidationModel mockModel = Mockito.mock(ValidationModel.class);
+		FormValidator<ValidationModel> validator = new FormValidator<ValidationModel>(mockModel);
 		ValidationListener mockListener = Mockito.mock(ValidationListener.class);
 		validator.setValidationListener(mockListener);
 		validator.validate();
@@ -60,8 +60,8 @@ public class FormValidatorTest
 	@Test
 	public void validatorWithoutListener()
 	{
-		FormModel mockModel = Mockito.mock(FormModel.class);
-		FormValidator<FormModel> validator = new FormValidator<FormModel>(mockModel);
+		ValidationModel mockModel = Mockito.mock(ValidationModel.class);
+		FormValidator<ValidationModel> validator = new FormValidator<ValidationModel>(mockModel);
 		assertEquals(0, validator.validate().size());	
 	}
 	
@@ -129,8 +129,8 @@ public class FormValidatorTest
 	@Test
 	public void validatorUpdateCall()
 	{
-		FormModel mockModel = Mockito.mock(FormModel.class);
-		FormValidator<FormModel> validator = new FormValidator<FormModel>(mockModel);
+		ValidationModel mockModel = Mockito.mock(ValidationModel.class);
+		FormValidator<ValidationModel> validator = new FormValidator<ValidationModel>(mockModel);
 		validator.validate();
 		Mockito.verify(mockModel, Mockito.times(1)).setValidation(ArgumentMatchers.any());
 	}

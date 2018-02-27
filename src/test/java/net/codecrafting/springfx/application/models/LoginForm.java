@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.application;
+package net.codecrafting.springfx.application.models;
 
 import java.util.List;
 

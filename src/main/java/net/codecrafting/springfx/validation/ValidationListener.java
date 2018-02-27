@@ -17,7 +17,7 @@ import net.codecrafting.springfx.controls.ViewContext;
  * public class LoginController extends ViewContext implements ValidationListener
  * {
  * 	private LoginForm formModel;
- * 	private FormValidator&lt;LoginForm&gt; loginValidator; //LoginForm abstraction of ValidationModel
+ * 	private FormValidator&lt;LoginForm&gt; loginValidator; //LoginForm implements ValidationModel
  * 
  * 	&#064;Override
  * 	public void onCreate(URL location, ResourceBundle resources)

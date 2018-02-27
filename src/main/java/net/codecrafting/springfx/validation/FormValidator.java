@@ -19,7 +19,7 @@ import net.codecrafting.springfx.annotation.ValidationBind;
  * This class is used to help validate JavaFX UI elements. The implementation uses Hibernate Validator to validate
  * a implementation of {@link ValidationModel}, which represents the actual data that could be retrieved from UI. The
  * validation model can contain annotations for set constraints about the attributes on the model. Each
- * {@link FormValidator} has to be a type of implementation of {@link FormModel}. The form validator can register a
+ * {@link FormValidator} has to be a type of implementation of {@link ValidationModel}. The form validator can register a
  * {@link ValidationListener} which act as listener helper for calling {@link ValidationListener#onValidationFailed(List)}
  * passing the errors if failed or {@link ValidationListener#onValidationSucceeded()} if succeeded.
  *
@@ -28,7 +28,7 @@ import net.codecrafting.springfx.annotation.ValidationBind;
  * @see #setValidationListener(ValidationListener)
  * @see #validate()
  *
- * @param <T> The validator implementation of {@link FormModel}
+ * @param <T> The model implementation of {@link ValidationModel}
  */
 public class FormValidator<T>
 {
