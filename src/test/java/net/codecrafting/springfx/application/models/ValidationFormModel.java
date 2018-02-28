@@ -1,8 +1,10 @@
 package net.codecrafting.springfx.application.models;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.List;
 
+import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.paint.Color;
 import net.codecrafting.springfx.controls.ViewContext;
@@ -35,6 +37,11 @@ public class ValidationFormModel extends FormModel
 	public void setValidation(List<ValidationError> errors) 
 	{
 		
+	}
+	
+	public Node getNodeField(Field field)
+	{
+		return getContextFieldNode(field);
 	}
 
 	public String getTextField() 

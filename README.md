@@ -12,7 +12,7 @@ SpringFX it's a small framework that allow you to use [Spring Boot][1] framework
 - Icon mipmap utility for loading multiple image sizes to JavaFX Stage icons.
 - System icon tray utility.
 - Dialog builder for easy construction of JavaFX Alerts.
-- Validation system for integration of Hibernate Validation.
+- Validation system for integration with Hibernate Validation.
 
 [1]: https://projects.spring.io/spring-boot/
 [2]: https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm#JFXST784 

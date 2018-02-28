@@ -2,6 +2,7 @@ package net.codecrafting.springfx.validation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.time.LocalDate;
 
@@ -9,6 +10,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.springframework.util.ReflectionUtils;
 
 import javafx.scene.paint.Color;
 import net.codecrafting.springfx.application.controllers.ValidationController;
@@ -99,5 +101,11 @@ public class FormModelTest
 		assertEquals(formModel.getRadioField(), context.getRadioField().isSelected());
 		assertEquals(formModel.getComboStringField(), context.getComboStringField().getValue());
 		assertEquals(formModel.getSliderField(), context.getSliderField().getValue(), 0);
+	}
+	
+	@Test
+	public void getContextFieldNonNode()
+	{
+		assertNull(formModel.getNodeField(ReflectionUtils.findField(context.getClass(), "nonNode")));
 	}
 }

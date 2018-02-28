@@ -66,6 +66,8 @@ public class ValidationController extends ViewContext
 	
 	private AnchorPane pane = new AnchorPane();
 	
+	private Integer nonNode = 0;
+	
 	@Override
 	public Node getMainNode() 
 	{
