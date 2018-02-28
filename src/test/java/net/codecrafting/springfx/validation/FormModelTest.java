@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.util.ReflectionUtils;
 
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import net.codecrafting.springfx.application.controllers.ValidationController;
 import net.codecrafting.springfx.application.models.ValidationFormModel;
@@ -107,5 +108,47 @@ public class FormModelTest
 	public void getContextFieldNonNode()
 	{
 		assertNull(formModel.getNodeField(ReflectionUtils.findField(context.getClass(), "nonNode")));
+	}
+	
+	@Test
+	public void setValueToModelFieldWithNullName()
+	{
+		this.thrown.expect(IllegalArgumentException.class);
+		this.thrown.expectMessage("fieldName must not be null");
+		formModel.setValueToModelField((String) null, null);
+	}
+	
+	@Test
+	public void setValueToModelFieldWithInvalidName()
+	{
+		formModel.setValueToModelField("banana", "");
+	}
+
+	@Test
+	public void setValueToModelField()
+	{
+		formModel.setValueToModelField("textField", "banana");
+		assertEquals("banana", formModel.getTextField());
+	}
+	
+	@Test
+	public void getContextFieldNodeWithNullName()
+	{
+		this.thrown.expect(IllegalArgumentException.class);
+		this.thrown.expectMessage("fieldName must not be null");
+		formModel.getContextFieldNode((String) null);
+	}
+	
+	@Test
+	public void getContextFieldNodeWithInvalidName()
+	{
+		formModel.getContextFieldNode("banana");
+	}
+	
+	@Test
+	public void getContextFieldNode()
+	{
+		context.getTextField().setText("banana");
+		assertEquals("banana", ((TextField) formModel.getContextFieldNode("textField")).getText());
 	}
 }

@@ -224,6 +224,24 @@ public abstract class FormModel implements ValidationModel
 	 * This method set a value to this superclass instance {@link Field}. The value is set directly to the attribute
 	 * and does not use any get/set methods. Private and protected attributes are also covered. The method will fail
 	 * (without throwing a exception) due to possible {@link IllegalAccessException} exception.
+	 * @param fieldName the name of the {@link Field} of this superclass
+	 * @param value any {@link Object} value to be set at a field instance {@link Field} of this superclass
+	 * @throws IllegalArgumentException if fieldName is null
+	 */
+	protected void setValueToModelField(String fieldName, Object value)
+	{
+		if(fieldName != null) {
+			Field field = ReflectionUtils.findField(getClass(), fieldName);
+			if(field != null) setValueToModelField(field, value);
+		} else {
+			throw new IllegalArgumentException("fieldName must not be null");
+		}
+	}	
+	
+	/**
+	 * This method set a value to this superclass instance {@link Field}. The value is set directly to the attribute
+	 * and does not use any get/set methods. Private and protected attributes are also covered. The method will fail
+	 * (without throwing a exception) due to possible {@link IllegalAccessException} exception.
 	 * @param field a instance {@link Field} of this superclass
 	 * @param value any {@link Object} value to be set at a field instance {@link Field} of this superclass
 	 */
@@ -238,6 +256,25 @@ public abstract class FormModel implements ValidationModel
 			LOGGER.error(e.getMessage(), e);
 		}		
 	}
+	
+	/**
+	 * This method get a {@link Node} value from a {@link Field} of the {@link ViewContext}. The value is get directly 
+	 * from the attribute and does not use any get/set methods. Private and protected methods are also covered. 
+	 * @param fieldName the {@link Field} name from {@link ViewContext} class
+	 * @return a {@link Field} from the {@link ViewContext}. Can be {@literal null} if the field value isn't a {@link Node}
+	 * class or superclass or due to possible {@link IllegalAccessException} exception.
+	 * @throws IllegalArgumentException if fieldName is null
+	 */
+	protected Node getContextFieldNode(String fieldName)
+	{
+		if(fieldName != null) {
+			Field field = ReflectionUtils.findField(context.getClass(), fieldName);
+			if(field != null) return getContextFieldNode(field);
+			return null;
+		} else {
+			throw new IllegalArgumentException("fieldName must not be null");
+		}
+	}	
 	
 	/**
 	 * This method get a {@link Node} value from a {@link Field} of the {@link ViewContext}. The value is get directly 

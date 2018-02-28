@@ -43,6 +43,18 @@ public class ValidationFormModel extends FormModel
 	{
 		return getContextFieldNode(field);
 	}
+	
+	@Override
+	public void setValueToModelField(String fieldName, Object value)
+	{
+		super.setValueToModelField(fieldName, value);
+	}
+	
+	@Override
+	public Node getContextFieldNode(String fieldName)
+	{
+		return super.getContextFieldNode(fieldName);
+	}
 
 	public String getTextField() 
 	{
