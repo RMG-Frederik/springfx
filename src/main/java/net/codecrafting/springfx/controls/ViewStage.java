@@ -9,6 +9,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 
+import javafx.application.ConditionalFeature;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -470,7 +472,7 @@ public class ViewStage extends Stage
 		viewCache.clear();
 	}
 	
-	//Configured any ViewLinks annotation mapped on ViewContext controller class
+	//Configured any ViewLinks annotation mapped on ViewContext controller class. Touch events are supported.
 	private void setViewLinks(ViewContext context)
 	{
 		Field[] fields = context.getClass().getDeclaredFields();
@@ -487,9 +489,15 @@ public class ViewStage extends Stage
 					LOGGER.error(e.getMessage(), e);
 				}
 				if(region != null) {
-					region.setOnMouseClicked((clickEvent) -> {
-						loadIntent(new Intent(context, viewLinkAnnotation.value()));
-					});
+					if(Platform.isSupported(ConditionalFeature.INPUT_TOUCH)) {
+						region.setOnTouchReleased((event) -> {
+							loadIntent(new Intent(context, viewLinkAnnotation.value()));
+						});
+					} else {
+						region.setOnMouseClicked((event) -> {
+							loadIntent(new Intent(context, viewLinkAnnotation.value()));
+						});
+					}
 				}
 			}
 		}
