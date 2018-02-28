@@ -52,7 +52,7 @@ public class FormModelTest
 		context.getCheckField().setSelected(true);
 		context.getChoiceField().setValue("test choice");
 		context.getColorField().setValue(springFXColor);
-		context.getComboField().setValue(27);
+		context.getWrongField().setValue(Color.GREEN);
 		context.getCustomField().setText("custom text");
 		context.getDateField().setValue(replicantDate);
 		context.getPassField().setText("pass text");
@@ -85,6 +85,8 @@ public class FormModelTest
 		formModel.setRadioField(false);
 		formModel.setComboStringField("combo string field");
 		formModel.setSliderField(51.0);
+		formModel.setBarField(0.0);
+		formModel.setWrongField(LocalDate.now());
 		
 		formModel.setValuesToForm();
 		assertEquals(formModel.getTextField(), context.getTextField().getText());

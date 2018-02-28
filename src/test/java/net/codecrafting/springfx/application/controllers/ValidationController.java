@@ -10,6 +10,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
@@ -37,7 +38,7 @@ public class ValidationController extends ViewContext
 	private ColorPicker colorField = new ColorPicker();
 	
 	@ValidationBind
-	private ComboBox<Integer> comboField = new ComboBox<Integer>();
+	private ColorPicker wrongField = new ColorPicker();
 	
 	@ValidationBind
 	private DatePicker dateField = new DatePicker();
@@ -53,6 +54,9 @@ public class ValidationController extends ViewContext
 	
 	@ValidationBind
 	private TableView<Object> tableField = new TableView<Object>();
+	
+	@ValidationBind
+	private ProgressBar barField = new ProgressBar();
 	
 	@ValidationBind
 	private Slider sliderField = new Slider();
@@ -129,15 +133,15 @@ public class ValidationController extends ViewContext
     {
 		this.colorField = colorField;
 	}
-
-	public ComboBox<Integer> getComboField() 
-    {
-		return comboField;
+	
+	public ColorPicker getWrongField() 
+	{
+		return wrongField;
 	}
 
-	public void setComboField(ComboBox<Integer> comboField) 
-    {
-		this.comboField = comboField;
+	public void setWrongField(ColorPicker wrongField) 
+	{
+		this.wrongField = wrongField;
 	}
 
 	public DatePicker getDateField() 

@@ -17,13 +17,14 @@ public class ValidationFormModel extends FormModel
 	private String choiceField;
 	private TableView<Object> tableField;
 	private Color colorField;
-	private LocalDate comboField; //wrong type
+	private LocalDate wrongField; //wrong type
 	private LocalDate dateField;
 	private Boolean radioField;
 	//private String textAreaField; missing
 	private String comboStringField;
 	private Double sliderField;
 	private String customField;
+	private Double barField;
 	
 	public ValidationFormModel(ViewContext context) 
 	{
@@ -32,12 +33,6 @@ public class ValidationFormModel extends FormModel
 
 	@Override
 	public void setValidation(List<ValidationError> errors) 
-	{
-		
-	}
-
-	@Override
-	public void resetValidation() 
 	{
 		
 	}
@@ -91,14 +86,14 @@ public class ValidationFormModel extends FormModel
 		this.colorField = colorField;
 	}
 
-	public LocalDate getComboField() 
+	public LocalDate getWrongField() 
 	{
-		return comboField;
+		return wrongField;
 	}
 
-	public void setComboField(LocalDate comboField) 
+	public void setWrongField(LocalDate wrongField) 
 	{
-		this.comboField = comboField;
+		this.wrongField = wrongField;
 	}
 
 	public LocalDate getDateField() 
@@ -160,5 +155,15 @@ public class ValidationFormModel extends FormModel
 	public void setSliderField(Double sliderField) 
 	{
 		this.sliderField = sliderField;
+	}
+
+	public Double getBarField() 
+	{
+		return barField;
+	}
+
+	public void setBarField(Double barField) 
+	{
+		this.barField = barField;
 	}
 }
