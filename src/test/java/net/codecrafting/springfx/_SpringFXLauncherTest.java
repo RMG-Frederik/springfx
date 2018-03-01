@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.core;
+package net.codecrafting.springfx;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -22,6 +22,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import net.codecrafting.springfx.application.AnnotatedTestApplication;
 import net.codecrafting.springfx.application.EmptyApplication;
 import net.codecrafting.springfx.application.ThroableEmptyApplication;
+import net.codecrafting.springfx.core.SpringFXContext;
+import net.codecrafting.springfx.core.SpringFXLauncher;
 import net.codecrafting.springfx.exceptions.SpringFXLaunchException;
 
 //Make this test class be the last

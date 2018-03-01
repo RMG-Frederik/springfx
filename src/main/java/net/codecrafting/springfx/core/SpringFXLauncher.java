@@ -278,6 +278,19 @@ public class SpringFXLauncher
 		new SpringFXLauncher(context).launch(args);
 	}
 	
+	/**
+	 * Helper for exit and terminate {@link SpringFXApplication}. If the {@link BootstrapApplication} has
+	 * been initialized once, this method will call for {@link Platform#exit()} otherwise {@link System#exit(int)}
+	 * with {@literal 0} value.
+	 */
+	public static void exit()
+	{
+		if(BootstrapApplication.isToolkitInitialized()) {
+			Platform.exit();
+		} else {
+			System.exit(0);
+		}
+	}
 	
 	/**
 	 * Helper for check if SpringFX can be relaunched. This is for not call {@link Platform#exit()} (if relaunchable is true)
