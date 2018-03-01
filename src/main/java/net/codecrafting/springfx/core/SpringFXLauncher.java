@@ -15,7 +15,7 @@ import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import net.codecrafting.springfx.exceptions.SpringFXLauncherException;
+import net.codecrafting.springfx.exceptions.SpringFXLaunchException;
 import net.codecrafting.springfx.utils.DialogBuilder;
 
 
@@ -108,7 +108,7 @@ public class SpringFXLauncher
 	{
 		if(args != null) {
 			if(fxApplicationLaunched && !relaunchable) {
-				throw new SpringFXLauncherException("Relaunchable attribute is false");
+				throw new SpringFXLaunchException("Relaunchable attribute is false");
 			} else {
 				initLaunch(args);
 			}	
@@ -126,7 +126,7 @@ public class SpringFXLauncher
 	{
 		if(props != null) {
 			if(fxApplicationLaunched && !relaunchable) {
-				throw new SpringFXLauncherException("Relaunchable attribute is false");
+				throw new SpringFXLaunchException("Relaunchable attribute is false");
 			} else {
 				System.getProperties().putAll(props);
 				initLaunch(new String[0]);
@@ -156,7 +156,7 @@ public class SpringFXLauncher
 		}
 	}
 	
-	private void initLaunch(String args[]) throws SpringFXLauncherException
+	private void initLaunch(String args[]) throws SpringFXLaunchException
 	{
 		context.run(args);
 		if(isSpringFXContextEmpty()) {
@@ -186,7 +186,7 @@ public class SpringFXLauncher
 			LOGGER.info("SpringFX launched");
 			launchFxApplication(args);	
 		} else {
-			throw new SpringFXLauncherException("SpringFXContext must not be empty");
+			throw new SpringFXLaunchException("SpringFXContext must not be empty");
 		}
 	}
 	

@@ -151,4 +151,24 @@ public class FormModelTest
 		context.getTextField().setText("banana");
 		assertEquals("banana", ((TextField) formModel.getContextFieldNode("textField")).getText());
 	}
+	
+	@Test
+	public void postUpdateValuesCall()
+	{
+		assertNull(formModel.getHookField());
+		formModel.setHookField("test");
+		assertEquals("test", formModel.getHookField());
+		formModel.setValuesFromForm();
+		assertNull(formModel.getHookField());
+	}
+	
+	@Test
+	public void preUpdateValuesCall()
+	{
+		assertNull(formModel.getHookField());
+		formModel.setHookField("test");
+		assertEquals("test", formModel.getHookField());
+		formModel.setValuesToForm();
+		assertNull(formModel.getHookField());
+	}
 }

@@ -22,7 +22,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import net.codecrafting.springfx.application.AnnotatedTestApplication;
 import net.codecrafting.springfx.application.EmptyApplication;
 import net.codecrafting.springfx.application.ThroableEmptyApplication;
-import net.codecrafting.springfx.exceptions.SpringFXLauncherException;
+import net.codecrafting.springfx.exceptions.SpringFXLaunchException;
 
 //Make this test class be the last
 public class _SpringFXLauncherTest 
@@ -177,7 +177,7 @@ public class _SpringFXLauncherTest
 			new SpringFXLauncher(context).launch(new String[0]);
 			assertFalse("SpringFXLauncher should thrown SpringFXLauncherException", true);
 		} catch(Exception ex) {
-			assertEquals(SpringFXLauncherException.class, ex.getClass());
+			assertEquals(SpringFXLaunchException.class, ex.getClass());
 			assertEquals("Relaunchable attribute is false", ex.getMessage());
 		}
 		
@@ -187,7 +187,7 @@ public class _SpringFXLauncherTest
 			new SpringFXLauncher(context).launch(props);
 			assertFalse("SpringFXLauncher should thrown SpringFXLauncherException", true);
 		} catch(Exception ex) {
-			assertEquals(SpringFXLauncherException.class, ex.getClass());
+			assertEquals(SpringFXLaunchException.class, ex.getClass());
 			assertEquals("Relaunchable attribute is false", ex.getMessage());
 		}
 		LOGGER.info("Test springFXRelaunchableIsFalse");
@@ -243,7 +243,7 @@ public class _SpringFXLauncherTest
 			new SpringFXLauncher(context).launch(new String[0]);
 			assertFalse("SpringFXLauncher should thrown SpringFXLauncherException", true);
 		} catch(Exception ex) {
-			assertEquals(SpringFXLauncherException.class, ex.getClass());
+			assertEquals(SpringFXLaunchException.class, ex.getClass());
 			assertEquals("SpringFXContext must not be empty", ex.getMessage());
 		}		
 		
@@ -261,7 +261,7 @@ public class _SpringFXLauncherTest
 			new SpringFXLauncher(context).launch(new String[0]);
 			assertFalse("SpringFXLauncher should thrown SpringFXLauncherException", true);
 		} catch(Exception ex) {
-			assertEquals(SpringFXLauncherException.class, ex.getClass());
+			assertEquals(SpringFXLaunchException.class, ex.getClass());
 			assertEquals("SpringFXContext must not be empty", ex.getMessage());
 		}
 		
@@ -279,7 +279,7 @@ public class _SpringFXLauncherTest
 			new SpringFXLauncher(context).launch(new String[0]);
 			assertFalse("SpringFXLauncher should thrown SpringFXLauncherException", true);
 		} catch(Exception ex) {
-			assertEquals(SpringFXLauncherException.class, ex.getClass());
+			assertEquals(SpringFXLaunchException.class, ex.getClass());
 			assertEquals("SpringFXContext must not be empty", ex.getMessage());
 		}
 		
@@ -297,7 +297,7 @@ public class _SpringFXLauncherTest
 			new SpringFXLauncher(context).launch(new String[0]);
 			assertFalse("SpringFXLauncher should thrown SpringFXLauncherException", true);
 		} catch(Exception ex) {
-			assertEquals(SpringFXLauncherException.class, ex.getClass());
+			assertEquals(SpringFXLaunchException.class, ex.getClass());
 			assertEquals("SpringFXContext must not be empty", ex.getMessage());
 		}
 	}

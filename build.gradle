@@ -32,7 +32,7 @@ repositories {
 }
 
 dependencies {
-	implementation "commons-io:commons-io:2.6"
+	api "commons-io:commons-io:2.6"
 	api "org.hibernate:hibernate-validator:5.0.3.Final"
 	api "org.springframework.boot:spring-boot-starter:${springBootVersion}"
 	
@@ -52,6 +52,11 @@ jacocoTestReport {
     reports {
         xml.enabled = true
         csv.enabled = false
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: 'net/codecrafting/springfx/exceptions/**')
+        })
     }
 }
 

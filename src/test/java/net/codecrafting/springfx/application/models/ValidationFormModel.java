@@ -27,6 +27,7 @@ public class ValidationFormModel extends FormModel
 	private Double sliderField;
 	private String customField;
 	private Double barField;
+	private String hookField;
 	
 	public ValidationFormModel(ViewContext context) 
 	{
@@ -39,6 +40,20 @@ public class ValidationFormModel extends FormModel
 		
 	}
 	
+	@Override
+	protected void postUpdateValues()
+	{
+		super.postUpdateValues();
+		hookField = null;
+	}
+
+	@Override
+	protected void preUpdateValues() 
+	{
+		super.preUpdateValues();
+		hookField = null;
+	}
+
 	public Node getNodeField(Field field)
 	{
 		return getContextFieldNode(field);
@@ -184,5 +199,15 @@ public class ValidationFormModel extends FormModel
 	public void setBarField(Double barField) 
 	{
 		this.barField = barField;
+	}
+
+	public String getHookField() 
+	{
+		return hookField;
+	}
+
+	public void setHookField(String hookField)
+	{
+		this.hookField = hookField;
 	}
 }

@@ -94,6 +94,27 @@ public abstract class FormModel implements ValidationModel
 	public abstract void setValidation(List<ValidationError> errors);
 	
 	/**
+     * This method is called at the end of {@link #setValuesFromForm()} after the model values 
+     * are filled. Use this method to post process model data retrieved from {@link ViewContext} elements.
+     * 
+     * <p>
+     * The implementation of this method provided by {@link FormModel} does nothing.
+     * </p>
+	 */
+	protected void postUpdateValues(){}
+	
+	/**
+     * This method is called at the top of {@link #setValuesToForm()} before the {@link ViewContext} form
+     * elements values are filled. Use this method to pre process model data to be passed to 
+     * {@link ViewContext} elements.
+     * 
+     * <p>
+     * The implementation of this method provided by {@link FormModel} does nothing.
+     * </p>
+	 */
+	protected void preUpdateValues(){}
+	
+	/**
 	 * This method set the values of the model attributes from the {@link ViewContext} form elements containing
 	 * {@link ValidationBind} annotation. The value present on the {@link ValidationBind} is used to find a 
 	 * corresponding attribute with that name. If the annotation has a empty value the name of the form element 
@@ -142,6 +163,7 @@ public abstract class FormModel implements ValidationModel
 				}
 			}
 		}
+		postUpdateValues();
 	}
 	
 	/**
@@ -153,6 +175,7 @@ public abstract class FormModel implements ValidationModel
 	@SuppressWarnings("unchecked")
 	public void setValuesToForm()
 	{
+		preUpdateValues();
 		Field[] fields = context.getClass().getDeclaredFields();
 		for (Field field : fields) {
 			Object modelFieldValue = getValueFromModelField(field);
