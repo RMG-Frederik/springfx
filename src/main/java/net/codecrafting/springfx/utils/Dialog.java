@@ -38,11 +38,17 @@ public class Dialog
 	
 	public Dialog setIcon(Image icon)
 	{
-		this.icon = icon;
-		Platform.runLater(() -> {
-			((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(icon);
-		});
-		return this;
+		if(Platform.isFxApplicationThread()) {
+			if(icon != null) {
+				this.icon = icon;
+				((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(icon);
+				return this;		
+			} else {
+				throw new IllegalArgumentException("icon must not be null");
+			}
+		} else {
+			throw new IllegalStateException("Not on JavaFX thread");
+		}
 	}
 	
 	public DialogPane getDialogPane()
@@ -57,8 +63,12 @@ public class Dialog
 	
 	public Dialog setTitle(String title)
 	{
-		alert.setTitle(title);
-		return this;
+		if(title != null) {
+			alert.setTitle(title);
+			return this;	
+		} else {
+			throw new IllegalArgumentException("title must not be null");		
+		}
 	}
 	
 	public String getHeader()
@@ -68,19 +78,27 @@ public class Dialog
 	
 	public Dialog setHeader(String header)
 	{
-		alert.setHeaderText(header);
-		return this;
+		if(header != null) {
+			alert.setHeaderText(header);
+			return this;	
+		} else {
+			throw new IllegalArgumentException("header must not be null");
+		}
 	}
 	
-	public String getContent(String content)
+	public String getContent()
 	{
 		return alert.getContentText();
 	}
 	
 	public Dialog setContent(String content)
 	{
-		alert.setContentText(content);
-		return this;
+		if(content != null) {
+			alert.setContentText(content);	
+			return this;
+		} else {
+			throw new IllegalArgumentException("content must not be null");
+		}
 	}
 	
 	public ObservableList<String> getStyleClass()
@@ -88,9 +106,14 @@ public class Dialog
 		return getDialogPane().getStyleClass();
 	}
 	
-	public void setStylesheets(ObservableList<String> stylesheets)
+	public Dialog setStylesheets(ObservableList<String> stylesheets)
 	{
-		getDialogPane().getStylesheets().addAll(stylesheets);
+		if(stylesheets != null) {
+			getDialogPane().getStylesheets().addAll(stylesheets);
+			return this;
+		} else {
+			throw new IllegalArgumentException("stylesheets must not be null");
+		}
 	}
 	
 	public ObservableList<String> getStylesheets()
