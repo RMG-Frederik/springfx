@@ -88,7 +88,7 @@ public class DialogBuilder
 		if(isInitialized()) {
 			Dialog dialog = new Dialog(type);
 			if(cachedIcon != null) dialog.setIcon(cachedIcon);
-			if(cachedStylesheets != null) dialog.setStylesheets(cachedStylesheets);
+			if(cachedStylesheets != null) dialog.addStylesheets(cachedStylesheets);
 			return dialog;
 		} else {
 			throw new DialogBuilderInitializationException();

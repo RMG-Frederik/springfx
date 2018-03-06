@@ -267,7 +267,7 @@ public class DialogTest
 	}
 	
 	@Test
-	public void setStylesheets()
+	public void addStylesheets()
 	{
 		this.thrown.expect(IllegalArgumentException.class);
 		this.thrown.expectMessage("stylesheets must not be null");
@@ -277,15 +277,15 @@ public class DialogTest
 		assertEquals(0, dialog.getDialogAlert().getDialogPane().getStylesheets().size());
 		ObservableList<String> styles = FXCollections.observableArrayList();
 		styles.add("-fx-background-color:red");
-		dialog = dialog.setStylesheets(styles);
+		dialog = dialog.addStylesheets(styles);
 		assertEquals(1, dialog.getDialogAlert().getDialogPane().getStylesheets().size());
 		styles = FXCollections.observableArrayList();
 		styles.add("-fx-background-color:yellow");
-		dialog.setStylesheets(styles);
+		dialog.addStylesheets(styles);
 		assertEquals(2, dialog.getDialogAlert().getDialogPane().getStylesheets().size());
 		assertTrue(dialog.getDialogAlert().getDialogPane().getStylesheets().contains("-fx-background-color:red"));
 		assertTrue(dialog.getDialogAlert().getDialogPane().getStylesheets().contains("-fx-background-color:yellow"));
-		dialog.setStylesheets(null);
+		dialog.addStylesheets(null);
 	}
 	
 	@Test
