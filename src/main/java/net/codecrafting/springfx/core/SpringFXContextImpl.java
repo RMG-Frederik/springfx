@@ -1,7 +1,6 @@
 package net.codecrafting.springfx.core;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
@@ -22,7 +21,7 @@ import net.codecrafting.springfx.annotation.HeadlessApplication;
 public class SpringFXContextImpl implements SpringFXContext
 {
 	/**
-	 * The Spring {@link ApplicationContext}
+	 * The Spring {@link ConfigurableApplicationContext}
 	 */
 	private ConfigurableApplicationContext springContext;	
 	
@@ -41,7 +40,7 @@ public class SpringFXContextImpl implements SpringFXContext
 	/**
 	 * Create a new {@link SpringFXContextImpl} instance.
 	 * Here will be created a internal {@link SpringApplicationBuilder} to initialize 
-	 * and configure a {@link ApplicationContext}
+	 * and configure a {@link ConfigurableApplicationContext}
 	 * @param appClass the user application class
 	 */
 	public SpringFXContextImpl(Class<? extends SpringFXApplication> appClass)

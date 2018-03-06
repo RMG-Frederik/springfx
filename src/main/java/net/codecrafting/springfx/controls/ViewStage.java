@@ -7,7 +7,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.util.ReflectionUtils;
 
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
@@ -42,7 +43,7 @@ import net.codecrafting.springfx.utils.MipmapLevel;
  * controller that has means to create a replaceable view. All views are part of
  * the root view of StageContext.
  * 
- * To create a new ViewStage is necessary to pass a {@link ApplicationContext} to
+ * To create a new ViewStage is necessary to pass a {@link ConfigurableApplicationContext} to
  * allow get the view controllers as Spring beans. View controllers are JavaFX 
  * controllers that extends a {@link ViewContext}.
  *
@@ -90,7 +91,7 @@ public class ViewStage extends Stage
 	/**
 	 * Spring application context to load controllers as beans
 	 */
-	private ApplicationContext springContext;
+	private ConfigurableApplicationContext springContext;
 	private EventHandler<ActionEvent> minimizeEvent;
 	private EventHandler<ActionEvent> maximizeEvent;
 	
@@ -115,10 +116,10 @@ public class ViewStage extends Stage
 	/**
 	 * Create a new instance of {@link ViewStage}. By default all loaded views
 	 * will use the {@link ViewStage#DEFAULT_VIEW_PATH} for load FXML files.
-	 * @param springContext the spring {@link ApplicationContext} used to initialize SpringFX
+	 * @param springContext the spring {@link ConfigurableApplicationContext} used to initialize SpringFX
 	 * @throws IllegalArgumentException if springContext is null.
 	 */
-	public ViewStage(ApplicationContext springContext)
+	public ViewStage(ConfigurableApplicationContext springContext)
 	{
 		this(springContext, DEFAULT_VIEW_PATH);
 	}
@@ -126,11 +127,11 @@ public class ViewStage extends Stage
 	/**
 	 * Create a new instance of {@link ViewStage} using a custom view path 
 	 * for load FXML files.
-	 * @param springContext the spring {@link ApplicationContext} used to initialize SpringFX
+	 * @param springContext the spring {@link ConfigurableApplicationContext} used to initialize SpringFX
 	 * @param viewPath the view root path to load FXML files
 	 * @throws IllegalArgumentException if springContext or viewPath are null.
 	 */
-	public ViewStage(ApplicationContext springContext, String viewPath)
+	public ViewStage(ConfigurableApplicationContext springContext, String viewPath)
 	{
 		super();
 		if(viewPath != null && springContext != null) {
@@ -348,9 +349,9 @@ public class ViewStage extends Stage
 			initialized = true;
 			FXMLLoader loader = new FXMLLoader(viewURL);
 			loader.setController(stageContext);
-			stageContext.setViewStage(this);
 			Parent rootNode;
 			try {
+				injectViewStage(stageContext);
 				rootNode = loader.load();
 			} catch (Exception e) {
 				initialized = false;
@@ -405,9 +406,9 @@ public class ViewStage extends Stage
 			if(viewURL != null) {
 				FXMLLoader loader = new FXMLLoader(viewURL);
 				loader.setController(viewController);
-				viewController.setViewStage(this);
 				Parent loadedNode;
 				try {
+					injectViewStage(viewController);
 					this.intent = intent;
 					loadedNode = loader.load();
 				} catch (Exception e) {
@@ -507,5 +508,15 @@ public class ViewStage extends Stage
 	{
 		if(!path.startsWith("/")) path = "/"+path;
 		return getClass().getResource(path);
+	}
+	
+	//Inject this ViewStage into a ViewContext.
+	private void injectViewStage(ViewContext context) throws Exception
+	{
+		Field stageField = ReflectionUtils.findField(context.getClass(), "viewStage");
+		boolean access = stageField.isAccessible();
+		stageField.setAccessible(true);
+		ReflectionUtils.setField(stageField, context, this);
+		stageField.setAccessible(access);
 	}
 }

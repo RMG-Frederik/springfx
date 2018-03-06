@@ -122,7 +122,7 @@ public class ViewContextTest
 		assertNull(context.getLocation());
 		assertNull(context.getResources());
 	}
-	
+
 	@Test
 	public void setViewStage()
 	{
@@ -181,6 +181,23 @@ public class ViewContextTest
 	}
 	
 	@Test
+	public void contextWithoutViewStage()
+	{
+		ViewContext context = new ViewContext("test", "test title") {
+			@Override
+			protected void onStart() {}
+			
+			@Override
+			protected void onCreate(URL location, ResourceBundle resources) {}
+			
+			@Override
+			public Node getMainNode() {return null;}
+		};
+		assertNull(context.getIntent());
+		assertNull(context.getStageContext());
+	}
+	
+	@Test
 	public void getIntent()
 	{
 		ViewContext context = new ViewContext("test", "test title") {
@@ -197,6 +214,7 @@ public class ViewContextTest
 		ViewStage mockStage = Mockito.mock(ViewStage.class);
 		Intent mockIntent = Mockito.mock(Intent.class);
 		Mockito.doReturn(TestController.class).when(mockIntent).getViewClass();
+		Mockito.when(mockStage.getIntent()).thenReturn(mockIntent);
 		Mockito.when(mockStage.isInitialized()).thenReturn(true);
 		Mockito.when(mockStage.getIntent()).thenReturn(mockIntent);
 		context.setViewStage(mockStage);

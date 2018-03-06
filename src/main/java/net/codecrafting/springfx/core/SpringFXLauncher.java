@@ -7,14 +7,15 @@ import java.util.concurrent.Executors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextStoppedEvent;
 
 import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import net.codecrafting.springfx.controls.ViewStage;
 import net.codecrafting.springfx.exceptions.SpringFXLaunchException;
 import net.codecrafting.springfx.utils.DialogBuilder;
 
@@ -25,9 +26,9 @@ import net.codecrafting.springfx.utils.DialogBuilder;
  * application:
  * 
  * <ul>
- * <li>Register a {@link SpringFXContext} to create a {@link ApplicationContext}</li>
+ * <li>Register a {@link SpringFXContext} to create a {@link ConfigurableApplicationContext}</li>
  * <li>Run the {@link SpringFXContext} with optional arguments</li>
- * <li>Create a internal JAVAFX Bootstrap Application ({@link BootstrapApplication} to call your {@link SpringFXApplication#start(net.codecrafting.springfx.controls.ViewStage)} implementation)</li>
+ * <li>Create a internal JAVAFX Bootstrap Application ({@link BootstrapApplication} to call your {@link SpringFXApplication#start(ViewStage)} implementation)</li>
  * </ul>
  * 
  * The default behavior of {@link #launch(Class)} is to use the internal {@link SpringFXContextImpl},
@@ -56,7 +57,7 @@ import net.codecrafting.springfx.utils.DialogBuilder;
  * 
  * <b>OBS:</b> Note that your application must extends {@link SpringFXApplication}
  * 
- * However if you intent to use your own custom {@link ApplicationContext}, create a implementation of
+ * However if you intent to use your own custom {@link ConfigurableApplicationContext}, create a implementation of
  * {@link SpringFXContext} which you can define your own context. 
  * To launch your custom {@link SpringFXContext} @see {@link #launch(SpringFXContext, String[])}.
  * 
@@ -69,7 +70,7 @@ import net.codecrafting.springfx.utils.DialogBuilder;
 public class SpringFXLauncher 
 {
 	/**
-	 * The context of this launcher which contains the {@link ApplicationContext} and a {@link SpringFXApplication}
+	 * The context of this launcher which contains the {@link ConfigurableApplicationContext} and a {@link SpringFXApplication}
 	 */
 	private SpringFXContext context;
 	

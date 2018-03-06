@@ -19,6 +19,9 @@ import org.junit.rules.ExpectedException;
 
 import com.sun.javafx.application.PlatformImpl;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert.AlertType;
@@ -26,6 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import net.codecrafting.springfx.core.BootstrapApplication;
 
 @SuppressWarnings("restriction")
@@ -40,6 +44,7 @@ public class DialogTest
 		if(!BootstrapApplication.isToolkitInitialized()) {
 			CountDownLatch countDownLatch = new CountDownLatch(1);
 			PlatformImpl.startup(() -> {
+				Platform.setImplicitExit(false);
 				countDownLatch.countDown();
 				new BootstrapApplication();
 			});
@@ -290,7 +295,10 @@ public class DialogTest
 			Dialog d = new Dialog();
 			Button button = (Button) d.getDialogAlert().getDialogPane().lookupButton(ButtonType.OK);
 			d.getDialogAlert().setOnShown((event) -> {
-				button.fire();
+				Timeline timeline = new Timeline(new KeyFrame(
+				        Duration.millis(250),
+				        ae -> button.fire()));
+				timeline.play();
 			});
 			return d;
 		}));

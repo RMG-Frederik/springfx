@@ -19,7 +19,7 @@ import org.springframework.core.env.Environment;
 public interface SpringFXContext
 {
 	/**
-	 * Get a {@link ApplicationContext} instance. Only call this method after a successful {@link #run(String[])}
+	 * Get a {@link ConfigurableApplicationContext} instance. Only call this method after a successful {@link #run(String[])}
 	 * @return {@link ConfigurableApplicationContext} instance. Can return null.
 	 */
     ConfigurableApplicationContext getSpringContext();
@@ -39,7 +39,7 @@ public interface SpringFXContext
     Environment getEnvironment();
 	
 	/**
-	 * Executes and initialize a {@link ApplicationContext}. This is the moment that Spring Boot is initialized.
+	 * Executes and initialize a {@link ConfigurableApplicationContext}. This is the moment that Spring Boot is initialized.
 	 * @param args arguments to pass to Spring Boot initialization.
 	 */
     void run(String args[]);

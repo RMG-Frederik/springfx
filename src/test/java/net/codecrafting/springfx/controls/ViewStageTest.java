@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,11 +20,12 @@ import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.testfx.util.WaitForAsyncUtils;
 
 import com.sun.javafx.application.PlatformImpl;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -50,26 +50,22 @@ public class ViewStageTest
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 	
-	public ApplicationContext springContext;
+	public static ConfigurableApplicationContext springContext;
 	
 	@BeforeClass
 	public static void setup() throws InterruptedException
 	{
+		springContext = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false).run();
 		SpringFXLauncher.setRelaunchable(true);
 		if(!BootstrapApplication.isToolkitInitialized()) {
 			CountDownLatch countDownLatch = new CountDownLatch(1);
 			PlatformImpl.startup(() -> {
+				Platform.setImplicitExit(false);
 				countDownLatch.countDown();
 				new BootstrapApplication();
 			});
 			countDownLatch.await();
 		}
-	}
-	
-	@Before
-	public void init()
-	{
-		springContext = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false).run();
 	}
 	
 	@Test
@@ -330,6 +326,7 @@ public class ViewStageTest
 		
 		assertTrue("ViewStage not initialized", viewStage.isInitialized());
 		assertNotNull(viewStage.getStageContext());
+		assertNotNull(viewStage.getStageContext().getViewStage());
 		
 		//Don't know why it's not covered by IconMipmap test
 		assertNull("Mipmap should be null", viewStage.getIconMipmap());
@@ -554,6 +551,27 @@ public class ViewStageTest
 	}
 	
 	@Test
+	public void intentViewStageContext() throws Exception
+	{
+		ViewStage viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			vs.init(MainController.class);
+			vs.show(true);
+			return vs;
+		}));
+		
+		TestController testController = springContext.getBean(TestController.class);
+		Intent mockIntent = Mockito.mock(Intent.class);
+		ViewContext mockCallerContext = Mockito.mock(ViewContext.class);
+		Mockito.doReturn(TestController.class).when(mockIntent).getViewClass();
+		Mockito.doReturn(mockCallerContext).when(mockIntent).getCallerContext();
+		asyncFx(() -> {
+			viewStage.loadIntent(mockIntent);
+		}).get();
+		assertEquals(viewStage, testController.getViewStage());
+	}
+	
+	@Test
 	public void removeIntentFromCache()
 	{
 		Intent mockIntent = Mockito.mock(Intent.class);
@@ -627,7 +645,6 @@ public class ViewStageTest
 			vs.show(true);
 			return vs;
 		}));
-	
 		viewStage.clearViewCache();
 		assertFalse("Intent still cached", viewStage.isViewCached(TestController.class));
 	}

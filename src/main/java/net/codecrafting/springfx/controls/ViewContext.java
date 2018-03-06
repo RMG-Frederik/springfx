@@ -42,7 +42,7 @@ public abstract class ViewContext implements Initializable
 	protected String viewTitle;
 	
 	/**
-	 * The view stage associated with this context
+	 * The view stage associated with this context. Injected by {@link ViewStage}
 	 */
 	protected ViewStage viewStage;
 	
@@ -143,7 +143,8 @@ public abstract class ViewContext implements Initializable
 	 */
 	public Intent getIntent()
 	{
-		return viewStage.getIntent();
+		if(viewStage != null) return viewStage.getIntent();
+		return null;
 	}
 	
 	/**
@@ -152,7 +153,8 @@ public abstract class ViewContext implements Initializable
 	 */
 	public StageContext getStageContext()
 	{
-		return viewStage.getStageContext();
+		if(viewStage != null) return viewStage.getStageContext();
+		return null;
 	}
 	
 	/**
