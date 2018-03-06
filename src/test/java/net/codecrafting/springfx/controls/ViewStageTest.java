@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,6 +54,8 @@ public class ViewStageTest
 	
 	public static ConfigurableApplicationContext springContext;
 	
+	public ViewStage viewStage;
+	
 	@BeforeClass
 	public static void setup() throws InterruptedException
 	{
@@ -60,7 +64,6 @@ public class ViewStageTest
 		if(!BootstrapApplication.isToolkitInitialized()) {
 			CountDownLatch countDownLatch = new CountDownLatch(1);
 			PlatformImpl.startup(() -> {
-				Platform.setImplicitExit(false);
 				countDownLatch.countDown();
 				new BootstrapApplication();
 			});
@@ -68,10 +71,22 @@ public class ViewStageTest
 		}
 	}
 	
+	@Before
+	public void init()
+	{
+		Platform.setImplicitExit(false);
+	}
+	
+	@After
+	public void close()
+	{
+		if(viewStage != null) asyncFx(() -> { viewStage.close();});
+	}
+	
 	@Test
 	public void constructorWithoutDefaultPath()
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			return new ViewStage(springContext);
 		}));		
 		assertEquals(ViewStage.DEFAULT_VIEW_PATH, viewStage.getViewPath());
@@ -80,7 +95,7 @@ public class ViewStageTest
 	@Test
 	public void constructorWithViewPath()
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			return new ViewStage(springContext, "test");
 		}));
 		assertEquals("test", viewStage.getViewPath());
@@ -127,7 +142,7 @@ public class ViewStageTest
 	@SuppressWarnings("unchecked")
 	public void onMinimizeRequest()
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.show();
 			vs.setIconified(true);
@@ -145,7 +160,7 @@ public class ViewStageTest
 	@SuppressWarnings("unchecked")
 	public void onMaximizeRequest()
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.show();	
 			vs.setMaximized(true);
@@ -162,7 +177,7 @@ public class ViewStageTest
 	@Test
 	public void setIcon()
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			return new ViewStage(springContext);
 		}));
 		viewStage.setIcon("/icons/launcher_icon@4x.png");
@@ -189,7 +204,7 @@ public class ViewStageTest
 	{
 		this.thrown.expect(RuntimeException.class);
 		this.thrown.expectMessage("mipmap must not be null");
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			return new ViewStage(springContext);
 		}));
 		List<MipmapLevel> levels = new ArrayList<MipmapLevel>();
@@ -216,7 +231,7 @@ public class ViewStageTest
 	@Test
 	public void querySelector()
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			return new ViewStage(springContext);
 		}));
 		
@@ -247,7 +262,7 @@ public class ViewStageTest
 	@Test
 	public void querySelectorAll()
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			return new ViewStage(springContext);
 		}));
 		
@@ -279,7 +294,7 @@ public class ViewStageTest
 	@Test
 	public void show()
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.show(false);
 			return vs;
@@ -318,7 +333,7 @@ public class ViewStageTest
 			assertEquals("StageContext class must not be null", e.getCause().getMessage());
 		}
 		
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.init(MainController.class);
 			return vs;
@@ -385,7 +400,7 @@ public class ViewStageTest
 	@Test
 	public void loadInvalidIntent() throws Exception
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.show(true);
 			return vs;
@@ -456,7 +471,7 @@ public class ViewStageTest
 	@Test
 	public void loadIntentBadControllers()
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.init(MainController.class);
 			vs.show(true);
@@ -516,7 +531,7 @@ public class ViewStageTest
 	@Test
 	public void loadIntentControllers() throws Exception
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.init(MainController.class);
 			vs.show(true);
@@ -553,7 +568,7 @@ public class ViewStageTest
 	@Test
 	public void intentViewStageContext() throws Exception
 	{
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.init(MainController.class);
 			vs.show(true);
@@ -579,7 +594,7 @@ public class ViewStageTest
 		Mockito.doReturn(TestController.class).when(mockIntent).getViewClass();
 		Mockito.doReturn(mockCallerContext).when(mockIntent).getCallerContext();
 		
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.init(MainController.class);
 			vs.loadIntent(mockIntent);
@@ -609,7 +624,7 @@ public class ViewStageTest
 		Mockito.doReturn(TestController.class).when(mockIntent).getViewClass();
 		Mockito.doReturn(mockCallerContext).when(mockIntent).getCallerContext();
 		
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.init(MainController.class);
 			vs.loadIntent(mockIntent);
@@ -638,7 +653,7 @@ public class ViewStageTest
 		Mockito.doReturn(TestController.class).when(mockIntent).getViewClass();
 		Mockito.doReturn(mockCallerContext).when(mockIntent).getCallerContext();
 		
-		ViewStage viewStage = waitFor(asyncFx(() -> {
+		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.init(MainController.class);
 			vs.loadIntent(mockIntent);
