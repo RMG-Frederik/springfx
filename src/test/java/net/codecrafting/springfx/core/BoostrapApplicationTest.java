@@ -21,6 +21,7 @@ import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.stubbing.Answer;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -107,7 +108,7 @@ public class BoostrapApplicationTest
 	public void springFXContextNotNull() throws Exception
 	{
 		doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			when(context.getSpringContext()).thenReturn(springContext);
 			when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -122,7 +123,7 @@ public class BoostrapApplicationTest
 	public void initialization() throws Exception
 	{
 		doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			when(context.getSpringContext()).thenReturn(springContext);
 			when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -139,7 +140,7 @@ public class BoostrapApplicationTest
 	public void simpleStartup() throws Exception
 	{
 		doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			when(context.getSpringContext()).thenReturn(springContext);
 			when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -171,7 +172,7 @@ public class BoostrapApplicationTest
 		System.getProperties().putAll(dialogTestProps);
 		System.getProperties().setProperty("springfx.app.root-controller", MainController.class.getName());
 		doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			when(context.getSpringContext()).thenReturn(springContext);
 			when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -212,7 +213,7 @@ public class BoostrapApplicationTest
 		System.getProperties().setProperty("springfx.app.root-controller", MainController.class.getName());
 		System.getProperties().setProperty("springfx.app.auto-open", "false");
 		doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			when(context.getSpringContext()).thenReturn(springContext);
 			when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -243,7 +244,7 @@ public class BoostrapApplicationTest
 		System.getProperties().setProperty("springfx.app.root-controller", MainController.class.getName());
 		System.getProperties().setProperty("springfx.app.auto-open", "true");
 		doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			when(context.getSpringContext()).thenReturn(springContext);
 			when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -277,7 +278,7 @@ public class BoostrapApplicationTest
 		System.getProperties().setProperty("springfx.app.name", "SpringFX Test");
 		System.getProperties().setProperty("springfx.app.icon", "/icons/launcher_icon.png");
 		doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			when(context.getSpringContext()).thenReturn(springContext);
 			when(context.getEnvironment()).thenReturn(springContext.getEnvironment());

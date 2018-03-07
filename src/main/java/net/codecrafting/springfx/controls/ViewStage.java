@@ -12,6 +12,7 @@ import org.springframework.util.ReflectionUtils;
 
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -140,16 +141,17 @@ public class ViewStage extends Stage
 			this.viewPath = viewPath;
 			
 			iconifiedProperty().addListener((onMinimize) -> {
-				if(isIconified() && minimizeEvent != null) {
+				ReadOnlyBooleanProperty min = (ReadOnlyBooleanProperty) onMinimize;
+				if(min.get() && minimizeEvent != null) {
 					minimizeEvent.handle(new ActionEvent());
 				}
 			});
-			
 			maximizedProperty().addListener((onMaximize) -> {
-				if(isMaximized() && maximizeEvent != null) {
+				ReadOnlyBooleanProperty max = (ReadOnlyBooleanProperty) onMaximize;
+				if(max.get() && maximizeEvent != null) {
 					maximizeEvent.handle(new ActionEvent());
 				}
-			});	
+			});
 		} else {
 			throw new IllegalArgumentException("springContext and viewPath must not be null");
 		}

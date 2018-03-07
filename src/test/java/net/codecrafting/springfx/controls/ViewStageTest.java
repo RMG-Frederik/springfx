@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.testfx.util.WaitForAsyncUtils;
@@ -59,7 +60,7 @@ public class ViewStageTest
 	@BeforeClass
 	public static void setup() throws InterruptedException
 	{
-		springContext = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false).run();
+		springContext = new SpringApplicationBuilder().sources(EmptyApplication.class).web(WebApplicationType.NONE).run();
 		SpringFXLauncher.setRelaunchable(true);
 		if(!BootstrapApplication.isToolkitInitialized()) {
 			CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -144,11 +145,14 @@ public class ViewStageTest
 	{
 		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
-			vs.show();
 			vs.setIconified(true);
 			vs.setIconified(false);
+			vs.show();
 			return vs;
 		}));
+		
+		//For some reason only this way works on Linux
+		WaitForAsyncUtils.waitForFxEvents();
 		EventHandler<ActionEvent> mockEventHandler = Mockito.mock(EventHandler.class);
 		viewStage.setOnMinimizeRequest(mockEventHandler);
 		asyncFx(() -> {viewStage.setIconified(true);});
@@ -162,11 +166,16 @@ public class ViewStageTest
 	{
 		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
-			vs.show();	
+			
+			//For some reason only this way works on Linux
 			vs.setMaximized(true);
 			vs.setMaximized(false);
+			vs.show();
 			return vs;
 		}));
+		
+		//For some reason only this way works on Linux
+		WaitForAsyncUtils.waitForFxEvents();
 		EventHandler<ActionEvent> mockEventHandler = Mockito.mock(EventHandler.class);
 		viewStage.setOnMaximizeRequest(mockEventHandler);
 		asyncFx(() -> {viewStage.setMaximized(true);});

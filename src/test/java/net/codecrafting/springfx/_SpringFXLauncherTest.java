@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.stubbing.Answer;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -58,7 +59,7 @@ public class _SpringFXLauncherTest
 	{
 		SpringFXLauncher.setRelaunchable(true);
 		Mockito.doAnswer((Answer<Void>) i1 -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) i1.getArguments()[0]);
 			Mockito.when(context.getSpringContext()).thenReturn(springContext);
 			Mockito.when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -76,7 +77,7 @@ public class _SpringFXLauncherTest
 	{
 		SpringFXLauncher.setRelaunchable(true);
 		Mockito.doAnswer((Answer<Void>) i1 -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) i1.getArguments()[0]);
 			Mockito.when(context.getSpringContext()).thenReturn(springContext);
 			Mockito.when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -97,7 +98,7 @@ public class _SpringFXLauncherTest
 	{
 		SpringFXLauncher.setRelaunchable(true);
 		Mockito.doAnswer((Answer<Void>) i1 -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(ThroableEmptyApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(ThroableEmptyApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) i1.getArguments()[0]);
 			ThroableEmptyApplication application = springContext.getBean(ThroableEmptyApplication.class);
 			application.setThrowInit(true);
@@ -123,7 +124,7 @@ public class _SpringFXLauncherTest
 	{
 		SpringFXLauncher.setRelaunchable(true);
 		Mockito.doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(true);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(WebApplicationType.SERVLET);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			Mockito.when(context.getSpringContext()).thenReturn(springContext);
 			Mockito.when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -159,7 +160,7 @@ public class _SpringFXLauncherTest
 	{
 		SpringFXLauncher.setRelaunchable(true);
 		Mockito.doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			Mockito.when(context.getSpringContext()).thenReturn(springContext);
 			Mockito.when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -201,7 +202,7 @@ public class _SpringFXLauncherTest
 		SpringFXLauncher.setRelaunchable(true);
 		String[] args = {"--myArg=test"};
 		Mockito.doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			Mockito.when(context.getSpringContext()).thenReturn(springContext);
 			Mockito.when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -224,7 +225,7 @@ public class _SpringFXLauncherTest
 		props.put("prism.lcdtext", "false");
 		props.put("prism.text", "t2k");
 		Mockito.doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			Mockito.when(context.getSpringContext()).thenReturn(springContext);
 			Mockito.when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -252,7 +253,7 @@ public class _SpringFXLauncherTest
 		//THROW with environment null
 		Mockito.reset(context);
 		Mockito.doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			Mockito.when(context.getSpringContext()).thenReturn(springContext);
 			Mockito.when(context.getEnvironment()).thenReturn(null);
@@ -270,7 +271,7 @@ public class _SpringFXLauncherTest
 		//THROW with application null
 		Mockito.reset(context);
 		Mockito.doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			Mockito.when(context.getSpringContext()).thenReturn(springContext);
 			Mockito.when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
@@ -288,7 +289,7 @@ public class _SpringFXLauncherTest
 		//THROW with NullPointerException
 		Mockito.reset(context);
 		Mockito.doAnswer((Answer<Void>) invocation -> {
-			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(false);
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(EmptyApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
 			Mockito.when(context.getSpringContext()).thenReturn(springContext);
 			Mockito.when(context.getEnvironment()).thenReturn(null);

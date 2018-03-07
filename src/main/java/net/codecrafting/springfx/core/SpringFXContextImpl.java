@@ -1,5 +1,6 @@
 package net.codecrafting.springfx.core;
 
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
@@ -49,7 +50,7 @@ public class SpringFXContextImpl implements SpringFXContext
 			this.appClass = appClass;
 			springBuilder = new SpringApplicationBuilder()
 					.sources(appClass)
-					.web(false)
+					.web(WebApplicationType.NONE)
 					.headless(isHeadless());
 		} else {
 			throw new IllegalArgumentException("Application class must not be null");
