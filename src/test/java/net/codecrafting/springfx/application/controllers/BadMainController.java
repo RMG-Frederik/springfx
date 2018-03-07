@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import net.codecrafting.springfx.annotation.ViewController;
-import net.codecrafting.springfx.controls.StageContext;
+import net.codecrafting.springfx.context.StageContext;
 
 @ViewController(name="bad")
 public class BadMainController extends StageContext

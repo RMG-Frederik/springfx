@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import net.codecrafting.springfx.annotation.ViewController;
 import net.codecrafting.springfx.annotation.ViewLink;
-import net.codecrafting.springfx.controls.StageContext;
+import net.codecrafting.springfx.context.StageContext;
 
 @ViewController
 public class MainController extends StageContext

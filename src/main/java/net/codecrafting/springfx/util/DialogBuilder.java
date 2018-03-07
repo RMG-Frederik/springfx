@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.utils;
+package net.codecrafting.springfx.util;
 
 import java.net.URL;
 import java.util.Optional;
@@ -12,7 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
-import net.codecrafting.springfx.exceptions.DialogBuilderInitializationException;
+import net.codecrafting.springfx.exception.DialogBuilderInitializationException;
 
 public class DialogBuilder 
 {

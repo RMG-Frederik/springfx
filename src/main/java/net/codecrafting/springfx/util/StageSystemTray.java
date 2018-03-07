@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.utils;
+package net.codecrafting.springfx.util;
 
 import java.awt.Image;
 import java.awt.MenuItem;
@@ -17,7 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.stage.Stage;
-import net.codecrafting.springfx.exceptions.StageSystemTrayNotSupported;
+import net.codecrafting.springfx.exception.StageSystemTrayNotSupported;
 
 public class StageSystemTray 
 {

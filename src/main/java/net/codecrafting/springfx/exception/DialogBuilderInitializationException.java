@@ -1,6 +1,6 @@
-package net.codecrafting.springfx.exceptions;
+package net.codecrafting.springfx.exception;
 
-import net.codecrafting.springfx.utils.DialogBuilder;
+import net.codecrafting.springfx.util.DialogBuilder;
 
 /**
  * This exception is a {@link RuntimeException} that is used to indicated that 

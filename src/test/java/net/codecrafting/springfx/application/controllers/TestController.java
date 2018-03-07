@@ -9,7 +9,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import net.codecrafting.springfx.annotation.ViewController;
 import net.codecrafting.springfx.annotation.ViewLink;
-import net.codecrafting.springfx.controls.ViewContext;
+import net.codecrafting.springfx.context.ViewContext;
 
 @ViewController
 public class TestController extends ViewContext

@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import net.codecrafting.springfx.controls.StageContext;
+import net.codecrafting.springfx.context.StageContext;
 
 public class FakeMainController extends StageContext
 {

@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.scene.Node;
-import net.codecrafting.springfx.controls.ViewContext;
+import net.codecrafting.springfx.context.ViewContext;
 
 public class TestWithoutAnnotationController extends ViewContext
 {

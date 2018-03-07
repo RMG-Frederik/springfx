@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import net.codecrafting.springfx.controls.ViewContext;
+import net.codecrafting.springfx.context.ViewContext;
 
 /**
  * Annotation meant to be used by a {@link ViewContext} indicating that the class is a Spring {@link Component}.

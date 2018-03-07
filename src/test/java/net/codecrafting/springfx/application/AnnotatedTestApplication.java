@@ -8,7 +8,7 @@ import org.springframework.core.env.Environment;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import net.codecrafting.springfx.annotation.HeadlessApplication;
-import net.codecrafting.springfx.controls.ViewStage;
+import net.codecrafting.springfx.context.ViewStage;
 import net.codecrafting.springfx.core.SpringFXApplication;
 
 @SpringBootApplication

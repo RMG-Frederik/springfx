@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.utils;
+package net.codecrafting.springfx.util;
 
 import javafx.scene.image.Image;
 

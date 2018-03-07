@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.utils;
+package net.codecrafting.springfx.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

@@ -2,7 +2,7 @@ package net.codecrafting.springfx.validation;
 
 import java.util.List;
 
-import net.codecrafting.springfx.controls.ViewContext;
+import net.codecrafting.springfx.context.ViewContext;
 
 /**
  * Interface indicating a listener to the {@link FormValidator}. This interface act as listener helper 

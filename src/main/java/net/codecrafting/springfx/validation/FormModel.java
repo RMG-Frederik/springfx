@@ -21,7 +21,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import net.codecrafting.springfx.annotation.ValidationBind;
-import net.codecrafting.springfx.controls.ViewContext;
+import net.codecrafting.springfx.context.ViewContext;
 
 /**
  * This class is used to abstract a JavaFX form validation with {@link ValidationModel}. The goal is to provide 

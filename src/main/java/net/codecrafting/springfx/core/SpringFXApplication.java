@@ -3,9 +3,9 @@ package net.codecrafting.springfx.core;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import net.codecrafting.springfx.controls.ViewStage;
-import net.codecrafting.springfx.utils.Dialog;
-import net.codecrafting.springfx.utils.DialogBuilder;
+import net.codecrafting.springfx.context.ViewStage;
+import net.codecrafting.springfx.util.Dialog;
+import net.codecrafting.springfx.util.DialogBuilder;
 
 /**
  * Abstract class to be used on {@link BootstrapApplication} for the JAVAFX initialization process.

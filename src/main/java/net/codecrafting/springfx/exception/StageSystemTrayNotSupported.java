@@ -1,6 +1,6 @@
-package net.codecrafting.springfx.exceptions;
+package net.codecrafting.springfx.exception;
 
-import net.codecrafting.springfx.utils.StageSystemTray;
+import net.codecrafting.springfx.util.StageSystemTray;
 
 /**
  * This exception used to indicate that the usage of {@link StageSystemTray} is not possible

@@ -10,11 +10,11 @@ import org.springframework.core.env.Environment;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import net.codecrafting.springfx.controls.StageContext;
-import net.codecrafting.springfx.controls.ViewStage;
-import net.codecrafting.springfx.utils.Dialog;
-import net.codecrafting.springfx.utils.DialogBuilder;
-import net.codecrafting.springfx.utils.Mipmap;
+import net.codecrafting.springfx.context.StageContext;
+import net.codecrafting.springfx.context.ViewStage;
+import net.codecrafting.springfx.util.Dialog;
+import net.codecrafting.springfx.util.DialogBuilder;
+import net.codecrafting.springfx.util.Mipmap;
 
 /**
  * Class that implements the JavaFX {@link Application}. The main goal it's to bootstrap the JavaFX application

@@ -15,9 +15,9 @@ import com.sun.javafx.application.PlatformImpl;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import net.codecrafting.springfx.controls.ViewStage;
-import net.codecrafting.springfx.exceptions.SpringFXLaunchException;
-import net.codecrafting.springfx.utils.DialogBuilder;
+import net.codecrafting.springfx.context.ViewStage;
+import net.codecrafting.springfx.exception.SpringFXLaunchException;
+import net.codecrafting.springfx.util.DialogBuilder;
 
 
 /**

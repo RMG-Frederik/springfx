@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 import net.codecrafting.springfx.application.AnnotatedTestApplication;
 import net.codecrafting.springfx.application.EmptyApplication;
 import net.codecrafting.springfx.application.controllers.MainController;
-import net.codecrafting.springfx.utils.DialogBuilder;
+import net.codecrafting.springfx.util.DialogBuilder;
 
 @SuppressWarnings("restriction")
 public class BoostrapApplicationTest 

@@ -7,7 +7,7 @@ import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.paint.Color;
-import net.codecrafting.springfx.controls.ViewContext;
+import net.codecrafting.springfx.context.ViewContext;
 import net.codecrafting.springfx.validation.FormModel;
 import net.codecrafting.springfx.validation.ValidationError;
 

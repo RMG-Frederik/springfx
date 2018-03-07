@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.controls;
+package net.codecrafting.springfx.context;
 
 import java.lang.reflect.Field;
 import java.net.URL;
@@ -27,8 +27,8 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import net.codecrafting.springfx.annotation.ViewLink;
-import net.codecrafting.springfx.utils.Mipmap;
-import net.codecrafting.springfx.utils.MipmapLevel;
+import net.codecrafting.springfx.util.Mipmap;
+import net.codecrafting.springfx.util.MipmapLevel;
 
 
 /**

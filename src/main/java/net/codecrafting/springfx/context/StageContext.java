@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.controls;
+package net.codecrafting.springfx.context;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;

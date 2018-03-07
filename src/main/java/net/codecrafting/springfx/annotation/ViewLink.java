@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import javafx.scene.layout.Region;
-import net.codecrafting.springfx.controls.Intent;
-import net.codecrafting.springfx.controls.ViewContext;
+import net.codecrafting.springfx.context.Intent;
+import net.codecrafting.springfx.context.ViewContext;
 
 /**
  * Annotation meant to be used at a {@link Region} attribute from a {@link ViewContext} JavaFX controller. This annotation

@@ -2,7 +2,7 @@ package net.codecrafting.springfx.validation;
 
 import java.util.List;
 
-import net.codecrafting.springfx.controls.ViewContext;
+import net.codecrafting.springfx.context.ViewContext;
 
 /**
  * Interface that is used to abstract the model data for {@link FormValidator}. The goal to this

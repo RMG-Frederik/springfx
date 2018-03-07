@@ -25,7 +25,7 @@ import net.codecrafting.springfx.application.EmptyApplication;
 import net.codecrafting.springfx.application.ThroableEmptyApplication;
 import net.codecrafting.springfx.core.SpringFXContext;
 import net.codecrafting.springfx.core.SpringFXLauncher;
-import net.codecrafting.springfx.exceptions.SpringFXLaunchException;
+import net.codecrafting.springfx.exception.SpringFXLaunchException;
 
 //Make this test class be the last
 public class _SpringFXLauncherTest 

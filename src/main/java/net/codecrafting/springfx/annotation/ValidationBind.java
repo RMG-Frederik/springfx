@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.codecrafting.springfx.controls.ViewContext;
+import net.codecrafting.springfx.context.ViewContext;
 import net.codecrafting.springfx.validation.FormModel;
 import net.codecrafting.springfx.validation.FormValidator;
 import net.codecrafting.springfx.validation.ValidationModel;

@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.controls;
+package net.codecrafting.springfx.context;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.exceptions;
+package net.codecrafting.springfx.exception;
 
 import net.codecrafting.springfx.core.SpringFXContext;
 import net.codecrafting.springfx.core.SpringFXLauncher;

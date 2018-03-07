@@ -1,4 +1,4 @@
-package net.codecrafting.springfx.controls;
+package net.codecrafting.springfx.context;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -44,8 +44,8 @@ import net.codecrafting.springfx.application.controllers.MainController;
 import net.codecrafting.springfx.application.controllers.TestController;
 import net.codecrafting.springfx.core.BootstrapApplication;
 import net.codecrafting.springfx.core.SpringFXLauncher;
-import net.codecrafting.springfx.utils.Mipmap;
-import net.codecrafting.springfx.utils.MipmapLevel;
+import net.codecrafting.springfx.util.Mipmap;
+import net.codecrafting.springfx.util.MipmapLevel;
 
 @SuppressWarnings("restriction")
 public class ViewStageTest
