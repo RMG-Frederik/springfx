@@ -296,7 +296,7 @@ public class DialogTest
 			Button button = (Button) d.getDialogAlert().getDialogPane().lookupButton(ButtonType.OK);
 			d.getDialogAlert().setOnShown((event) -> {
 				Timeline timeline = new Timeline(new KeyFrame(
-				        Duration.millis(250),
+				        Duration.millis(500),
 				        ae -> button.fire()));
 				timeline.play();
 			});

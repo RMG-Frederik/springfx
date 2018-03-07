@@ -34,7 +34,7 @@ import net.codecrafting.springfx.application.controllers.MainController;
 import net.codecrafting.springfx.util.DialogBuilder;
 
 @SuppressWarnings("restriction")
-public class BoostrapApplicationTest 
+public class BootstrapApplicationTest 
 {
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
@@ -43,7 +43,7 @@ public class BoostrapApplicationTest
 	private SpringFXContext context;
 	
 	private Properties dialogTestProps;
-	private static final Log LOGGER = LogFactory.getLog(BoostrapApplicationTest.class);
+	private static final Log LOGGER = LogFactory.getLog(BootstrapApplicationTest.class);
 	
 	@BeforeClass
 	public static void setup() throws InterruptedException
