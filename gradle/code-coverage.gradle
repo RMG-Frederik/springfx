@@ -1,0 +1,23 @@
+apply plugin: "jacoco"
+
+jacoco {
+    toolVersion = jacocoVersion
+}
+
+jacocoTestReport {
+    group = 'Reporting'
+    description = 'Generate Jacoco coverage reports after running tests.'
+    reports {
+        xml.enabled = true
+        csv.enabled = false
+        html.enabled = true
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it,
+	            exclude: ['net/codecrafting/springfx/exception/**', 
+	            			'net/codecrafting/springfx/animation/**' //Not tested yet
+	            ])
+        })
+    }
+}

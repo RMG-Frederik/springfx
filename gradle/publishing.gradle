@@ -1,0 +1,46 @@
+apply plugin: 'maven-publish'
+
+jar {
+    manifest.attributes(
+        "Built-By": project.builtBy,
+        "Created-By": project.createdBy,
+        "Build-Date": project.buildDate,
+        "Build-Time": project.buildTime,
+        "Build-Revision": project.buildRevision,
+        "Specification-Title": project.name,
+        "Specification-Version": project.version,
+        "Implementation-Title": project.name,
+        "Implementation-Version": project.version,
+    )
+}
+
+def pomConfig = {
+    packaging 'jar'
+    name project.name
+    description project.projectDescription
+    url project.projectUrl
+    inceptionYear '2018'
+    licenses {
+        license([:]) {
+            name 'GNU General Public License v2.0'
+            url 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html'
+            distribution 'repo'
+        }
+    }
+    scm {
+        url project.projectScm
+    }
+}
+
+publishing {
+    publications {
+        mavenCustom(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+           	pom.withXml {
+                asNode().children().last() + pomConfig
+            }
+        }
+    }
+}

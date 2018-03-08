@@ -1,75 +1,63 @@
+import java.text.SimpleDateFormat
+
+Date buildDateTime = new Date()
+
 buildscript {
-	ext {
-		springBootVersion = "2.0.0.RELEASE"
-		jacocoVersion = "0.8.0"
-	}
     repositories {
-        mavenLocal()
-        mavenCentral()     
+        mavenCentral()
+        maven { url 'https://plugins.gradle.org/m2/' }
     }
+    dependencies {
+        classpath 'net.nemerosa:versioning:2.6.1'
+    }    
 }
 
-apply plugin: "java-library"
-apply plugin: "maven"
-apply plugin: "jacoco"
-group = "net.codecrafting"
-version = "0.1.0-beta"
-sourceCompatibility = 1.8
+apply plugin: 'net.nemerosa.versioning'
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-        url 'https://repo.spring.io/libs-milestone'
+ext {
+    builtBy = System.properties['user.name']
+    buildRevision = versioning.info.commit
+    buildDate = new SimpleDateFormat('yyyy-MM-dd').format(buildDateTime)
+    buildTime = new SimpleDateFormat('HH:mm:ss.SSSZ').format(buildDateTime)
+    createdBy = "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})".toString()
+}
+
+allprojects {
+	task envriontmentInfo {
+	    group 'help'
+	    description 'Prints envriontment information'
+	    doLast {
+	    	println "========================================================="
+	        println "JAVA_OPTS:             ${System.env.JAVA_OPTS ?: "[]"}"
+	        println "JAVA_HOME:             ${System.env.JAVA_HOME}"
+	        println "Java version:          ${System.properties['java.version']}"
+	        println "Gradle version:        ${gradle.gradleVersion}"
+	        println "Subprojects:           ${rootProject.childProjects.keySet()}"
+	        println "========================================================="
+	        println "Project Properties:"
+	        rootProject.ext.properties.each {key, value ->
+	        	println "${key} : ${value}"
+	        }
+	        println "========================================================="
+	    }
+	}	
+}
+
+subprojects { subproject ->
+    apply plugin: 'java'
+
+    buildscript {
+        repositories {
+            mavenCentral()
+            maven { url 'https://plugins.gradle.org/m2/' }
+        }
     }
-}
+    repositories {
+        mavenCentral()
+        jcenter()  
+    } 
 
-dependencies {
-	api "commons-io:commons-io:2.6"
-	api "org.hibernate:hibernate-validator:5.2.4.Final"
-	api "org.springframework.boot:spring-boot-starter:${springBootVersion}"
-	
-	testImplementation "junit:junit:4.12"
-	testImplementation "org.hamcrest:hamcrest-junit:2.0.0.0"
-	testImplementation "org.mockito:mockito-core:2.15.0"
-	testImplementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-	testImplementation "org.testfx:testfx-core:4.0.8-alpha"
-	testImplementation "org.testfx:testfx-junit:4.0.8-alpha"
-}
-
-jacoco {
-    toolVersion = "${jacocoVersion}"
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled = true
-        csv.enabled = false
-    }
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it,
-	            exclude: ['net/codecrafting/springfx/exception/**', 
-	            			'net/codecrafting/springfx/animation/**' //Not tested yet
-	            ])
-        })
-    }
-}
-
-javadoc {
-	description = "Generates aggregated Javadocs"
-	title = "SpringFX API (${version})"	
-    options.tags = [ "defaultValue" ]
-    options.stylesheetFile rootProject.file("src/javadoc/stylesheet.css")
-    options.author = true
-}
-
-task testsWithJacocoReports() {
-    group 'verification'
-    description 'Clear test > Junit Tests > Generate Jacoco Reports'
-    dependsOn 'clean'
-    dependsOn 'test'
-    dependsOn 'jacocoTestReport'
-    tasks.findByName('classes').mustRunAfter 'clean'
-    tasks.findByName('jacocoTestReport').mustRunAfter 'test'
+    apply from: rootProject.file('gradle/code-coverage.gradle')
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 }

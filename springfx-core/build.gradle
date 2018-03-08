@@ -1,0 +1,62 @@
+apply plugin: "java-library"
+apply from: rootProject.file('gradle/publishing.gradle')
+println project.file("src/javadoc/stylesheet.css")
+
+
+dependencies {
+	api "commons-io:commons-io:2.6"
+	api "org.hibernate:hibernate-validator:5.2.4.Final"
+	api "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+	
+	testImplementation "junit:junit:4.12"
+	testImplementation "org.hamcrest:hamcrest-junit:2.0.0.0"
+	testImplementation "org.mockito:mockito-core:2.15.0"
+	testImplementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+	testImplementation "org.testfx:testfx-core:4.0.8-alpha"
+	testImplementation "org.testfx:testfx-junit:4.0.8-alpha"
+}
+
+task sourcesJar(type: Jar) {
+    group 'Build'
+    description 'An archive of the source code'
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+javadoc {
+    excludes            = ['META-INF/**']
+	description         = "Generates aggregated Javadocs"
+	title               = "SpringFX API (${project.version})"	
+    options.tags        = [ "defaultValue" ]
+    options.encoding    = "UTF-8"
+    options.author      = true
+    options.version     = true
+    //options.links       = ["https://docs.oracle.com/javase/8/docs/api/", "https://docs.oracle.com/javase/8/javafx/api/"]
+    options.stylesheetFile project.file("src/javadoc/stylesheet.css")
+}
+
+task javadocJar(type: Jar) {
+    group 'Build'
+    description 'An archive of the javadoc'
+    classifier 'javadoc'
+    from javadoc.destinationDir
+}
+
+jar.finalizedBy sourcesJar
+jar.finalizedBy javadocJar
+
+artifacts {
+	archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+task testWithJacoco() {
+    group 'verification'
+    description 'Clear test > Junit Tests > Generate Jacoco Reports'
+    dependsOn 'clean'
+    dependsOn 'test'
+    dependsOn 'jacocoTestReport'
+    tasks.findByName('classes').mustRunAfter 'clean'
+    tasks.findByName('jacocoTestReport').mustRunAfter 'test'
+}

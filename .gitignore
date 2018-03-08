@@ -1,15 +1,19 @@
+# java specific
+*.bak
+*.class
+
 #Gradle
-/.gradle
+.gradle/
+build/
 
 # Eclipse
-/.settings
-/bin
-/build
-.classpath
-.project
+*.classpath
+*.settings
+*.project
+bin/
 
 # VSCODE
-./vscode
+.vscode/
 
 #Windows
 *.ini
@@ -17,10 +21,12 @@
 *.DS_Store
 
 # IDEA
-/.idea
 *.iml
-/out
+*.ipr
+*.iws
+.idea/
+out/
 
 # Project
-/layout
+layout/
 !*.gitkeep
