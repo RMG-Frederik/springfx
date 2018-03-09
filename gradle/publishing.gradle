@@ -12,6 +12,11 @@ jar {
         "Implementation-Title": project.name,
         "Implementation-Version": project.version,
     )
+    metaInf {
+        from(rootProject.files('.')) {
+            include 'LICENSE*'
+        }
+    }
 }
 
 def pomConfig = {

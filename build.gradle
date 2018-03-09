@@ -9,7 +9,8 @@ buildscript {
     }
     dependencies {
         classpath 'net.nemerosa:versioning:2.6.1'
-    }    
+        classpath 'gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.14.0'
+    } 
 }
 
 apply plugin: 'net.nemerosa.versioning'
@@ -53,6 +54,7 @@ subprojects { subproject ->
         }
     }
     repositories {
+    	mavenLocal()
         mavenCentral()
         jcenter()  
     } 

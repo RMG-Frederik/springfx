@@ -7,7 +7,7 @@ buildscript {
 apply plugin: 'org.springframework.boot'
 
 dependencies {
-	//implementation "net.codecrafting:springfx:0.1.0-beta"
+	implementation "net.codecrafting:springfx-core:0.1.0-beta"
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
 	
 	testImplementation "junit:junit:4.12"

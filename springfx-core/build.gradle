@@ -1,7 +1,6 @@
 apply plugin: "java-library"
 apply from: rootProject.file('gradle/publishing.gradle')
-println project.file("src/javadoc/stylesheet.css")
-
+apply from: rootProject.file('gradle/license.gradle')
 
 dependencies {
 	api "commons-io:commons-io:2.6"
