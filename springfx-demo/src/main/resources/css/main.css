@@ -1,0 +1,9 @@
+.splash-container
+{	
+    -fx-background-color: linear-gradient(to bottom right, #60B03F, #285514);
+}
+
+.light-spinner .arc
+{
+	-fx-stroke: white;
+}

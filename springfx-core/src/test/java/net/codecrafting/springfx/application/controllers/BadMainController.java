@@ -15,9 +15,6 @@
  */
 package net.codecrafting.springfx.application.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import net.codecrafting.springfx.annotation.ViewController;
@@ -49,13 +46,13 @@ public class BadMainController extends StageContext
 	}
 
 	@Override
-	protected void onStart() 
+	protected void onCreate() 
 	{
 		
 	}
-
+	
 	@Override
-	protected void onCreate(URL location, ResourceBundle resources) 
+	protected void onStart() 
 	{
 		
 	}

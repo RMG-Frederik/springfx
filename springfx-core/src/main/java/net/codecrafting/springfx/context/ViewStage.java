@@ -19,6 +19,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -76,6 +77,8 @@ import net.codecrafting.springfx.util.MipmapLevel;
  * @author Lucas Marotta
  * @see #getViewPath()
  * @see #isInitialized()
+ * @see #isCacheLoadedNode()
+ * @see #setCacheLoadedNode(boolean)
  * @see #setOnMinimizeRequest(EventHandler)
  * @see #setOnMaximizeRequest(EventHandler)
  * @see #setIcon(String)
@@ -120,6 +123,11 @@ public class ViewStage extends Stage
 	 * Flag that indicates the ViewStage initialization
 	 */
 	private boolean initialized = false;
+	
+	/**
+	 * Flag that indicates the loaded nodes will be cached
+	 */
+	private boolean cacheLoadedNode = false;
 	private StageContext stageContext;
 	
 	/**
@@ -190,6 +198,29 @@ public class ViewStage extends Stage
 		return initialized;
 	}
 	
+	/**
+	 * Check if the {@link ViewStage} will cache the nodes for {@link #init(Class)} 
+	 * or {@link #loadIntent(Intent)}.
+	 * @return {@literal true} if the cacheNode is being utilized
+	 */
+	public boolean isCacheLoadedNode() 
+	{
+		return cacheLoadedNode;
+	}
+
+	/**
+	 * Set the cacheLoadedNode to be utilized on the {@link #init(Class)} or {@link #loadIntent(Intent)}.
+	 * This cache it's useful to optimize performance for
+	 * weak or non present GPU. On practice this will will indicate that on loading new 
+	 * views the {@link ViewStage} will use {@link Node#setCache(boolean)} to {@literal true}
+	 * and {@link Node#setCacheHint(CacheHint)} to {@link CacheHint#SPEED}.
+	 * @param cacheLoadedNode the flag that indicates that loaded nodes will be cached
+	 */
+	public void setCacheLoadedNode(boolean cacheNode) 
+	{
+		this.cacheLoadedNode = cacheNode;
+	}
+
 	/**
 	 * Configure a window minimize event handler
 	 * @param minimizeEvent the minimize event handler action
@@ -351,6 +382,19 @@ public class ViewStage extends Stage
 	 */
 	public void init(Class<? extends StageContext> contextClass)
 	{
+		init(contextClass, null);
+	}
+	
+	/**
+	 * Initialize this instance to load {@link Intent}s with a {@link ResourceBundle}.
+	 * @param contextClass the root view controller class to initialize the ViewStage.
+	 * @param resources the {@link ResourceBundle} to be passed to {@link FXMLLoader}
+	 * @throws IllegalStateException if ViewStage is already initialized
+	 * @throws IllegalArgumentException if StageContext is null
+	 * @throws RuntimeException if the Spring bean or JavaFX FXML load fails
+	 */
+	public void init(Class<? extends StageContext> contextClass, ResourceBundle resources)
+	{
 		if(initialized) 
 			throw new IllegalStateException("ViewStage already initialized");
 		if(contextClass == null) 
@@ -365,6 +409,7 @@ public class ViewStage extends Stage
 		if(viewURL != null) {
 			initialized = true;
 			FXMLLoader loader = new FXMLLoader(viewURL);
+			if(resources != null) loader.setResources(resources);
 			loader.setController(stageContext);
 			Parent rootNode;
 			try {
@@ -377,28 +422,33 @@ public class ViewStage extends Stage
 			ObservableList<String> styles = FXCollections.observableArrayList(rootNode.getStylesheets());
 			rootNode.getStylesheets().clear();
 			rootNode.getStylesheets().addAll(styles);
-			rootNode.setCache(true);
-			rootNode.setCacheHint(CacheHint.SPEED);
+			if(cacheLoadedNode) {
+				rootNode.setCache(true);
+				rootNode.setCacheHint(CacheHint.SPEED);	
+			}
 			setScene(new Scene(rootNode));
+			stageContext.onCreate();
 		} else {
 			throw new IllegalStateException("Could not initialize with \""+viewFilePath+"\"");
 		}
 	}
 	
 	/**
-	 * Load a Intent to switch the current view. The {@link Intent} viewClass will be used
+	 * Load a Intent to swap the current view. The {@link Intent} viewClass will be used
 	 * to find the {@link ViewContext} controller as a Spring bean and will be cached for
 	 * future loads. This method will execute the {@link ViewContext#swapAnimation(Node)}
-	 * to switch the {@link StageContext} main node child for the loaded controller node.
+	 * to swap the {@link StageContext} main node child for the loaded controller node.
 	 * The node to be loaded is found by using the FXML file name as the configured view path 
 	 * and {@link ViewContext#viewName}.
 	 * 
 	 * This method also configure any mapped {@link ViewLink} annotations
 	 * 
+	 * <br><b>NOTE:</b> This method does not pass a {@link ResourceBundle} to views that has
+	 * already been loaded. Any new {@link ResourceBundle} will be only present at the {@link Intent}
+	 * 
 	 * @param intent the container for execute the transaction to switch the current view
 	 * @throws IllegalStateException if ViewStage is not initialized
-	 * @throws IllegalArgumentException if Intent viewClass is null
-	 * @throws IllegalArgumentException if Intent callerContext is null
+	 * @throws IllegalArgumentException if Intent is null
 	 * @throws RuntimeException if the Spring bean or JavaFX FXML load fails
 	 */
 	public void loadIntent(Intent intent)
@@ -407,10 +457,6 @@ public class ViewStage extends Stage
 			throw new IllegalStateException("ViewStage is not initialized");
 		if(intent == null) 
 			throw new IllegalArgumentException("Intent must not be null");
-		if(intent.getViewClass() == null) 
-			throw new IllegalArgumentException("Intent viewClass must not be null");
-		if(intent.getCallerContext() == null) 
-			throw new IllegalArgumentException("Intent callerContext must not be null");
 		ViewContext viewController = viewCache.get(intent.getViewClass().getName());
 		if(viewController == null) {
 			try {
@@ -423,6 +469,9 @@ public class ViewStage extends Stage
 			if(viewURL != null) {
 				FXMLLoader loader = new FXMLLoader(viewURL);
 				loader.setController(viewController);
+				if(intent.getResources() != null) {
+					loader.setResources(intent.getResources());
+				}
 				Parent loadedNode;
 				try {
 					injectViewStage(viewController);
@@ -433,13 +482,15 @@ public class ViewStage extends Stage
 					throw new RuntimeException(e);
 				}
 				loadedNode.getStylesheets().clear();
-				loadedNode.setCache(true);
-				loadedNode.setCacheHint(CacheHint.SPEED);
-				loadedNode.setVisible(true);
+				if(cacheLoadedNode) {
+					loadedNode.setCache(true);
+					loadedNode.setCacheHint(CacheHint.SPEED);	
+				}
 				loadedNode.setDisable(false);
-				loadedNode.requestFocus();
+				loadedNode.setVisible(true);
 				setViewLinks(viewController);
 				viewCache.put(intent.getViewClass().getName(), viewController);
+				viewController.onCreate();
 			} else {
 				throw new RuntimeException("Could not load \""+viewFilePath+"\"");
 			}

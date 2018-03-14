@@ -20,9 +20,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -49,7 +46,7 @@ public class StageContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public void setViewStageTitle(String title) {}
@@ -69,7 +66,7 @@ public class StageContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public void setViewStageTitle(String title) {}
@@ -94,7 +91,7 @@ public class StageContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public void setViewStageTitle(String title) {}
@@ -119,7 +116,7 @@ public class StageContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public void setViewStageTitle(String title) {}
@@ -150,7 +147,7 @@ public class StageContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public void setViewStageTitle(String title) {}

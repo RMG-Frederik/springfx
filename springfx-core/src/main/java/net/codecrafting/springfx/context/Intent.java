@@ -17,6 +17,9 @@ package net.codecrafting.springfx.context;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
+
+import javafx.fxml.FXMLLoader;
 
 /**
  * The transaction data class that is used to switch {@link ViewContext}s. The idea
@@ -27,6 +30,7 @@ import java.util.Map;
  * @author Lucas Marotta
  * @see #getCallerContext()
  * @see #getViewClass()
+ * @see #getResources()
  * @see #getExtra(String)
  * @see #putExtra(String, Object)
  * @see #clearExtra()
@@ -49,20 +53,48 @@ public class Intent
 	private final Map<String, Object> extraData;
 	
 	/**
+	 * The resources to be passed to the {@link FXMLLoader} on the {@link ViewStage#loadIntent(Intent)}
+	 */
+	private final ResourceBundle resources;
+	
+	/**
 	 * Create a new instance of {@link Intent}. The extra data will be initialized
 	 * with empty parameters.
 	 * 
-	 * <br><b>NOTE:</b> The callerContext and the viewClass can be {@literal null}.
+	 * <br><b>NOTE:</b> The callerContext can be {@literal null}.
 	 * 
 	 * @param callerContext the previous controller that is calling. Use the instance (this) to
 	 * pass the current controller.
 	 * @param viewClass the new {@link ViewContext} JavaFX controller class to be loaded
+	 * @throws IllegalArgumentException if viewClass is {@literal null}
 	 */
 	public Intent(ViewContext callerContext, Class<? extends ViewContext> viewClass)
 	{
-		this.callerContext = callerContext;
-		this.viewClass = viewClass;
-		extraData = new HashMap<String, Object>();
+		this(callerContext, viewClass, null);
+	}
+	
+	/**
+	 * Create a new instance of {@link Intent} with a {@link ResourceBundle}. 
+	 * The extra data will be initialized with empty parameters.
+	 * 
+	 * <br><b>NOTE:</b> The callerContext and resources can be {@literal null}.
+	 * 
+	 * @param callerContext the previous controller that is calling. Use the instance (this) to
+	 * pass the current controller.
+	 * @param viewClass the new {@link ViewContext} JavaFX controller class to be loaded
+	 * @param resources the {@link ResourceBundle} to be passed to the new {@link ViewContext}
+	 * @throws IllegalArgumentException if viewClass is {@literal null}
+	 */
+	public Intent(ViewContext callerContext, Class<? extends ViewContext> viewClass, ResourceBundle resources)
+	{
+		if(viewClass != null) {
+			this.callerContext = callerContext;
+			this.viewClass = viewClass;
+			this.resources = resources;
+			extraData = new HashMap<String, Object>();	
+		} else {
+			throw new IllegalArgumentException("viewClass must not be null");
+		}
 	}
 
 	public ViewContext getCallerContext() 
@@ -73,6 +105,11 @@ public class Intent
 	public Class<? extends ViewContext> getViewClass() 
 	{
 		return viewClass;
+	}
+	
+	public ResourceBundle getResources()
+	{
+		return resources;
 	}
 	
 	/**

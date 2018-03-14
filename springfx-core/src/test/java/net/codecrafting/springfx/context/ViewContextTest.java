@@ -49,7 +49,7 @@ public class ViewContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public Node getMainNode() {return null;}
@@ -67,7 +67,7 @@ public class ViewContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public Node getMainNode() {return null;}
@@ -80,7 +80,7 @@ public class ViewContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public Node getMainNode() {return null;}
@@ -93,7 +93,7 @@ public class ViewContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public Node getMainNode() {return null;}
@@ -148,7 +148,7 @@ public class ViewContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public Node getMainNode() {return null;}
@@ -170,7 +170,7 @@ public class ViewContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public Node getMainNode() {return null;}
@@ -203,7 +203,7 @@ public class ViewContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public Node getMainNode() {return null;}
@@ -220,7 +220,7 @@ public class ViewContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public Node getMainNode() {return null;}
@@ -244,7 +244,7 @@ public class ViewContextTest
 			protected void onStart() {}
 			
 			@Override
-			protected void onCreate(URL location, ResourceBundle resources) {}
+			protected void onCreate() {}
 			
 			@Override
 			public Node getMainNode() {return null;}

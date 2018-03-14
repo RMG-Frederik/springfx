@@ -61,6 +61,10 @@ public abstract class ViewContext implements Initializable
 	 */
 	protected ViewStage viewStage;
 	
+	private URL location;
+	
+	private ResourceBundle resources;
+	
 	//The internal AnimationBuilder to create a animation between views
 	private final AnimationBuilder animationBuilder;
 	private static final String UPPER_CAMEL_REGEX = "([a-z])([A-Z]+)";
@@ -102,7 +106,9 @@ public abstract class ViewContext implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
-		onCreate(location, resources);
+		//It was opted to don't call onCreate method to provide a better initialization on ViewStage
+		this.location = location;
+		this.resources = resources;
 	}	
 	
 	public String getViewName() 
@@ -115,6 +121,16 @@ public abstract class ViewContext implements Initializable
 		return viewTitle;
 	}
 	
+	public URL getLocation() 
+	{
+		return location;
+	}
+
+	public ResourceBundle getResources() 
+	{
+		return resources;
+	}
+
 	/**
 	 * Configure the association of a {@link ViewStage} to the view context. This can be
 	 * only configured once.
@@ -185,27 +201,26 @@ public abstract class ViewContext implements Initializable
 	}
 	
 	/**
-	 * Get the root main {@link Node} for this view context. Need to be implemented.
-	 * @return the root main {@link Node} of this view context.
-	 */
-	public abstract Node getMainNode();
-	
-	/**
 	 * The implementation that is called every time that a new context is called by {@link ViewStage#loadIntent(Intent)}.
-	 * If the view context its not cached by {@link ViewStage} this method will be called before {@link #onStart()}. 
+	 * If the view context its not cached by {@link ViewStage} this method will be called before {@link #onStart()}.
 	 * Have in mind that the state of JavaFX controller its maintained by the {@link ViewStage} cache, so use this
 	 * method to set any initialization configuration that you would use on the typical {@link Initializable#initialize(URL, ResourceBundle)}
-	 * method of the JavaFX controller.
-	 * @param location used to resolve relative paths for the root object, or {@literal null} if the location is not known.
-	 * @param resources used to localize the root object, or {@literal null} if the root object was not localized.
+	 * method of the JavaFX controller. The {@link URL} and {@link ResourceBundle} are available through {@link #getLocation()}
+	 * and {@link #getResources()} methods
 	 */
-	protected abstract void onCreate(URL location, ResourceBundle resources);
+	protected abstract void onCreate();
 	
 	/**
 	 * The implementation that is called on every time that this context is called by {@link ViewStage#loadIntent(Intent)}.
 	 * Use this to perform any action every time that a view its swapped.
 	 */
-	protected abstract void onStart();
+	protected abstract void onStart();	
+	
+	/**
+	 * Get the root main {@link Node} for this view context. Need to be implemented.
+	 * @return the root main {@link Node} of this view context.
+	 */
+	public abstract Node getMainNode();
 	
 	//Load any ViewController annotation and set the viewName and viewTitle.
 	private void loadAnnotations()

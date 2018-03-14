@@ -142,17 +142,26 @@ public class BootstrapApplication extends Application
 		final SpringFXApplication application = springFXContext.getApplication();
 		viewStage = new ViewStage(springFXContext.getSpringContext());
 		String root = env.getProperty("springfx.app.root-controller");
+		viewStage.setTitle(env.getProperty("springfx.app.name", application.getClass().getSimpleName()));	
 		if(root != null) {
-			Class<? extends StageContext> rootController = (Class<? extends StageContext>) Class.forName(root);
-			viewStage.setTitle(env.getProperty("springfx.app.name", application.getClass().getSimpleName()));
-			String iconPath = env.getProperty("springfx.app.icon");
-			if(iconPath != null) {
-				viewStage.setIconByMipmap(new Mipmap(iconPath, new int[] {1,2,4,8,16,32}));
+			try {
+				String iconPath = env.getProperty("springfx.app.icon");
+				if(iconPath != null) viewStage.setIconByMipmap(new Mipmap(iconPath, new int[] {1,2,4,8,16,32}));
+				Class<? extends StageContext> rootController = (Class<? extends StageContext>) Class.forName(root);
+				viewStage.init(rootController);	
+			} catch (Exception e) {
+				//JavaFX only log errors as Exception in Application start method
+				LOGGER.error(e.getMessage(), e);
+				throw e;
 			}
-			viewStage.init(rootController);
 			if(env.getProperty("springfx.app.auto-open", "true").equals("true")) viewStage.show(true);
 		}
-		application.start(viewStage);
+		try {
+			application.start(viewStage);
+		} catch(Exception e) {
+			LOGGER.error(e.getMessage(), e);
+			throw e;
+		}
 	}
 	
     /**

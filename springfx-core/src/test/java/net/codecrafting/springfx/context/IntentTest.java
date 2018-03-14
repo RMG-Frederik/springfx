@@ -34,14 +34,21 @@ public class IntentTest
 	@Test
 	public void instantiation()
 	{
-		Intent intent = new Intent(null, null);
+		Intent intent = new Intent(null, TestController.class);
 		assertNull(intent.getCallerContext());
-		assertNull(intent.getViewClass());
 		ViewContext mockContext = Mockito.mock(ViewContext.class);
 		intent = new Intent(mockContext, TestController.class);
 		assertNotNull(intent.getCallerContext());
 		assertNotNull(intent.getViewClass());
 		assertNull(intent.getExtra("test"));
+	}
+	
+	@Test
+	public void viewClassMustNotBeNull()
+	{
+		this.thrown.expect(IllegalArgumentException.class);
+		this.thrown.expectMessage("viewClass must not be null");
+		new Intent(null, null);
 	}
 	
 	@Test
