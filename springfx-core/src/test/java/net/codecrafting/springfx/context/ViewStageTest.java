@@ -25,6 +25,7 @@ import static org.testfx.util.WaitForAsyncUtils.waitFor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 
@@ -472,6 +473,21 @@ public class ViewStageTest
 	}
 	
 	@Test
+	public void initWithResources()
+	{
+		ResourceBundle mockResources = Mockito.mock(ResourceBundle.class);
+		Mockito.when(mockResources.getBaseBundleName()).thenReturn("testBundle");
+		viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			vs.init(MainController.class, mockResources);
+			return vs;
+		}));
+		MainController controller = springContext.getBean(MainController.class);
+		assertNotNull(controller.getResources());
+		assertEquals("testBundle", controller.getResources().getBaseBundleName());
+	}
+	
+	@Test
 	public void loadInvalidIntent() throws Exception
 	{
 		viewStage = waitFor(asyncFx(() -> {
@@ -626,6 +642,24 @@ public class ViewStageTest
 		}));
 		controller = springContext.getBean(ContextCallController.class);
 		assertFalse(controller.getMainNode().isCache());
+	}
+	
+	@Test
+	public void loadIntentWithResources()
+	{
+		ResourceBundle mockResources = Mockito.mock(ResourceBundle.class);
+		Mockito.when(mockResources.getBaseBundleName()).thenReturn("testBundle");
+		viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			vs.init(MainController.class);
+			return vs;
+		}));
+		waitFor(asyncFx(() -> {
+			viewStage.loadIntent(new Intent(null, ContextCallController.class, mockResources));
+		}));
+		ContextCallController controller = springContext.getBean(ContextCallController.class);
+		assertNotNull(controller.getResources());
+		assertEquals("testBundle", controller.getResources().getBaseBundleName());
 	}
 	
 	@Test

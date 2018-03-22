@@ -37,6 +37,8 @@ import net.codecrafting.springfx.annotation.ViewController;
  * @see #initialize(URL, ResourceBundle)
  * @see #getViewName()
  * @see #getViewTitle()
+ * @see #getLocation()
+ * @see #getResources()
  * @see #setViewStage(ViewStage)
  * @see #getViewStage()
  * @see #getIntent()

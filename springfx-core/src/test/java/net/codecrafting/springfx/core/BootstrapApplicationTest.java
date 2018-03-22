@@ -21,9 +21,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
+import static org.testfx.util.WaitForAsyncUtils.asyncFx;
 
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Future;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -251,6 +253,69 @@ public class BootstrapApplicationTest
 		assertTrue("Application init failed", application.getInit());
 		assertTrue("Application start failed", application.getStart());
 		assertTrue("Application stop failed", application.getStop());
+	}
+	
+	@Test
+	public void badStartupWithMainController() throws Exception
+	{
+		System.getProperties().setProperty("springfx.app.root-controller", MainController.class.getName()+"Test");
+		doAnswer((Answer<Void>) invocation -> {
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(WebApplicationType.NONE);
+			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
+			when(context.getSpringContext()).thenReturn(springContext);
+			when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
+			when(context.getApplication()).thenReturn(springContext.getBean(AnnotatedTestApplication.class));
+			return null;
+		}).when(context).run(new String[0]);
+		context.run(new String[0]);
+		BootstrapApplication bootApplication = new BootstrapApplication(context);
+		bootApplication.init();
+		Future<Void> futureStart = asyncFx(() -> {
+			bootApplication.start(new Stage());
+			return null;
+		});
+		try {
+			futureStart.get();
+			assertFalse("Exception with bad controller not thrown", true);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		context.stop();
+	}
+
+	@Test
+	public void startupMainControllerWithCache() throws Exception
+	{
+		System.getProperties().setProperty("springfx.app.root-controller", MainController.class.getName());
+		System.getProperties().setProperty("springfx.cache-loaded-node", "true");
+		doAnswer((Answer<Void>) invocation -> {
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(WebApplicationType.NONE);
+			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
+			when(context.getSpringContext()).thenReturn(springContext);
+			when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
+			when(context.getApplication()).thenReturn(springContext.getBean(AnnotatedTestApplication.class));
+			return null;
+		}).when(context).run(new String[0]);
+		context.run(new String[0]);
+		BootstrapApplication bootApplication = new BootstrapApplication(context);
+		bootApplication.init();
+		PlatformImpl.runAndWait(() -> {
+			try {
+				bootApplication.start(new Stage());
+			} catch (Exception e) {
+				e.printStackTrace();
+				assertTrue("Application startup failed", false);
+			}
+		});
+		MainController mainController = context.getSpringContext().getBean(MainController.class);
+		assertTrue("Cache node is not true", mainController.getViewStage().isCacheLoadedNode());
+		PlatformImpl.runAndWait(() -> {
+			try {
+				bootApplication.stop();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 	}
 	
 	@Test

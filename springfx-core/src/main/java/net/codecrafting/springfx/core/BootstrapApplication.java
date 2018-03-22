@@ -147,6 +147,7 @@ public class BootstrapApplication extends Application
 			try {
 				String iconPath = env.getProperty("springfx.app.icon");
 				if(iconPath != null) viewStage.setIconByMipmap(new Mipmap(iconPath, new int[] {1,2,4,8,16,32}));
+				if(env.getProperty("springfx.cache-loaded-node", "false").equals("true")) viewStage.setCacheLoadedNode(true);
 				Class<? extends StageContext> rootController = (Class<? extends StageContext>) Class.forName(root);
 				viewStage.init(rootController);	
 			} catch (Exception e) {

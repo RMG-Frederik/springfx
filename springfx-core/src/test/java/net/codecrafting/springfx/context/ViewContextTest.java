@@ -130,9 +130,11 @@ public class ViewContextTest
 		AnnotationController context = new AnnotationController();
 		URL url = new URL("http://google.com");
 		ResourceBundle mockResources = Mockito.mock(ResourceBundle.class);
+		Mockito.when(mockResources.getBaseBundleName()).thenReturn("testBundle");
 		context.initialize(url, mockResources);
 		assertEquals(url, context.getLocation());
 		assertEquals(mockResources, context.getResources());
+		assertEquals("testBundle", context.getResources().getBaseBundleName());
 		context.initialize(null, null);
 		assertNull(context.getLocation());
 		assertNull(context.getResources());

@@ -411,7 +411,7 @@ public class ViewStage extends Stage
 			FXMLLoader loader = new FXMLLoader(viewURL);
 			if(resources != null) loader.setResources(resources);
 			loader.setController(stageContext);
-			Parent rootNode;
+			Parent rootNode = null;
 			try {
 				injectViewStage(stageContext);
 				rootNode = loader.load();
@@ -469,10 +469,8 @@ public class ViewStage extends Stage
 			if(viewURL != null) {
 				FXMLLoader loader = new FXMLLoader(viewURL);
 				loader.setController(viewController);
-				if(intent.getResources() != null) {
-					loader.setResources(intent.getResources());
-				}
-				Parent loadedNode;
+				if(intent.getResources() != null) loader.setResources(intent.getResources());
+				Parent loadedNode = null;
 				try {
 					injectViewStage(viewController);
 					this.intent = intent;

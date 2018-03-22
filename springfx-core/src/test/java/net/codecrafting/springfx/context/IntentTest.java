@@ -19,6 +19,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.util.ResourceBundle;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -40,6 +42,21 @@ public class IntentTest
 		intent = new Intent(mockContext, TestController.class);
 		assertNotNull(intent.getCallerContext());
 		assertNotNull(intent.getViewClass());
+		assertNull(intent.getExtra("test"));
+		assertNull(intent.getResources());
+	}
+	
+	@Test
+	public void instantiationWithResources()
+	{
+		ViewContext mockContext = Mockito.mock(ViewContext.class);
+		ResourceBundle mockResources = Mockito.mock(ResourceBundle.class);
+		Mockito.when(mockResources.getBaseBundleName()).thenReturn("testBundle");
+		Intent intent = new Intent(mockContext, TestController.class, mockResources);
+		assertNotNull(intent.getCallerContext());
+		assertNotNull(intent.getViewClass());
+		assertNotNull(intent.getResources());
+		assertEquals("testBundle", intent.getResources().getBaseBundleName());
 		assertNull(intent.getExtra("test"));
 	}
 	
