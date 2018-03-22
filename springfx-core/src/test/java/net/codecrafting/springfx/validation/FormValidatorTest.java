@@ -52,6 +52,19 @@ public class FormValidatorTest
 	}
 	
 	@Test
+	//Don't know how to proper test this
+	public void instantiationWithPreloadValidation()
+	{
+		this.thrown.expect(IllegalArgumentException.class);
+		this.thrown.expectMessage("model must not be null");
+		ValidationModel mockModel = Mockito.mock(ValidationModel.class);
+		FormValidator<ValidationModel> validator = new FormValidator<ValidationModel>(mockModel, true);
+		assertNotNull("validation model is null", validator.getModel());
+		validator = new FormValidator<ValidationModel>(mockModel, false);
+		new FormValidator<ValidationModel>(null, true);
+	}
+	
+	@Test
 	public void validatorListenerMustNotBeNull()
 	{
 		this.thrown.expect(IllegalArgumentException.class);

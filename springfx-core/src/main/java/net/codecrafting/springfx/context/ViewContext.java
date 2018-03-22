@@ -44,7 +44,7 @@ import net.codecrafting.springfx.annotation.ViewController;
  * @see #getIntent()
  * @see #swapAnimation(Node)
  * @see #onStart()
- * @see #onCreate(URL, ResourceBundle)
+ * @see #onCreate()
  */
 public abstract class ViewContext implements Initializable
 {
@@ -102,7 +102,7 @@ public abstract class ViewContext implements Initializable
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * <br><b>NOTE:</b> This method will call the {@link #onCreate(URL, ResourceBundle)} 
+	 * <br><b>NOTE:</b> This method will call the {@link #onCreate()} 
 	 * implementation
 	 */
 	@Override

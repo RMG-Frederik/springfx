@@ -78,6 +78,26 @@ public class FormValidator<T>
 			throw new IllegalArgumentException("model must not be null");
 		}
 	}
+	
+	/**
+	 * Create a new instance of {@link FormValidator}. The validation is done by the default validator {@link Validation#buildDefaultValidatorFactory()}.
+	 * This constructor offers a optional preloadValidation which will indicate to perform a early validation of the model. This
+	 * is useful to significant diminish the time for the next validations which is helps to no slow down the JavaFX Thread. 
+	 * @param model the implementation of {@link ValidationModel} containing the actual data and constraints that will be validated
+	 * @param preloadValidation the flag that indicates to perform a early validation or not
+	 * @throws IllegalArgumentException if model is null
+	 */
+	public FormValidator(ValidationModel model, boolean preloadValidation)
+	{
+		if(model != null) {
+			ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+			validator = factory.getValidator();
+			this.model = model;
+			if(preloadValidation) validator.validate(model);
+		} else {
+			throw new IllegalArgumentException("model must not be null");
+		}
+	}
 
 	/**
 	 * Set a implementation of {@link ValidationListener} to call for a fail or success validation.
