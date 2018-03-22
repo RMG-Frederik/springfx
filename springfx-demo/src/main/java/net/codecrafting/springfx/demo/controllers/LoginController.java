@@ -1,8 +1,6 @@
 package net.codecrafting.springfx.demo.controllers;
 
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -25,7 +23,7 @@ public class LoginController extends ViewContext implements ValidationListener
 	}
 
 	@Override
-	protected void onCreate(URL location, ResourceBundle resources) 
+	protected void onCreate() 
 	{
 		
 	}

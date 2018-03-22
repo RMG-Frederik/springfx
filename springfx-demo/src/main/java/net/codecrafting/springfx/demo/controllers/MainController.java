@@ -1,8 +1,6 @@
 package net.codecrafting.springfx.demo.controllers;
 
-import java.net.URL;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,7 +42,7 @@ public class MainController extends StageContext
 	private static final Log LOGGER = LogFactory.getLog(MainController.class);
 	
 	@Override
-	protected void onCreate(URL location, ResourceBundle resources) 
+	protected void onCreate()
 	{
 		LOGGER.info("MAIN CONTROLLER STARTUP");
 		new AnimationBuilder()
