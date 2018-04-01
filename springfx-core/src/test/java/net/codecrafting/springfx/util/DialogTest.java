@@ -22,8 +22,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.testfx.util.WaitForAsyncUtils.async;
 import static org.testfx.util.WaitForAsyncUtils.asyncFx;
-import static org.testfx.util.WaitForAsyncUtils.waitFor;
 import static org.testfx.util.WaitForAsyncUtils.sleep;
+import static org.testfx.util.WaitForAsyncUtils.waitFor;
 
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
@@ -37,8 +37,6 @@ import org.junit.rules.ExpectedException;
 
 import com.sun.javafx.application.PlatformImpl;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -47,7 +45,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import net.codecrafting.springfx.core.BootstrapApplication;
 
 @SuppressWarnings("restriction")

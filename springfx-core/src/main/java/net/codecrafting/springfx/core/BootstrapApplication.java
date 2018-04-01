@@ -152,8 +152,7 @@ public class BootstrapApplication extends Application
 				viewStage.init(rootController);	
 			} catch (Exception e) {
 				//JavaFX only log errors as "Exception in Application start method"
-				LOGGER.error(e.getMessage(), e);
-				throw e;
+				throw new Exception(e.getMessage(), e);
 			}
 			
 			if(env.getProperty("springfx.app.auto-open", "true").equals("true")) {

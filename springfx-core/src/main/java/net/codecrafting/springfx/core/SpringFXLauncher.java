@@ -175,7 +175,7 @@ public class SpringFXLauncher
 	private void initLaunch(String args[]) throws SpringFXLaunchException
 	{
 		context.run(args);
-		if(isSpringFXContextEmpty()) {
+		if(!isSpringFXContextEmpty()) {
 			context.getSpringContext().addApplicationListener(new ApplicationListener<ContextStoppedEvent>() {
 				@Override
 				public void onApplicationEvent(ContextStoppedEvent event) 
@@ -209,13 +209,22 @@ public class SpringFXLauncher
 	private boolean isSpringFXContextEmpty()
 	{
 		try {
-			if(context.getSpringContext() == null || context.getApplication() == null || context.getEnvironment() == null)
-				return false;
+			boolean empty = false;
+			if(context.getSpringContext() == null) {
+				empty = true;
+				LOGGER.warn("SpringFXContext springContext is null");
+			} else if(context.getApplication() == null) {
+				empty = true;
+				LOGGER.warn("SpringFXContext application is null");
+			} else if(context.getEnvironment() == null) {
+				empty = true;
+				LOGGER.warn("SpringFXContext environment is null");
+			}
+			return empty;
 		} catch(Exception e) {
 			LOGGER.error(e.getMessage(), e);
-			return false;
+			return true;
 		}
-		return true;
 	}	
 	
 	private void launchFxApplication(String args[])

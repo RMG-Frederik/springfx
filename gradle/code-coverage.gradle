@@ -15,8 +15,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it,
-	            exclude: ['net/codecrafting/springfx/exception/**', 
-	            			'net/codecrafting/springfx/animation/**' //Not tested yet
+	            exclude: ['net/codecrafting/springfx/exception/**'
 	            ])
         })
     }

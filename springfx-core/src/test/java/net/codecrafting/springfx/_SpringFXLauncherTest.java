@@ -24,9 +24,12 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runners.MethodSorters;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -43,6 +46,7 @@ import net.codecrafting.springfx.core.SpringFXLauncher;
 import net.codecrafting.springfx.exception.SpringFXLaunchException;
 
 //Make this test class be the last
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class _SpringFXLauncherTest 
 {
 	
@@ -254,7 +258,8 @@ public class _SpringFXLauncherTest
 	}
 	
 	@Test
-	public void springFXContextMustNotBeEmpty() {
+	public void springFXContextMustNotBeEmpty() 
+	{
 		//THROW with all null
 		SpringFXLauncher.setRelaunchable(true);
 		try {
@@ -318,5 +323,35 @@ public class _SpringFXLauncherTest
 			assertEquals(SpringFXLaunchException.class, ex.getClass());
 			assertEquals("SpringFXContext must not be empty", ex.getMessage());
 		}
+	}
+	
+	@Test
+	public void staticLaunch() throws Exception
+	{
+		SpringFXLauncher.setRelaunchable(true);
+		Properties props = new Properties();
+		props.put("prism.lcdtext", "false");
+		props.put("prism.text", "t2k");
+		String[] args = {"--myArg=test"};
+		
+		SpringFXLauncher.launch(EmptyApplication.class);
+		SpringFXLauncher.launch(EmptyApplication.class, props);
+		SpringFXLauncher.launch(EmptyApplication.class, args);
+		
+		Mockito.doAnswer((Answer<Void>) invocation -> {
+			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(WebApplicationType.NONE);
+			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
+			Mockito.when(context.getSpringContext()).thenReturn(springContext);
+			Mockito.when(context.getEnvironment()).thenReturn(springContext.getEnvironment());
+			Mockito.when(context.getApplication()).thenReturn(springContext.getBean(AnnotatedTestApplication.class));
+			return null;
+		}).when(context).run(ArgumentMatchers.any());
+		
+		SpringFXLauncher.launch(context, args);
+		AnnotatedTestApplication application = (AnnotatedTestApplication) context.getApplication();
+		assertNotNull(application);
+		assertNotNull(application.getArgs());
+		assertEquals("test", application.getArgs().getOptionValues("myArg").get(0));
+		SpringFXLauncher.exit();
 	}
 }
