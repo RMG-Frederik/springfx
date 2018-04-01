@@ -419,6 +419,7 @@ public class ViewStage extends Stage
 				initialized = false;
 				throw new RuntimeException(e);
 			}
+			rootNode.setVisible(false);
 			ObservableList<String> styles = FXCollections.observableArrayList(rootNode.getStylesheets());
 			rootNode.getStylesheets().clear();
 			rootNode.getStylesheets().addAll(styles);
@@ -427,6 +428,7 @@ public class ViewStage extends Stage
 				rootNode.setCacheHint(CacheHint.SPEED);	
 			}
 			setScene(new Scene(rootNode));
+			rootNode.setVisible(true);
 			stageContext.onCreate();
 		} else {
 			throw new IllegalStateException("Could not initialize with \""+viewFilePath+"\"");
@@ -479,15 +481,16 @@ public class ViewStage extends Stage
 					this.intent = null;
 					throw new RuntimeException(e);
 				}
+				loadedNode.setVisible(false);
 				loadedNode.getStylesheets().clear();
 				if(cacheLoadedNode) {
 					loadedNode.setCache(true);
 					loadedNode.setCacheHint(CacheHint.SPEED);	
 				}
 				loadedNode.setDisable(false);
-				loadedNode.setVisible(true);
 				setViewLinks(viewController);
 				viewCache.put(intent.getViewClass().getName(), viewController);
+				loadedNode.setVisible(true);
 				viewController.onCreate();
 			} else {
 				throw new RuntimeException("Could not load \""+viewFilePath+"\"");

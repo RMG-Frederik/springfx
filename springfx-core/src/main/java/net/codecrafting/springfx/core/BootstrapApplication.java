@@ -151,11 +151,15 @@ public class BootstrapApplication extends Application
 				Class<? extends StageContext> rootController = (Class<? extends StageContext>) Class.forName(root);
 				viewStage.init(rootController);	
 			} catch (Exception e) {
-				//JavaFX only log errors as Exception in Application start method
+				//JavaFX only log errors as "Exception in Application start method"
 				LOGGER.error(e.getMessage(), e);
 				throw e;
 			}
-			if(env.getProperty("springfx.app.auto-open", "true").equals("true")) viewStage.show(true);
+			
+			if(env.getProperty("springfx.app.auto-open", "true").equals("true")) {
+				viewStage.show(true);
+				viewStage.toFront();
+			}
 		}
 		try {
 			application.start(viewStage);

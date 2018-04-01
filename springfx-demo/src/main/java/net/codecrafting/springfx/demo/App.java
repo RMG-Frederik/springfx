@@ -12,7 +12,7 @@ import net.codecrafting.springfx.core.SpringFXApplication;
 import net.codecrafting.springfx.core.SpringFXLauncher;
 
 @SpringBootApplication
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class App extends SpringFXApplication
 {
 	private static final Log LOGGER = LogFactory.getLog(App.class);
