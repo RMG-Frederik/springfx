@@ -9,6 +9,7 @@ buildscript {
     }
     dependencies {
         classpath 'net.nemerosa:versioning:2.6.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
         classpath 'gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.14.0'
     } 
 }
@@ -16,6 +17,8 @@ buildscript {
 apply plugin: 'net.nemerosa.versioning'
 
 ext {
+	bintrayUser = System.getenv('BINTRAY_USER')
+	bintrayApiKey = System.getenv('BINTRAY_API_KEY')
     builtBy = System.properties['user.name']
     buildRevision = versioning.info.commit
     buildDate = new SimpleDateFormat('yyyy-MM-dd').format(buildDateTime)

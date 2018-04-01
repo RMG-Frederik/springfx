@@ -1,12 +1,11 @@
 apply plugin: "license"
 license {
-    header = rootProject.file("gradle/check/license-header.txt")
-    ext.year = '2018'
+    header = rootProject.file("config/header.txt")
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
     mapping {
         java = "SLASHSTAR_STYLE"
-        groovy = "SLASHSTAR_STYLE"
         gradle = "SLASHSTAR_STYLE"
         fxml = "XML_STYLE"
     }
-    includes(["**/*.java", "**/*.groovy", "**/*.gradle"])
+    includes(["**/*.java", "**/*.gradle"])
 }

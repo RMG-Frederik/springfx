@@ -1,4 +1,6 @@
 apply plugin: 'maven-publish'
+apply plugin: "com.jfrog.bintray"
+
 
 jar {
     manifest.attributes(
@@ -27,14 +29,27 @@ def pomConfig = {
     inceptionYear '2018'
     licenses {
         license([:]) {
-            name 'GNU General Public License v2.0'
-            url 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.html'
+            name project.projectLicence
+            url project.projectLicenceUrl
             distribution 'repo'
         }
     }
     scm {
         url project.projectScm
     }
+    developers {
+        developer {
+            id 'codecrafting'
+            name 'Code Crafting (Admin)'
+            email 'contact@codecrafting.net'
+        }
+        
+        developer {
+            id 'lucasmarotta'
+            name 'Lucas Marotta'
+            email 'lucas.marotta@codecrafting.net'
+        }
+    }    
 }
 
 publishing {
@@ -46,6 +61,41 @@ publishing {
            	pom.withXml {
                 asNode().children().last() + pomConfig
             }
+        }
+    }
+}
+
+if (!project.hasProperty('bintrayUser')) ext.bintrayUser = ''
+if (!project.hasProperty('bintrayApiKey')) ext.bintrayApiKey = ''
+if (!project.hasProperty('sonatypeUser')) ext.sonatypeUser = ''
+if (!project.hasProperty('sonatypePass')) ext.sonatypePass = ''
+
+bintray {
+    user = project.bintrayUser
+    key = project.bintrayApiKey
+    publications = ['mavenCustom']
+    pkg {
+        repo = project.bintrayRepo
+        name = project.name
+        desc = project.projectDescription
+        licenses = [project.projectLicenceTag]
+        labels = ['javafx','spring','spring boot', 'javafx framework']
+        websiteUrl = project.projectUrl
+        issueTrackerUrl = project.projectIssues
+        vcsUrl = project.projectScm
+        publicDownloadNumbers = true
+        githubRepo = 'codecrafting-net/springfx'
+        version {
+            name = project.version
+            vcsTag = "${project.name}-${project.version}"
+            gpg {
+            	sign = true
+            }
+            /*mavenCentralSync {
+                sync = true
+                user = project.mavenUsername
+                password = project.mavenPassword
+            }*/
         }
     }
 }
