@@ -20,12 +20,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.testfx.util.WaitForAsyncUtils.async;
 import static org.testfx.util.WaitForAsyncUtils.asyncFx;
 import static org.testfx.util.WaitForAsyncUtils.waitFor;
+import static org.testfx.util.WaitForAsyncUtils.sleep;
 
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -310,10 +313,12 @@ public class DialogTest
 			Dialog d = new Dialog();
 			Button button = (Button) d.getDialogAlert().getDialogPane().lookupButton(ButtonType.OK);
 			d.getDialogAlert().setOnShown((event) -> {
-				Timeline timeline = new Timeline(new KeyFrame(
-				        Duration.millis(500),
-				        ae -> button.fire()));
-				timeline.play();
+				async(() -> {
+					sleep(1, TimeUnit.SECONDS);
+					asyncFx(() -> {
+						button.fire();	
+					});
+				});
 			});
 			return d;
 		}));
