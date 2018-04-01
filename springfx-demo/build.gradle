@@ -6,7 +6,6 @@ buildscript {
 
 apply plugin: 'application'
 apply plugin: 'org.springframework.boot'
-
 mainClassName = 'net.codecrafting.springfx.demo.App'
 
 dependencies {

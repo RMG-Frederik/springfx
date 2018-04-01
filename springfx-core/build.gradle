@@ -49,13 +49,3 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
-
-task testWithJacoco() {
-    group 'verification'
-    description 'Clear test > Junit Tests > Generate Jacoco Reports'
-    dependsOn 'clean'
-    dependsOn 'test'
-    dependsOn 'jacocoTestReport'
-    tasks.findByName('classes').mustRunAfter 'clean'
-    tasks.findByName('jacocoTestReport').mustRunAfter 'test'
-}

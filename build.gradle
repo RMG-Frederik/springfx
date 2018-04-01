@@ -23,29 +23,9 @@ ext {
     createdBy = "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})".toString()
 }
 
-allprojects {
-	task envriontmentInfo {
-	    group 'help'
-	    description 'Prints envriontment information'
-	    doLast {
-	    	println "========================================================="
-	        println "JAVA_OPTS:             ${System.env.JAVA_OPTS ?: "[]"}"
-	        println "JAVA_HOME:             ${System.env.JAVA_HOME}"
-	        println "Java version:          ${System.properties['java.version']}"
-	        println "Gradle version:        ${gradle.gradleVersion}"
-	        println "Subprojects:           ${rootProject.childProjects.keySet()}"
-	        println "========================================================="
-	        println "Project Properties:"
-	        rootProject.ext.properties.each {key, value ->
-	        	println "${key} : ${value}"
-	        }
-	        println "========================================================="
-	    }
-	}	
-}
-
 subprojects { subproject ->
     apply plugin: 'java'
+    apply from: rootProject.file('gradle/code-coverage.gradle')
 
     buildscript {
         repositories {
@@ -57,9 +37,38 @@ subprojects { subproject ->
     	mavenLocal()
         mavenCentral()
         jcenter()  
-    } 
-
-    apply from: rootProject.file('gradle/code-coverage.gradle')
+    }
+    
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
+    
+	task cleanTestWithJacoco() {
+	    group 'verification'
+	    description 'Clear test > Junit Tests > Generate Jacoco Reports'
+	    dependsOn 'clean'
+	    dependsOn 'test'
+	    dependsOn 'jacocoTestReport'
+	    tasks.findByName('classes').mustRunAfter 'clean'
+	    tasks.findByName('jacocoTestReport').mustRunAfter 'test'
+	}    
+    
+}
+
+task envriontmentInfo {
+    group 'help'
+    description 'Prints envriontment information'
+    doLast {
+    	println "========================================================="
+        println "JAVA_OPTS:             ${System.env.JAVA_OPTS ?: "[]"}"
+        println "JAVA_HOME:             ${System.env.JAVA_HOME}"
+        println "Java version:          ${System.properties['java.version']}"
+        println "Gradle version:        ${gradle.gradleVersion}"
+        println "Subprojects:           ${rootProject.childProjects.keySet()}"
+        println "========================================================="
+        println "Project Properties:"
+        rootProject.ext.properties.each {key, value ->
+        	println "${key} : ${value}"
+        }
+        println "========================================================="
+    }
 }

@@ -1,10 +1,9 @@
 language: java
 jdk: oraclejdk8
+sudo: false
 before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - sudo apt-get update -qq
-  - sudo apt-get install oracle-java8-installer
   - chmod +x gradlew
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -14,5 +13,7 @@ cache:
   - $HOME/.gradle/wrapper/
   - $HOME/.sonar/cache/
 before_script:
-  - ./gradlew --version
-script: ./gradlew clean build 
+  - ./gradlew envriontmentInfo
+script: ./gradlew cleanTestWithJacoco
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
