@@ -263,4 +263,40 @@ public class ViewContextTest
 		context.setViewStage(mockStage);
 		assertEquals("test-pane", context.getStageContext().getMainNode().getId());
 	}
+	
+	@Test
+	public void setFitWidth()
+	{
+		ViewContext context = new ViewContext("test", "test title") {
+			@Override
+			protected void onStart() {}
+			
+			@Override
+			protected void onCreate() {}
+			
+			@Override
+			public Node getMainNode() {return null;}
+		};
+		assertTrue(context.isFitWidth());
+		context.setFitWidth(false);
+		assertFalse(context.isFitWidth());
+	}
+	
+	@Test
+	public void setFitHeight()
+	{
+		ViewContext context = new ViewContext("test", "test title") {
+			@Override
+			protected void onStart() {}
+			
+			@Override
+			protected void onCreate() {}
+			
+			@Override
+			public Node getMainNode() {return null;}
+		};
+		assertTrue(context.isFitHeight());
+		context.setFitHeight(false);
+		assertFalse(context.isFitHeight());
+	}
 }

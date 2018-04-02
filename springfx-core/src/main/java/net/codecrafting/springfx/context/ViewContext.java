@@ -40,6 +40,10 @@ import net.codecrafting.springfx.annotation.ViewController;
  * @see #getViewTitle()
  * @see #getLocation()
  * @see #getResources()
+ * @see #isFitWidth()
+ * @see #setFitWidth(boolean)
+ * @see #isFitHeight()
+ * @see #setFitHeight(boolean)
  * @see #setViewStage(ViewStage)
  * @see #getViewStage()
  * @see #getIntent()
@@ -68,6 +72,16 @@ public abstract class ViewContext implements Initializable
 	
 	private ResourceBundle resources;
 	
+	/**
+	 * Flag that indicates to whatever or not make the loaded viewNode fit the width to the parent
+	 */
+	private boolean fitWidth = true;
+	
+	/**
+	 * Flag that indicates to whatever or not make the loaded viewNode fit the heigth to the parent
+	 */
+	private boolean fitHeight = true;
+	
 	//The internal AnimationBuilder to create a animation between views
 	private final AnimationBuilder animationBuilder;
 	private static final String UPPER_CAMEL_REGEX = "([a-z])([A-Z]+)";
@@ -80,7 +94,7 @@ public abstract class ViewContext implements Initializable
 	 */
 	public ViewContext()
 	{
-		animationBuilder = new AnimationBuilder(.4).percentage(.2).interpolator(EaseInterpolator.EASE_OUT);
+		animationBuilder = new AnimationBuilder(1).interpolator(EaseInterpolator.EASE_OUT_QUAD);
 		loadAnnotations();
 	}
 	
@@ -93,7 +107,7 @@ public abstract class ViewContext implements Initializable
 	public ViewContext(String viewName, String viewTitle)
 	{
 		if(viewName != null) {
-			animationBuilder = new AnimationBuilder(.4).percentage(.2).interpolator(EaseInterpolator.EASE_OUT);
+			animationBuilder = new AnimationBuilder(1).interpolator(EaseInterpolator.EASE_OUT_QUAD);
 			this.viewName = viewName;
 			this.viewTitle = viewTitle;	
 		} else {
@@ -132,6 +146,34 @@ public abstract class ViewContext implements Initializable
 	public ResourceBundle getResources() 
 	{
 		return resources;
+	}
+	
+	public boolean isFitWidth() 
+	{
+		return fitWidth;
+	}
+
+	/**
+	 * Set the {@link #fitWidth} flag to indicates that the loaded view {@link Node} will fit the parent
+	 * @param fitWidth the indication to fit the width
+	 */
+	public void setFitWidth(boolean fitWidth) 
+	{
+		this.fitWidth = fitWidth;
+	}
+
+	public boolean isFitHeight() 
+	{
+		return fitHeight;
+	}
+
+	/**
+	 * Set the {@link #fitHeight} flag to indicates that the loaded view {@link Node} will fit the parent
+	 * @param fitHeight the indication to fit the height
+	 */
+	public void setFitHeight(boolean fitHeight) 
+	{
+		this.fitHeight = fitHeight;
 	}
 
 	/**

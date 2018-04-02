@@ -35,6 +35,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.paint.Color;
 import net.codecrafting.springfx.annotation.ValidationBind;
 import net.codecrafting.springfx.context.ViewContext;
@@ -146,34 +147,37 @@ public abstract class FormModel implements ValidationModel
 				Node fieldNode = getContextFieldNode(field);
 				if(fieldNode != null) {
 					Class<?> fieldType = field.getType();
-					if(fieldType.isAssignableFrom(TextField.class)) {
+					if(TextField.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((TextField) fieldNode).getText());
 					
-					} else if(fieldType.isAssignableFrom(PasswordField.class)) {
+					} else if(PasswordField.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((PasswordField) fieldNode).getText());
 					
-					} else if(fieldType.isAssignableFrom(CheckBox.class)) {
+					} else if(CheckBox.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((CheckBox) fieldNode).isSelected());
 					
-					} else if(fieldType.isAssignableFrom(ChoiceBox.class)) {
+					} else if(ChoiceBox.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((ChoiceBox<Object>) fieldNode).getValue());
 					
-					} else if(fieldType.isAssignableFrom(ColorPicker.class)) {
+					} else if(ColorPicker.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((ColorPicker) fieldNode).getValue());
 					
-					} else if(fieldType.isAssignableFrom(ComboBox.class)) {
-						setValueToModelField(modelField, ((ComboBox<Object>) fieldNode).getValue());
+					} else if(ComboBox.class.isAssignableFrom(fieldType)) {
+						setValueToModelField(modelField, ((ComboBox<?>) fieldNode).getValue());
 					
-					} else if(fieldType.isAssignableFrom(DatePicker.class)) {
+					} else if(DatePicker.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((DatePicker) fieldNode).getValue());
 					
-					} else if(fieldType.isAssignableFrom(RadioButton.class)) {
+					} else if(RadioButton.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((RadioButton) fieldNode).isSelected());
+						
+					} else if(ToggleButton.class.isAssignableFrom(fieldType)) {
+						setValueToModelField(modelField, ((ToggleButton) fieldNode).isSelected());
 					
-					} else if(fieldType.isAssignableFrom(TextArea.class)) {
+					} else if(TextArea.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((TextArea) fieldNode).getText());
 					
-					} else if(fieldType.isAssignableFrom(Slider.class)) {
+					} else if(Slider.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((Slider) fieldNode).getValue());
 					}
 				}
@@ -200,36 +204,39 @@ public abstract class FormModel implements ValidationModel
 				if(fieldNode != null) {
 					Class<?> fieldType = field.getType();
 					try {
-						if(fieldType.isAssignableFrom(TextField.class)) {
+						if(TextField.class.isAssignableFrom(fieldType)) {
 							((TextField) fieldNode).setText((String) modelFieldValue);
 						
-						} else if(fieldType.isAssignableFrom(PasswordField.class)) {
+						} else if(PasswordField.class.isAssignableFrom(fieldType)) {
 							((PasswordField) fieldNode).setText((String) modelFieldValue);
 						
-						} else if(fieldType.isAssignableFrom(CheckBox.class)) {
+						} else if(CheckBox.class.isAssignableFrom(fieldType)) {
 							((CheckBox) fieldNode).setSelected((Boolean) modelFieldValue);
 						
-						} else if(fieldType.isAssignableFrom(ChoiceBox.class)) {
+						} else if(ChoiceBox.class.isAssignableFrom(fieldType)) {
 							((ChoiceBox<Object>) fieldNode).setValue(modelFieldValue);
 						
-						} else if(fieldType.isAssignableFrom(ColorPicker.class)) {
+						} else if(ColorPicker.class.isAssignableFrom(fieldType)) {
 							((ColorPicker) fieldNode).setValue((Color) modelFieldValue);
 						
-						} else if(fieldType.isAssignableFrom(ComboBox.class)) {
+						} else if(ComboBox.class.isAssignableFrom(fieldType)) {
 							((ComboBox<Object>) fieldNode).setValue(modelFieldValue);
 						
-						} else if(fieldType.isAssignableFrom(DatePicker.class)) {
+						} else if(DatePicker.class.isAssignableFrom(fieldType)) {
 							((DatePicker) fieldNode).setValue((LocalDate) modelFieldValue);
 						
-						} else if(fieldType.isAssignableFrom(RadioButton.class)) {
+						} else if(RadioButton.class.isAssignableFrom(fieldType)) {
 							((RadioButton) fieldNode).setSelected((Boolean) modelFieldValue);
+							
+						} else if(ToggleButton.class.isAssignableFrom(fieldType)) {
+							((ToggleButton) fieldNode).setSelected((Boolean) modelFieldValue);
 						
-						} else if(fieldType.isAssignableFrom(TextArea.class)) {
+						} else if(TextArea.class.isAssignableFrom(fieldType)) {
 							((TextArea) fieldNode).setText((String) modelFieldValue);
 						
-						} else if(fieldType.isAssignableFrom(Slider.class)) {
+						} else if(Slider.class.isAssignableFrom(fieldType)) {
 							((Slider) fieldNode).setValue((Double) modelFieldValue);
-						}	
+						}
 					} catch(Exception e) {
 						LOGGER.error(e.getMessage(), e);
 					}

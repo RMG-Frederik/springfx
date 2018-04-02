@@ -53,7 +53,7 @@ public abstract class StageContext extends ViewContext
 	{
 		super(viewName, viewTitle);
 	}
-	
+
 	/**
 	 * Method that can perform the configuration of the {@link ViewContext#viewTitle} to the interface
 	 * The {@link ViewStage} will call this method passing the {@link ViewContext#viewTitle} from the
@@ -89,10 +89,14 @@ public abstract class StageContext extends ViewContext
 				viewNode.autosize();
 				if(stageContextNode.getChildren().size() > 0) stageContextNode.getChildren().remove(0);
 				stageContextNode.getChildren().add(0, viewNode);
-				AnchorPane.setTopAnchor(viewNode, 0.0);
-				AnchorPane.setBottomAnchor(viewNode, 0.0);
-				AnchorPane.setLeftAnchor(viewNode, 0.0);
-				AnchorPane.setRightAnchor(viewNode, 0.0);
+				if(viewController.isFitWidth()) {
+					AnchorPane.setLeftAnchor(viewNode, 0.0);
+					AnchorPane.setRightAnchor(viewNode, 0.0);
+				}
+				if(viewController.isFitHeight()) {
+					AnchorPane.setTopAnchor(viewNode, 0.0);
+					AnchorPane.setBottomAnchor(viewNode, 0.0);	
+				}
 				viewController.swapAnimation(viewNode);
 			} else {
 				throw new NullPointerException("StageContext mainNode and content must not be null");

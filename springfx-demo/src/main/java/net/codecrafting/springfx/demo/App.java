@@ -29,7 +29,7 @@ public class App extends SpringFXApplication
 	@Override
 	public void start(ViewStage viewStage) throws Exception 
 	{
-		viewStage.setMinHeight(viewStage.getHeight());
+		viewStage.setMinHeight(640);
 		viewStage.setMinWidth(viewStage.getWidth());
 	}
 }

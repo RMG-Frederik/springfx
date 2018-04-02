@@ -363,7 +363,8 @@ public class ViewStage extends Stage
     /**
      * Attempts to show this Stage Window by setting visibility to true. 
      * Optionally it's possible to pass a parameter to indicate if it is to force resize
-     * the window to match {@link Scene} dimensions.
+     * the window to match {@link Scene} dimensions. By default this method also perform
+     * {@link #toFront()} and {@link #centerOnScreen()}
 	 * @param sizeToScene indicates if it is to force resize the window to match {@link Scene} dimensions
      * @throws IllegalStateException if this method is called on a thread
      * other than the JavaFX Application Thread.
@@ -372,6 +373,8 @@ public class ViewStage extends Stage
 	{
 		show();
 		if(sizeToScene) sizeToScene();
+		toFront();
+		centerOnScreen();
 	}
 	
 	/**
@@ -388,6 +391,7 @@ public class ViewStage extends Stage
 	
 	/**
 	 * Initialize this instance to load {@link Intent}s with a {@link ResourceBundle}.
+	 * By default this method bind the dimensions of the loaded node to the {@link Stage} dimensions
 	 * @param contextClass the root view controller class to initialize the ViewStage.
 	 * @param resources the {@link ResourceBundle} to be passed to {@link FXMLLoader}
 	 * @throws IllegalStateException if ViewStage is already initialized
@@ -412,7 +416,7 @@ public class ViewStage extends Stage
 			FXMLLoader loader = new FXMLLoader(viewURL);
 			if(resources != null) loader.setResources(resources);
 			loader.setController(stageContext);
-			Parent rootNode = null;
+			Region rootNode = null;
 			try {
 				injectViewStage(stageContext);
 				rootNode = loader.load();
@@ -428,8 +432,11 @@ public class ViewStage extends Stage
 				rootNode.setCache(true);
 				rootNode.setCacheHint(CacheHint.SPEED);	
 			}
-			setScene(new Scene(rootNode));
 			rootNode.setVisible(true);
+			rootNode.autosize();
+			setScene(new Scene(rootNode, rootNode.getWidth(), rootNode.getHeight()));
+			rootNode.prefWidthProperty().bind(widthProperty());
+			rootNode.prefHeightProperty().bind(heightProperty());
 			stageContext.onCreate();
 		} else {
 			throw new IllegalStateException("Could not initialize with \""+viewFilePath+"\"");

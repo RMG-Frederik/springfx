@@ -150,16 +150,13 @@ public class BootstrapApplication extends Application
 				if(iconPath != null) viewStage.setIconByMipmap(new Mipmap(iconPath, new int[] {1,2,4,8,16,32}));
 				if(env.getProperty("springfx.cache-loaded-node", "false").equals("true")) viewStage.setCacheLoadedNode(true);
 				Class<? extends StageContext> rootController = (Class<? extends StageContext>) Class.forName(root);
-				viewStage.init(rootController);	
+				viewStage.init(rootController);
 			} catch (Exception e) {
 				//JavaFX only log errors as "Exception in Application start method"
 				throw new Exception(e.getMessage(), e);
 			}
-			
-			if(env.getProperty("springfx.app.auto-open", "true").equals("true")) {
+			if(env.getProperty("springfx.app.auto-open", "true").equals("true")) 
 				viewStage.show(true);
-				viewStage.toFront();
-			}
 		}
 		try {
 			application.start(viewStage);

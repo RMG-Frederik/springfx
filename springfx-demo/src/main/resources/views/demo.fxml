@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXColorPicker?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane fx:id="mainNode" prefWidth="960.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" styleClass="header" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ImageView fitHeight="60.0" fitWidth="187.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0">
+               <image>
+                  <Image url="@../images/springfx_logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <VBox prefWidth="100.0" styleClass="card" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="130.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Demo Form">
+               <VBox.margin>
+                  <Insets bottom="25.0" />
+               </VBox.margin>
+            </Text>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" minHeight="250.0" styleClass="form-box">
+               <content>
+                  <VBox>
+                     <children>
+                        <JFXTextField fx:id="userField" promptText="User" styleClass="input-field">
+                           <VBox.margin>
+                              <Insets bottom="50.0" top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXPasswordField fx:id="passField" promptText="Pass" styleClass="input-field">
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                        </JFXPasswordField>
+                        <JFXTextArea fx:id="textField" prefHeight="100.0" promptText="Some Text" styleClass="input-field">
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                        </JFXTextArea>
+                        <JFXDatePicker fx:id="datePicker" promptText="Awesome Date">
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                        </JFXDatePicker>
+                        <JFXColorPicker fx:id="colorPicker" styleClass="input-field">
+                           <VBox.margin>
+                              <Insets bottom="50.0" />
+                           </VBox.margin>
+                        </JFXColorPicker>
+                        <JFXToggleButton fx:id="funToggle" text="Fun">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </JFXToggleButton>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="16.0" />
+                     </padding>
+                  </VBox>
+               </content>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ScrollPane>
+            <JFXButton defaultButton="true" onAction="#submit" styleClass="btn" text="SUBMIT">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

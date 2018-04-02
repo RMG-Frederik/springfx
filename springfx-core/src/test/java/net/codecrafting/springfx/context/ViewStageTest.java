@@ -18,6 +18,7 @@ package net.codecrafting.springfx.context;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -336,10 +337,15 @@ public class ViewStageTest
 			root.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 			root.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 			viewStage.setScene(new Scene(root, 200, 200));
+			viewStage.setX(0);
+			viewStage.setY(0);
 			viewStage.show(true);
 		}));
 		
 		assertTrue("View Stage not showing", viewStage.isShowing());
+		assertFalse("View Stage not on front", viewStage.isIconified());
+		assertNotEquals(0.0, viewStage.getX());
+		assertNotEquals(0.0, viewStage.getY());
 		assertEquals(200, viewStage.getScene().getWindow().getHeight(), 40);
 		assertEquals(200, viewStage.getScene().getWindow().getWidth(), 40);
 	}

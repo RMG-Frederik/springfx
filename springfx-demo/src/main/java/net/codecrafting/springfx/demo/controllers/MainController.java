@@ -58,7 +58,7 @@ public class MainController extends StageContext
 					.onFinished((onFinished) -> {
 						splashScreen.setVisible(false);
 						splashScreen.setDisable(true);
-						getViewStage().loadIntent(new Intent(this, LoginController.class));
+						getViewStage().loadIntent(new Intent(this, DemoFormController.class));
 					}).play();
 				});
 				loadTask.setOnFailed((onFail) -> {
@@ -98,7 +98,7 @@ public class MainController extends StageContext
 			{
 				if(!isCancelled()) {
 					//Simulating some initialization
-					Thread.sleep(5000);
+					Thread.sleep(2000);
 				}
 				return null;
 			}
