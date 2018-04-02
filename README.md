@@ -1,9 +1,11 @@
-![SpringFX](/images/springfx-logo.png)
-
 # SpringFX
 
+[![HitCount](http://hits.dwyl.io/codecrafting-net/springfx.svg)](http://hits.dwyl.io/codecrafting-net/springfx)
 [![Build Status](https://travis-ci.org/codecrafting-net/springfx.svg?branch=master)](https://travis-ci.org/codecrafting-net/springfx)
 [![codecov](https://codecov.io/gh/codecrafting-net/springfx/branch/master/graph/badge.svg)](https://codecov.io/gh/codecrafting-net/springfx)
+[![license](https://img.shields.io/github/license/codecrafting-net/springfx.svg)](https://raw.githubusercontent.com/codecrafting-net/springfx/master/LICENSE)
+
+![SpringFX](/config/springfx-logo.png)
 
 SpringFX it's a small framework that allow you to use [Spring Boot][1] framework with [JavaFX][2] to build desktop Java applications. Not only facilitating the use of Spring features on JavaFX, the framework also provide the following functionalities:
 
