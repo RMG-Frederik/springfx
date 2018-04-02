@@ -19,6 +19,8 @@ apply plugin: 'net.nemerosa.versioning'
 ext {
 	bintrayUser = System.getenv('BINTRAY_USER')
 	bintrayApiKey = System.getenv('BINTRAY_API_KEY')
+	sonatypeUser = System.getenv('SONATYPE_USER')
+	sonatypePass = System.getenv('SONATYPE_PASS')
     builtBy = System.properties['user.name']
     buildRevision = versioning.info.commit
     buildDate = new SimpleDateFormat('yyyy-MM-dd').format(buildDateTime)

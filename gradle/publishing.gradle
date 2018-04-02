@@ -52,6 +52,12 @@ def pomConfig = {
     }    
 }
 
+if (!project.hasProperty('bintrayUser')) ext.bintrayUser = ''
+if (!project.hasProperty('bintrayApiKey')) ext.bintrayApiKey = ''
+if (!project.hasProperty('sonatypeUser')) ext.sonatypeUser = ''
+if (!project.hasProperty('sonatypePass')) ext.sonatypePass = ''
+ext.sonatypeUrl = (project.sonatypeRelease == 'true') ? 'https://oss.sonatype.org/service/local/staging/deploy/maven2' : 'https://oss.sonatype.org/content/repositories/snapshots'
+
 publishing {
     publications {
         mavenCustom(MavenPublication) {
@@ -63,12 +69,16 @@ publishing {
             }
         }
     }
+    repositories {
+        maven {
+            url sonatypeUrl
+            credentials {
+                username = sonatypeUser
+                password = sonatypePass
+            }
+        }
+    }
 }
-
-if (!project.hasProperty('bintrayUser')) ext.bintrayUser = ''
-if (!project.hasProperty('bintrayApiKey')) ext.bintrayApiKey = ''
-if (!project.hasProperty('sonatypeUser')) ext.sonatypeUser = ''
-if (!project.hasProperty('sonatypePass')) ext.sonatypePass = ''
 
 bintray {
     user = project.bintrayUser
