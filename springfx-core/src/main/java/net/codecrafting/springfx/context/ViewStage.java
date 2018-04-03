@@ -91,6 +91,7 @@ import net.codecrafting.springfx.util.MipmapLevel;
  * @see #querySelectorAll(String)
  * @see #show(boolean)
  * @see #init(Class)
+ * @see #init(Class, ResourceBundle)
  * @see #loadIntent(Intent)
  * @see #isViewCached(Class)
  * @see #removeViewCache(Class)

@@ -1,7 +1,6 @@
 apply plugin: 'maven-publish'
 apply plugin: "com.jfrog.bintray"
 
-
 jar {
     manifest.attributes(
         "Built-By": project.builtBy,
@@ -85,6 +84,7 @@ bintray {
     user = project.bintrayUser
     key = project.bintrayApiKey
     publications = ['mavenCustom']
+    override = true
     pkg {
         repo = project.bintrayRepo
         name = project.name
@@ -98,6 +98,7 @@ bintray {
         githubRepo = 'codecrafting-net/springfx'
         version {
             name = project.version
+            desc = project.projectDescription
             vcsTag = "${project.name}-${project.version}"
             gpg {
             	sign = true
