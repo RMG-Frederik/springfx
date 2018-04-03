@@ -3,7 +3,7 @@
 [![HitCount](http://hits.dwyl.io/codecrafting-net/springfx.svg)](http://hits.dwyl.io/codecrafting-net/springfx)
 [![Build Status](https://travis-ci.org/codecrafting-net/springfx.svg?branch=master)](https://travis-ci.org/codecrafting-net/springfx)
 [![codecov](https://codecov.io/gh/codecrafting-net/springfx/branch/master/graph/badge.svg)](https://codecov.io/gh/codecrafting-net/springfx)
-[![Maven Central](https://img.shields.io/maven-central/v/net.codecrafting/springfx-core.svg?label=maven&style=flat-square)](https://search.maven.org/#search|ga|1|org.testfx)
+[![Maven Central](https://img.shields.io/maven-central/v/net.codecrafting/springfx-core.svg?label=maven&style=flat-square)](https://search.maven.org/#search|ga|1|net.codecrafting)
 [![Download](https://api.bintray.com/packages/codecrafting/maven/springfx-core/images/download.svg) ](https://bintray.com/codecrafting/maven/springfx-core/_latestVersion)
 [![license](https://img.shields.io/github/license/codecrafting-net/springfx.svg)](https://raw.githubusercontent.com/codecrafting-net/springfx/master/LICENSE)
 
