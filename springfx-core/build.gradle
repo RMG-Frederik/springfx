@@ -4,8 +4,9 @@ apply from: rootProject.file('gradle/license.gradle')
 
 dependencies {
 	api "commons-io:commons-io:2.6"
-	api "org.hibernate:hibernate-validator:5.2.4.Final"
+	api "org.hibernate:hibernate-validator:6.0.9.Final"
 	api "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+	implementation "org.glassfish:javax.el:3.0.1-b09"
 	
 	testImplementation "junit:junit:4.12"
 	testImplementation "org.hamcrest:hamcrest-junit:2.0.0.0"
@@ -15,23 +16,25 @@ dependencies {
 	testImplementation "org.testfx:testfx-junit:4.0.8-alpha"
 }
 
+javadoc {
+    excludes            = ['META-INF/**']
+	description         = "Generates aggregated Javadocs"
+	title               = "SpringFX API (${project.version})"	
+    options.tags        = ['defaultValue']
+    options.encoding    = "UTF-8"
+    options.author      = true
+    options.version     = true
+    options.stylesheetFile project.file("src/javadoc/stylesheet.css")
+    options.links       = ["https://docs.oracle.com/javase/8/docs/api/", 
+    						"https://docs.oracle.com/javase/8/javafx/api/",
+    						"https://docs.spring.io/spring-boot/docs/2.0.1.RELEASE/api/"]
+}
+
 task sourcesJar(type: Jar) {
     group 'Build'
     description 'An archive of the source code'
     classifier 'sources'
     from sourceSets.main.allSource
-}
-
-javadoc {
-    excludes            = ['META-INF/**']
-	description         = "Generates aggregated Javadocs"
-	title               = "SpringFX API (${project.version})"	
-    options.tags        = [ "defaultValue" ]
-    options.encoding    = "UTF-8"
-    options.author      = true
-    options.version     = true
-    //options.links       = ["https://docs.oracle.com/javase/8/docs/api/", "https://docs.oracle.com/javase/8/javafx/api/"]
-    options.stylesheetFile project.file("src/javadoc/stylesheet.css")
 }
 
 task javadocJar(type: Jar) {

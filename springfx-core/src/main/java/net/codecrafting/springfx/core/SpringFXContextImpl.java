@@ -137,7 +137,6 @@ public class SpringFXContextImpl implements SpringFXContext
 	public boolean isHeadless() 
 	{
 		HeadlessApplication headlessAnn = appClass.getAnnotation(HeadlessApplication.class);
-		if(headlessAnn != null) return headlessAnn.value();
-		return true;
+		return (headlessAnn != null) ? headlessAnn.value() : true;
 	}	
 }

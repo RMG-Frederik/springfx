@@ -426,6 +426,8 @@ public class ViewStage extends Stage
 				throw new RuntimeException(e);
 			}
 			rootNode.setVisible(false);
+			
+			//Some CSS rules doesn't render properly on startup, so this forces a reload
 			ObservableList<String> styles = FXCollections.observableArrayList(rootNode.getStylesheets());
 			rootNode.getStylesheets().clear();
 			rootNode.getStylesheets().addAll(styles);
@@ -491,12 +493,18 @@ public class ViewStage extends Stage
 					throw new RuntimeException(e);
 				}
 				loadedNode.setVisible(false);
+				
+				/*
+				 * I notice that this is a BIG convenient. If you use Scene Builder to develop your screens you will 
+				 * want to add your CSS file to the root node, but that element is not the root element for that ViewStage.
+				 * Removing the CSS from the loaded node you can still apply a CSS file to develop your screens with
+				 * Scene Builder but have confidence that will be removed by the framework
+				 */
 				loadedNode.getStylesheets().clear();
 				if(cacheLoadedNode) {
 					loadedNode.setCache(true);
 					loadedNode.setCacheHint(CacheHint.SPEED);	
 				}
-				loadedNode.setDisable(false);
 				setViewLinks(viewController);
 				viewCache.put(intent.getViewClass().getName(), viewController);
 				loadedNode.setVisible(true);

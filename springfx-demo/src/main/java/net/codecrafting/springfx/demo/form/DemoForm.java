@@ -2,7 +2,7 @@ package net.codecrafting.springfx.demo.form;
 
 import java.time.LocalDate;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 
 import javafx.scene.paint.Color;
 import net.codecrafting.springfx.annotation.ValidationBind;

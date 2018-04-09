@@ -18,8 +18,8 @@ package net.codecrafting.springfx.application.models;
 
 import java.util.List;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 import net.codecrafting.springfx.annotation.ValidationBind;
 import net.codecrafting.springfx.validation.ValidationError;

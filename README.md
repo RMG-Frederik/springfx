@@ -25,3 +25,13 @@ SpringFX it's a small framework that allow you to use [Spring Boot][1] framework
 [2]: https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm#JFXST784 
 [3]: https://daneden.github.io/animate.css/
 [4]: https://matthewlein.com/tools/ceaser
+
+## Setup (soon..)
+
+## Wiki (soon...)
+
+## Site (soon...)
+
+## NOTICE
+
+This library still on ***beta state***, so the API is subject to changes that break compatibility to previous beta versions.

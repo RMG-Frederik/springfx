@@ -30,6 +30,7 @@ ext {
 
 subprojects { subproject ->
     apply plugin: 'java'
+    apply plugin: 'java-library'
     apply from: rootProject.file('gradle/code-coverage.gradle')
 
     buildscript {
@@ -46,7 +47,8 @@ subprojects { subproject ->
     
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-    
+    compileJava.options.encoding = 'UTF-8'
+
 	task cleanTestWithJacoco() {
 	    group 'verification'
 	    description 'Clear test > Junit Tests > Generate Jacoco Reports'
