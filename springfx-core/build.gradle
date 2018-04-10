@@ -1,4 +1,3 @@
-apply plugin: "java-library"
 apply from: rootProject.file('gradle/publishing.gradle')
 apply from: rootProject.file('gradle/license.gradle')
 

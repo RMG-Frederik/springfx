@@ -1,20 +1,12 @@
 import java.text.SimpleDateFormat
 
-Date buildDateTime = new Date()
-
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url 'https://plugins.gradle.org/m2/' }
-    }
-    dependencies {
-        classpath 'net.nemerosa:versioning:2.6.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
-        classpath 'gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.14.0'
-    } 
+plugins {
+	id 'net.nemerosa.versioning'		version '2.6.1'
+	id 'com.jfrog.bintray' 				version '1.7.3'
+	id 'com.github.hierynomus.license' 	version '0.14.0'
 }
 
-apply plugin: 'net.nemerosa.versioning'
+Date buildDateTime = new Date()
 
 ext {
 	bintrayUser = System.getenv('BINTRAY_USER')
@@ -29,16 +21,18 @@ ext {
 }
 
 subprojects { subproject ->
-    apply plugin: 'java'
-    apply plugin: 'java-library'
-    apply from: rootProject.file('gradle/code-coverage.gradle')
 
-    buildscript {
-        repositories {
-            mavenCentral()
-            maven { url 'https://plugins.gradle.org/m2/' }
-        }
-    }
+	buildscript {
+		repositories {
+			mavenCentral()
+			jcenter()
+		}
+	}
+
+	apply plugin: 'java'
+	apply plugin: 'java-library'
+    apply from: rootProject.file('gradle/code-coverage.gradle')
+    
     repositories {
     	mavenLocal()
         mavenCentral()
