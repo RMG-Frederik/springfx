@@ -3,9 +3,9 @@ apply from: rootProject.file('gradle/license.gradle')
 
 dependencies {
 	api "commons-io:commons-io:2.6"
-	api "org.hibernate:hibernate-validator:6.0.9.Final"
+	api "org.hibernate:hibernate-validator:6.0.10.Final"
 	api "org.springframework.boot:spring-boot-starter:${springBootVersion}"
-	implementation "org.glassfish:javax.el:3.0.1-b09"
+	implementation "org.glassfish:javax.el:3.0.1-b10"
 	
 	testImplementation "junit:junit:4.12"
 	testImplementation "org.hamcrest:hamcrest-junit:2.0.0.0"
@@ -26,7 +26,7 @@ javadoc {
     options.stylesheetFile project.file("src/javadoc/stylesheet.css")
     options.links       = ["https://docs.oracle.com/javase/8/docs/api/", 
     						"https://docs.oracle.com/javase/8/javafx/api/",
-    						"https://docs.spring.io/spring-boot/docs/2.0.1.RELEASE/api/"]
+    						"https://docs.spring.io/spring-boot/docs/${springBootVersion}/api/"]
 }
 
 task sourcesJar(type: Jar) {

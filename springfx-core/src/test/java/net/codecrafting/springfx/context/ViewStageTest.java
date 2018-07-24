@@ -61,6 +61,7 @@ import net.codecrafting.springfx.application.controllers.BadTestController;
 import net.codecrafting.springfx.application.controllers.ContextCallController;
 import net.codecrafting.springfx.application.controllers.FakeMainController;
 import net.codecrafting.springfx.application.controllers.MainController;
+import net.codecrafting.springfx.application.controllers.MainFitController;
 import net.codecrafting.springfx.application.controllers.TestController;
 import net.codecrafting.springfx.core.BootstrapApplication;
 import net.codecrafting.springfx.core.SpringFXLauncher;
@@ -157,6 +158,19 @@ public class ViewStageTest
 			assertEquals(IllegalArgumentException.class, e.getCause().getClass());
 			assertEquals("springContext and viewPath must not be null", e.getCause().getMessage());
 		}
+	}
+	
+	@Test
+	public void nodeCacheHint()
+	{
+		viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			return vs;
+		}));
+		viewStage.setNodeCacheHint(CacheHint.SPEED);
+		assertEquals(CacheHint.SPEED, viewStage.getNodeCacheHint());
+		viewStage.setNodeCacheHint(CacheHint.QUALITY);
+		assertEquals(CacheHint.QUALITY, viewStage.getNodeCacheHint());
 	}
 	
 	@Test
@@ -351,16 +365,16 @@ public class ViewStageTest
 	}
 	
 	@Test
-	public void setCacheNode()
+	public void setNodeCacheHint()
 	{
 		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			return vs;
 		}));
-		viewStage.setCacheLoadedNode(true);
-		assertTrue(viewStage.isCacheLoadedNode());
-		viewStage.setCacheLoadedNode(false);
-		assertFalse(viewStage.isCacheLoadedNode());
+		viewStage.setNodeCacheHint(CacheHint.QUALITY);
+		assertEquals(CacheHint.QUALITY, viewStage.getNodeCacheHint());
+		viewStage.setNodeCacheHint(CacheHint.ROTATE);
+		assertEquals(CacheHint.ROTATE, viewStage.getNodeCacheHint());
 	}
 	
 	@Test
@@ -451,32 +465,46 @@ public class ViewStageTest
 			ViewStage vs = new ViewStage(springContext);
 			return vs;
 		}));
-		viewStage.setCacheLoadedNode(false);
-		assertFalse(viewStage.isCacheLoadedNode());
+		viewStage.setNodeCacheHint(CacheHint.SCALE);
+		assertEquals(CacheHint.SCALE, viewStage.getNodeCacheHint());
 		waitFor(asyncFx(() -> {
 			viewStage.init(ContextCallController.class);
 		}));
-		assertTrue("OnCreate was not called", viewStage.isCacheLoadedNode());
+		assertEquals(CacheHint.QUALITY, viewStage.getNodeCacheHint());
 	}
 	
 	@Test
-	public void initWithCacheNode()
+	public void initWithCacheHint()
 	{
 		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
-			vs.setCacheLoadedNode(true);
+			vs.setNodeCacheHint(CacheHint.SCALE);
+			vs.init(MainController.class);
+			return vs;
+		}));
+		MainController controller = springContext.getBean(MainController.class);
+		assertEquals(CacheHint.SCALE, controller.getMainNode().getCacheHint());
+		viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			vs.setNodeCacheHint(CacheHint.QUALITY);
+			vs.init(MainController.class);
+			return vs;
+		}));
+		assertEquals(CacheHint.QUALITY, controller.getMainNode().getCacheHint());
+	}
+	
+	@Test
+	public void initWithSpeedCacheHint()
+	{
+		viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			vs.setNodeCacheHint(CacheHint.SPEED);
 			vs.init(MainController.class);
 			return vs;
 		}));
 		MainController controller = springContext.getBean(MainController.class);
 		assertTrue(controller.getMainNode().isCache());
 		assertEquals(CacheHint.SPEED, controller.getMainNode().getCacheHint());
-		viewStage = waitFor(asyncFx(() -> {
-			ViewStage vs = new ViewStage(springContext);
-			vs.init(MainController.class);
-			return vs;
-		}));
-		assertFalse(controller.getMainNode().isCache());
 	}
 	
 	@Test
@@ -492,6 +520,75 @@ public class ViewStageTest
 		MainController controller = springContext.getBean(MainController.class);
 		assertNotNull(controller.getResources());
 		assertEquals("testBundle", controller.getResources().getBaseBundleName());
+	}
+	
+	@Test
+	public void initWithFitWidth()
+	{
+		MainFitController.fitWidth = false;
+		MainFitController controller = springContext.getBean(MainFitController.class);
+		controller.setFitWidth(false);
+		viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			vs.init(MainFitController.class);
+			vs.setWidth(400);
+			return vs;
+		}));
+		assertNotEquals(viewStage.getWidth(), controller.getMainNode().getPrefWidth());
+		controller.setFitWidth(true);
+		viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			vs.init(MainFitController.class);
+			vs.setWidth(400);
+			return vs;
+		}));
+		controller = springContext.getBean(MainFitController.class);
+		assertEquals(viewStage.getWidth(), controller.getMainNode().getPrefWidth(), 0);
+		waitFor(asyncFx(() -> {viewStage.setWidth(500);} ));
+		assertEquals(viewStage.getWidth(), controller.getMainNode().getPrefWidth(), 0);
+	}
+	
+	@Test
+	public void initWithFitHeight()
+	{
+		MainFitController.fitHeight = false;
+		MainFitController controller = springContext.getBean(MainFitController.class);
+		controller.setFitHeight(false);
+		viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			vs.init(MainFitController.class);
+			vs.setHeight(400);
+			return vs;
+		}));
+		assertNotEquals(viewStage.getHeight(), controller.getMainNode().getPrefHeight());
+		controller.setFitHeight(true);
+		viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			vs.init(MainFitController.class);
+			vs.setHeight(400);
+			return vs;
+		}));
+		controller = springContext.getBean(MainFitController.class);
+		assertEquals(viewStage.getHeight(), controller.getMainNode().getPrefHeight(), 0);
+		waitFor(asyncFx(() -> {viewStage.setHeight(500);} ));
+		assertEquals(viewStage.getHeight(), controller.getMainNode().getPrefHeight(), 0);
+	}
+	
+	@Test
+	public void initWithViewLinks()
+	{
+		viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			vs.init(MainController.class);
+			return vs;
+		}));
+		Pane testPane = (Pane) viewStage.getScene().getRoot().lookup("#testPane");
+		assertNotNull("Test Pane not found", testPane);
+		assertNotNull("View Link event should be configured", testPane.getOnMouseClicked());
+		waitFor(asyncFx(() -> {
+			testPane.getOnMouseClicked().handle(null);
+		}));
+		assertEquals(TestController.class, viewStage.getIntent().getViewClass());		
 	}
 	
 	@Test
@@ -601,12 +698,12 @@ public class ViewStageTest
 			ViewStage vs = new ViewStage(springContext);
 			return vs;
 		}));
-		viewStage.setCacheLoadedNode(false);
-		assertFalse(viewStage.isCacheLoadedNode());
+		viewStage.setNodeCacheHint(CacheHint.SCALE);
+		assertEquals(CacheHint.SCALE, viewStage.getNodeCacheHint());
 		waitFor(asyncFx(() -> {
 			viewStage.init(ContextCallController.class);
 		}));
-		assertTrue("OnCreate was not called", viewStage.isCacheLoadedNode());
+		assertEquals(CacheHint.QUALITY, viewStage.getNodeCacheHint());
 	}
 	
 	@Test
@@ -617,38 +714,52 @@ public class ViewStageTest
 			vs.init(MainController.class);
 			return vs;
 		}));
-		viewStage.setCacheLoadedNode(false);
-		assertFalse(viewStage.isCacheLoadedNode());
+		viewStage.setNodeCacheHint(CacheHint.SCALE);
+		assertEquals(CacheHint.SCALE, viewStage.getNodeCacheHint());
 		waitFor(asyncFx(() -> {
 			viewStage.loadIntent(new Intent(null, ContextCallController.class));
 		}));
-		assertTrue("OnStart was not called", viewStage.isCacheLoadedNode());
+		assertEquals(CacheHint.QUALITY, viewStage.getNodeCacheHint());
 	}
 	
 	@Test
-	public void loadIntentWithCacheNode()
+	public void loadIntentWithCacheHint()
 	{
 		viewStage = waitFor(asyncFx(() -> {
 			ViewStage vs = new ViewStage(springContext);
 			vs.init(MainController.class);
 			return vs;
 		}));
-		viewStage.setCacheLoadedNode(true);
+		viewStage.setNodeCacheHint(CacheHint.SCALE);
 		waitFor(asyncFx(() -> {
-			viewStage.loadIntent(new Intent(null, ContextCallController.class));
+			viewStage.loadIntent(new Intent(null, TestController.class));
 		}));
-		ContextCallController controller = springContext.getBean(ContextCallController.class);
-		assertTrue(controller.getMainNode().isCache());
-		assertEquals(CacheHint.SPEED, controller.getMainNode().getCacheHint());
+		TestController controller = springContext.getBean(TestController.class);
+		assertEquals(CacheHint.SCALE, controller.getMainNode().getCacheHint());
 		
 		viewStage.clearViewCache();
-		viewStage.setCacheLoadedNode(false);
-		assertFalse(viewStage.isViewCached(ContextCallController.class));
+		viewStage.setNodeCacheHint(CacheHint.QUALITY);
+		assertFalse(viewStage.isViewCached(TestController.class));
 		waitFor(asyncFx(() -> {
-			viewStage.loadIntent(new Intent(null, ContextCallController.class));
+			viewStage.loadIntent(new Intent(null, TestController.class));
 		}));
-		controller = springContext.getBean(ContextCallController.class);
-		assertFalse(controller.getMainNode().isCache());
+		controller = springContext.getBean(TestController.class);
+		assertEquals(CacheHint.QUALITY, controller.getMainNode().getCacheHint());
+	}
+	
+	@Test
+	public void loadIntentWithSpeedCacheHint()
+	{
+		viewStage = waitFor(asyncFx(() -> {
+			ViewStage vs = new ViewStage(springContext);
+			vs.setNodeCacheHint(CacheHint.SPEED);
+			vs.init(MainController.class);
+			vs.loadIntent(new Intent(null, TestController.class));
+			return vs;
+		}));
+		TestController controller = springContext.getBean(TestController.class);
+		assertTrue(controller.getMainNode().isCache());
+		assertEquals(CacheHint.SPEED, controller.getMainNode().getCacheHint());
 	}
 	
 	@Test

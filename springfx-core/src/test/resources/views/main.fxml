@@ -7,8 +7,8 @@
    <children>
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: blue;" styleClass="test" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
          <children>
-            <Pane fx:id="testPane" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: yellow;" styleClass="inner-test" id="inner1" />
-            <Pane layoutY="75.0" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: green;" styleClass="inner-test" id="inner2" />
+            <Pane fx:id="testPane" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: yellow;" styleClass="inner-test" id="testPane" />
+            <Pane layoutY="75.0" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: green;" styleClass="inner-test" id="testPane2" />
          </children></Pane>
    </children>
 </AnchorPane>

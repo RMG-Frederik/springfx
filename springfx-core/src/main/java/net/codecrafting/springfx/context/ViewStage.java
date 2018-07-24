@@ -18,9 +18,10 @@ package net.codecrafting.springfx.context;
 
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -78,8 +79,8 @@ import net.codecrafting.springfx.util.MipmapLevel;
  * @author Lucas Marotta
  * @see #getViewPath()
  * @see #isInitialized()
- * @see #isCacheLoadedNode()
- * @see #setCacheLoadedNode(boolean)
+ * @see #setNodeCacheHint(CacheHint)
+ * @see #getNodeCacheHint()
  * @see #setOnMinimizeRequest(EventHandler)
  * @see #setOnMaximizeRequest(EventHandler)
  * @see #setIcon(String)
@@ -129,13 +130,13 @@ public class ViewStage extends Stage
 	/**
 	 * Flag that indicates the loaded nodes will be cached
 	 */
-	private boolean cacheLoadedNode = false;
+	private CacheHint nodeCacheHint = CacheHint.DEFAULT;
 	private StageContext stageContext;
 	
 	/**
 	 * The view cache of loaded Intents
 	 */
-	private HashMap<String, ViewContext> viewCache;
+	private Set<String> viewCache;
 	private Intent intent;
 	private static final Log LOGGER = LogFactory.getLog(ViewStage.class);
 	
@@ -162,7 +163,7 @@ public class ViewStage extends Stage
 		super();
 		if(viewPath != null && springContext != null) {
 			this.springContext = springContext;
-			viewCache = new HashMap<String, ViewContext>();
+			viewCache = new HashSet<String>();
 			this.viewPath = viewPath;
 			
 			iconifiedProperty().addListener((onMinimize) -> {
@@ -201,26 +202,25 @@ public class ViewStage extends Stage
 	}
 	
 	/**
-	 * Check if the {@link ViewStage} will cache the nodes for {@link #init(Class)} 
-	 * or {@link #loadIntent(Intent)}.
-	 * @return {@literal true} if the cacheNode is being utilized
+	 * Set the {@link CacheHint} for all loaded nodes, both by {@link #init(Class)} or {@link #loadIntent(Intent)}.
+	 * @return the current {@literal CacheHint}
+	 * @default {@link CacheHint#DEFAULT}
 	 */
-	public boolean isCacheLoadedNode() 
+	public CacheHint getNodeCacheHint() 
 	{
-		return cacheLoadedNode;
+		return nodeCacheHint;
 	}
 
 	/**
-	 * Set the cacheLoadedNode to be utilized on the {@link #init(Class)} or {@link #loadIntent(Intent)}.
-	 * This cache it's useful to optimize performance for
-	 * weak or non present GPU. On practice this will will indicate that on loading new 
-	 * views the {@link ViewStage} will use {@link Node#setCache(boolean)} to {@literal true}
-	 * and {@link Node#setCacheHint(CacheHint)} to {@link CacheHint#SPEED}.
+	 * Set the nodeCacheHint to be utilized on the {@link #init(Class)} or {@link #loadIntent(Intent)} methods.
+	 * This cache it's useful to optimize performance for weak or non present GPU. On practice this will will 
+	 * indicate that on loading new views, the {@link ViewStage} will use {@link Node#setCache(boolean)} 
+	 * to {@literal true} and {@link #nodeCacheHint} value.
 	 * @param cacheNode the flag that indicates that loaded nodes will be cached
 	 */
-	public void setCacheLoadedNode(boolean cacheNode) 
+	public void setNodeCacheHint(CacheHint cacheHint) 
 	{
-		this.cacheLoadedNode = cacheNode;
+		nodeCacheHint = cacheHint;
 	}
 
 	/**
@@ -417,29 +417,32 @@ public class ViewStage extends Stage
 			FXMLLoader loader = new FXMLLoader(viewURL);
 			if(resources != null) loader.setResources(resources);
 			loader.setController(stageContext);
-			Region rootNode = null;
+			Region loadedNode = null;
 			try {
 				injectViewStage(stageContext);
-				rootNode = loader.load();
+				loadedNode = loader.load();
 			} catch (Exception e) {
 				initialized = false;
 				throw new RuntimeException(e);
 			}
-			rootNode.setVisible(false);
+			loadedNode.setVisible(false);
 			
 			//Some CSS rules doesn't render properly on startup, so this forces a reload
-			ObservableList<String> styles = FXCollections.observableArrayList(rootNode.getStylesheets());
-			rootNode.getStylesheets().clear();
-			rootNode.getStylesheets().addAll(styles);
-			if(cacheLoadedNode) {
-				rootNode.setCache(true);
-				rootNode.setCacheHint(CacheHint.SPEED);	
+			ObservableList<String> styles = FXCollections.observableArrayList(loadedNode.getStylesheets());
+			loadedNode.getStylesheets().clear();
+			loadedNode.getStylesheets().addAll(styles);
+			loadedNode.setCacheHint(nodeCacheHint);
+			if(nodeCacheHint.equals(CacheHint.SPEED)) loadedNode.setCache(true);
+			setViewLinks(stageContext);
+			loadedNode.setVisible(true);
+			loadedNode.autosize();
+			setScene(new Scene(loadedNode, loadedNode.getWidth(), loadedNode.getHeight()));
+			if(stageContext.isFitWidth()) {
+				loadedNode.prefWidthProperty().bind(widthProperty());
 			}
-			rootNode.setVisible(true);
-			rootNode.autosize();
-			setScene(new Scene(rootNode, rootNode.getWidth(), rootNode.getHeight()));
-			rootNode.prefWidthProperty().bind(widthProperty());
-			rootNode.prefHeightProperty().bind(heightProperty());
+			if(stageContext.isFitHeight()) {
+				loadedNode.prefHeightProperty().bind(heightProperty());
+			}
 			stageContext.onCreate();
 		} else {
 			throw new IllegalStateException("Could not initialize with \""+viewFilePath+"\"");
@@ -470,54 +473,56 @@ public class ViewStage extends Stage
 			throw new IllegalStateException("ViewStage is not initialized");
 		if(intent == null) 
 			throw new IllegalArgumentException("Intent must not be null");
-		ViewContext viewController = viewCache.get(intent.getViewClass().getName());
-		if(viewController == null) {
-			try {
-				viewController = springContext.getBean(intent.getViewClass());
-			} catch(Exception e) {
-				throw new RuntimeException(e);
-			}
-			String viewFilePath = viewPath+viewController.getViewName()+".fxml";
-			URL viewURL = getResourceURL(viewFilePath);
-			if(viewURL != null) {
-				FXMLLoader loader = new FXMLLoader(viewURL);
-				loader.setController(viewController);
-				if(intent.getResources() != null) loader.setResources(intent.getResources());
-				Parent loadedNode = null;
-				try {
-					injectViewStage(viewController);
-					this.intent = intent;
-					loadedNode = loader.load();
-				} catch (Exception e) {
-					this.intent = null;
-					throw new RuntimeException(e);
-				}
-				loadedNode.setVisible(false);
-				
-				/*
-				 * I notice that this is a BIG convenient. If you use Scene Builder to develop your screens you will 
-				 * want to add your CSS file to the root node, but that element is not the root element for that ViewStage.
-				 * Removing the CSS from the loaded node you can still apply a CSS file to develop your screens with
-				 * Scene Builder but have confidence that will be removed by the framework
-				 */
-				loadedNode.getStylesheets().clear();
-				if(cacheLoadedNode) {
-					loadedNode.setCache(true);
-					loadedNode.setCacheHint(CacheHint.SPEED);	
-				}
-				setViewLinks(viewController);
-				viewCache.put(intent.getViewClass().getName(), viewController);
-				loadedNode.setVisible(true);
-				viewController.onCreate();
-			} else {
-				throw new RuntimeException("Could not load \""+viewFilePath+"\"");
-			}
-		} else {
-			this.intent = intent;
+		
+		ViewContext viewContext = null;
+		try {
+			viewContext = springContext.getBean(intent.getViewClass());
+		} catch(Exception e) {
+			throw new RuntimeException(e);
 		}
-		stageContext.setViewStageTitle(viewController.getViewTitle());
-		stageContext.swapContent(viewController);
-		viewController.onStart();
+		
+		if(viewContext != null) {
+			if(! isViewCached(intent.getViewClass())) {
+				String viewFilePath = viewPath+viewContext.getViewName()+".fxml";
+				URL viewURL = getResourceURL(viewFilePath);
+				if(viewURL != null) {
+					FXMLLoader loader = new FXMLLoader(viewURL);
+					loader.setController(viewContext);
+					if(intent.getResources() != null) loader.setResources(intent.getResources());
+					Parent loadedNode = null;
+					try {
+						injectViewStage(viewContext);
+						this.intent = intent;
+						loadedNode = loader.load();
+					} catch (Exception e) {
+						this.intent = null;
+						throw new RuntimeException(e);
+					}
+					loadedNode.setVisible(false);
+					
+					/*
+					 * I notice that this is a BIG convenient. If you use Scene Builder to develop your screens you will 
+					 * want to add your CSS file to the root node, but that element is not the root element for that ViewStage.
+					 * Removing the CSS from the loaded node you can still apply a CSS file to develop your screens with
+					 * Scene Builder but have confidence that will be removed by the framework
+					 */
+					loadedNode.getStylesheets().clear();
+					loadedNode.setCacheHint(nodeCacheHint);
+					if(nodeCacheHint.equals(CacheHint.SPEED)) loadedNode.setCache(true);
+					setViewLinks(viewContext);
+					viewCache.add(intent.getViewClass().getName());
+					loadedNode.setVisible(true);
+					viewContext.onCreate();
+				} else {
+					throw new RuntimeException("Could not load \""+viewFilePath+"\"");
+				}
+			} else {
+				this.intent = intent;
+			}
+			stageContext.setViewStageTitle(viewContext.getViewTitle());
+			stageContext.swapContent(viewContext);
+			viewContext.onStart();
+		}
 	}
 	
 	/**
@@ -529,7 +534,7 @@ public class ViewStage extends Stage
 	public boolean isViewCached(Class<? extends ViewContext> viewClass)
 	{
 		if(viewClass != null) {
-			return viewCache.containsKey(viewClass.getName());
+			return viewCache.contains(viewClass.getName());
 		} else {
 			throw new IllegalArgumentException("ViewContext class must not be null");
 		}	
@@ -543,7 +548,7 @@ public class ViewStage extends Stage
 	public void removeViewCache(Class<? extends ViewContext> viewClass)
 	{
 		if(viewClass != null) {
-			if(viewCache.containsKey(viewClass.getName())) {
+			if(viewCache.contains(viewClass.getName())) {
 				viewCache.remove(viewClass.getName());
 			}	
 		} else {

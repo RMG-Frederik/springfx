@@ -45,6 +45,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import com.sun.javafx.application.PlatformImpl;
 
+import javafx.scene.CacheHint;
 import javafx.stage.Stage;
 import net.codecrafting.springfx.application.AnnotatedTestApplication;
 import net.codecrafting.springfx.application.EmptyApplication;
@@ -285,10 +286,10 @@ public class BootstrapApplicationTest
 	}
 
 	@Test
-	public void startupMainControllerWithCache() throws Exception
+	public void startupMainControllerWithCacheHint() throws Exception
 	{
 		System.getProperties().setProperty("springfx.app.root-controller", MainController.class.getName());
-		System.getProperties().setProperty("springfx.cache-loaded-node", "true");
+		System.getProperties().setProperty("springfx.node-cache-hint", "quality");
 		doAnswer((Answer<Void>) invocation -> {
 			SpringApplicationBuilder springBuilder = new SpringApplicationBuilder().sources(AnnotatedTestApplication.class).web(WebApplicationType.NONE);
 			ConfigurableApplicationContext springContext = springBuilder.run((String[]) invocation.getArguments()[0]);
@@ -309,7 +310,8 @@ public class BootstrapApplicationTest
 			}
 		});
 		MainController mainController = context.getSpringContext().getBean(MainController.class);
-		assertTrue("Cache node is not true", mainController.getViewStage().isCacheLoadedNode());
+		assertEquals(CacheHint.QUALITY, mainController.getMainNode().getCacheHint());
+		assertEquals(CacheHint.QUALITY, mainController.getViewStage().getNodeCacheHint());
 		PlatformImpl.runAndWait(() -> {
 			try {
 				bootApplication.stop();

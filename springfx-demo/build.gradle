@@ -12,7 +12,7 @@ applicationDefaultJvmArgs = ["-Xms64M", "-Xmx96M", "-XX:TieredStopAtLevel=1", "-
 dependencies {
 
 	implementation project(':springfx-core')
-	implementation 'com.jfoenix:jfoenix:8.0.3'
+	implementation 'com.jfoenix:jfoenix:8.0.5'
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
 	
 	testImplementation "junit:junit:4.12"

@@ -149,34 +149,28 @@ public abstract class FormModel implements ValidationModel
 					Class<?> fieldType = field.getType();
 					if(TextField.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((TextField) fieldNode).getText());
-					
-					} else if(PasswordField.class.isAssignableFrom(fieldType)) {
-						setValueToModelField(modelField, ((PasswordField) fieldNode).getText());
-					
+						
 					} else if(CheckBox.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((CheckBox) fieldNode).isSelected());
-					
+
 					} else if(ChoiceBox.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((ChoiceBox<Object>) fieldNode).getValue());
-					
+
 					} else if(ColorPicker.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((ColorPicker) fieldNode).getValue());
-					
+
 					} else if(ComboBox.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((ComboBox<?>) fieldNode).getValue());
-					
+
 					} else if(DatePicker.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((DatePicker) fieldNode).getValue());
-					
-					} else if(RadioButton.class.isAssignableFrom(fieldType)) {
-						setValueToModelField(modelField, ((RadioButton) fieldNode).isSelected());
 						
 					} else if(ToggleButton.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((ToggleButton) fieldNode).isSelected());
-					
+
 					} else if(TextArea.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((TextArea) fieldNode).getText());
-					
+
 					} else if(Slider.class.isAssignableFrom(fieldType)) {
 						setValueToModelField(modelField, ((Slider) fieldNode).getValue());
 					}
@@ -206,10 +200,7 @@ public abstract class FormModel implements ValidationModel
 					try {
 						if(TextField.class.isAssignableFrom(fieldType)) {
 							((TextField) fieldNode).setText((String) modelFieldValue);
-						
-						} else if(PasswordField.class.isAssignableFrom(fieldType)) {
-							((PasswordField) fieldNode).setText((String) modelFieldValue);
-						
+							
 						} else if(CheckBox.class.isAssignableFrom(fieldType)) {
 							((CheckBox) fieldNode).setSelected((Boolean) modelFieldValue);
 						
@@ -224,9 +215,6 @@ public abstract class FormModel implements ValidationModel
 						
 						} else if(DatePicker.class.isAssignableFrom(fieldType)) {
 							((DatePicker) fieldNode).setValue((LocalDate) modelFieldValue);
-						
-						} else if(RadioButton.class.isAssignableFrom(fieldType)) {
-							((RadioButton) fieldNode).setSelected((Boolean) modelFieldValue);
 							
 						} else if(ToggleButton.class.isAssignableFrom(fieldType)) {
 							((ToggleButton) fieldNode).setSelected((Boolean) modelFieldValue);

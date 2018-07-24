@@ -17,6 +17,7 @@
 package net.codecrafting.springfx.application.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.CacheHint;
 import javafx.scene.layout.AnchorPane;
 import net.codecrafting.springfx.annotation.ViewController;
 import net.codecrafting.springfx.context.StageContext;
@@ -42,13 +43,13 @@ public class ContextCallController extends StageContext
 	@Override
 	protected void onCreate() 
 	{
-		getViewStage().setCacheLoadedNode(true);
+		getViewStage().setNodeCacheHint(CacheHint.QUALITY);
 	}
 
 	@Override
 	protected void onStart() 
 	{
-		getViewStage().setCacheLoadedNode(true);
+		getViewStage().setNodeCacheHint(CacheHint.QUALITY);
 	}
 
 }

@@ -25,6 +25,7 @@ import org.springframework.core.env.Environment;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.CacheHint;
 import javafx.stage.Stage;
 import net.codecrafting.springfx.context.StageContext;
 import net.codecrafting.springfx.context.ViewStage;
@@ -148,7 +149,7 @@ public class BootstrapApplication extends Application
 			try {
 				String iconPath = env.getProperty("springfx.app.icon");
 				if(iconPath != null) viewStage.setIconByMipmap(new Mipmap(iconPath, new int[] {1,2,4,8,16,32}));
-				if(env.getProperty("springfx.cache-loaded-node", "false").equals("true")) viewStage.setCacheLoadedNode(true);
+				viewStage.setNodeCacheHint(CacheHint.valueOf(env.getProperty("springfx.node-cache-hint", "default").toUpperCase()));
 				Class<? extends StageContext> rootController = (Class<? extends StageContext>) Class.forName(root);
 				viewStage.init(rootController);
 			} catch (Exception e) {
