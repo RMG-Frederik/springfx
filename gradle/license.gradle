@@ -8,4 +8,5 @@ license {
         fxml = "XML_STYLE"
     }
     includes(["**/*.java", "**/*.gradle"])
+    excludes(["**/AsyncUtils.java", "**/AsyncUtilsFxTest.java", "**/AsyncUtilsTest.java"])
 }

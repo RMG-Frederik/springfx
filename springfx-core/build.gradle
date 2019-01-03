@@ -8,6 +8,7 @@ dependencies {
 	implementation "org.glassfish:javax.el:3.0.1-b11"
 
 	testImplementation "junit:junit:4.12"
+	testImplementation "org.assertj:assertj-core:3.11.1"
 	testImplementation "org.hamcrest:hamcrest-junit:2.0.0.0"
 	testImplementation "org.mockito:mockito-core:2.15.0"
 	testImplementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
