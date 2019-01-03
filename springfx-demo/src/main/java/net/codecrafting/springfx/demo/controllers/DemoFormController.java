@@ -21,7 +21,7 @@ import net.codecrafting.springfx.validation.FormValidator;
 import net.codecrafting.springfx.validation.ValidationError;
 import net.codecrafting.springfx.validation.ValidationListener;
 
-@ViewController(name="demo", title="Demo Form")
+@ViewController(name="demo")
 public class DemoFormController extends ViewContext implements ValidationListener
 {
 	@FXML

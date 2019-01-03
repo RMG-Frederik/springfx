@@ -431,6 +431,7 @@ public class ViewStage extends Stage
 			ObservableList<String> styles = FXCollections.observableArrayList(loadedNode.getStylesheets());
 			loadedNode.getStylesheets().clear();
 			loadedNode.getStylesheets().addAll(styles);
+			loadedNode.applyCss();
 			loadedNode.setCacheHint(nodeCacheHint);
 			if(nodeCacheHint.equals(CacheHint.SPEED)) loadedNode.setCache(true);
 			setViewLinks(stageContext);
@@ -443,7 +444,12 @@ public class ViewStage extends Stage
 			if(stageContext.isFitHeight()) {
 				loadedNode.prefHeightProperty().bind(heightProperty());
 			}
-			stageContext.onCreate();
+			
+			//Required for the proper loading of elements
+			Platform.runLater(() -> {
+				stageContext.onCreate();
+				stageContext.onStart();
+			});
 		} else {
 			throw new IllegalStateException("Could not initialize with \""+viewFilePath+"\"");
 		}
@@ -474,7 +480,7 @@ public class ViewStage extends Stage
 		if(intent == null) 
 			throw new IllegalArgumentException("Intent must not be null");
 		
-		ViewContext viewContext = null;
+		final ViewContext viewContext;
 		try {
 			viewContext = springContext.getBean(intent.getViewClass());
 		} catch(Exception e) {
@@ -507,12 +513,15 @@ public class ViewStage extends Stage
 					 * Scene Builder but have confidence that will be removed by the framework
 					 */
 					loadedNode.getStylesheets().clear();
+					loadedNode.applyCss();
 					loadedNode.setCacheHint(nodeCacheHint);
 					if(nodeCacheHint.equals(CacheHint.SPEED)) loadedNode.setCache(true);
 					setViewLinks(viewContext);
 					viewCache.add(intent.getViewClass().getName());
 					loadedNode.setVisible(true);
-					viewContext.onCreate();
+					Platform.runLater(() -> {
+						viewContext.onCreate();
+					});
 				} else {
 					throw new RuntimeException("Could not load \""+viewFilePath+"\"");
 				}
@@ -521,7 +530,9 @@ public class ViewStage extends Stage
 			}
 			stageContext.setViewStageTitle(viewContext.getViewTitle());
 			stageContext.swapContent(viewContext);
-			viewContext.onStart();
+			Platform.runLater(() -> {
+				viewContext.onStart();
+			});
 		}
 	}
 	

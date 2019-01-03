@@ -65,21 +65,21 @@ public class TransitionBuilder
 			w = node.getLayoutBounds().getWidth();
 			h = node.getLayoutBounds().getHeight();
 		}
-		if(w == 0) {
-			w = 250;
+		
+		if(w < 150) {
 			fromX = 1;
-			toX = 1;
+			w = 150;
 		}
-		if(h == 0) {
-			h = 250;
+		if(h < 150) {
 			fromY = 1;
-			toY = 1;
+			h = 150;
 		}
+		
 		slide.setFromX(fromX*w);
 		slide.setFromY(fromY*h);
 		slide.setToX(toX*w);
 		slide.setToY(toY*h);
-		return slide;		
+		return slide;	
 	}
 	
 	public FadeTransition getFadeTransition(final Node node, double start, double end)
@@ -100,47 +100,12 @@ public class TransitionBuilder
 		return scale;
 	}
 	
-	public ScaleTransition getScaleTransitionPerc(final Node node, double fromX, double fromY, double toX, double toY)
-	{
-		double w,h;
-		ScaleTransition scale = new ScaleTransition(duration, node);
-		if(!node.isResizable()) {
-			w = node.getBoundsInLocal().getWidth();
-			h = node.getBoundsInLocal().getHeight();
-		} else {
-			w = node.getLayoutBounds().getWidth();
-			h = node.getLayoutBounds().getHeight();	
-		}
-		if(w == 0) {
-			w = 250;
-			fromX = 1;
-			toX = 1;
-		}
-		if(h == 0) {
-			h = 250;
-			fromY = 1;
-			toY = 1;
-		}
-		scale.setFromX(fromX*w);
-		scale.setFromY(fromY*h);
-		scale.setToX(toX*w);
-		scale.setToY(toY*h);
-		return scale;
-	}
-	
 	public SizeTransition getSizeTransitionTo(final Region region, double toWidth, double toHeight)
 	{
-		double w,h;
-		if(!region.isResizable()) {
-			w = region.getBoundsInLocal().getWidth();
-			h = region.getBoundsInLocal().getHeight();
-		} else {
-			w = region.getLayoutBounds().getWidth();
-			h = region.getLayoutBounds().getHeight();	
-		}
-		if(w == 0) w = 250;
-		if(h == 0) h = 250;
-		return getSizeTransition(region, w, toWidth, h, toHeight);
+		SizeTransition size = new SizeTransition(duration, region);
+		size.setToWidth(toWidth);
+		size.setToHeight(toHeight);
+		return size;
 	}	
 	
 	public SizeTransition getSizeTransition(final Region region, double fromWidth, double toWidth, double fromHeight, double toHeight)

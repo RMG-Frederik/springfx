@@ -8,8 +8,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.jfoenix.controls.IFXTextInputControl;
 import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.controls.base.IFXValidatableControl;
 
 import javafx.scene.Node;
 import net.codecrafting.springfx.annotation.ValidationBind;
@@ -70,8 +70,8 @@ public class JFXFormModel extends FormModel
 	{
 		Field[] fields = context.getClass().getDeclaredFields();
 		for (Field field : fields) {
-			if(field.isAnnotationPresent(ValidationBind.class) && IFXTextInputControl.class.isAssignableFrom(field.getType())) {
-				IFXTextInputControl node = (IFXTextInputControl) context.getMainNode().lookup("#"+field.getName());
+			if(field.isAnnotationPresent(ValidationBind.class) && IFXValidatableControl.class.isAssignableFrom(field.getType())) {
+				IFXValidatableControl node = (IFXValidatableControl) context.getMainNode().lookup("#"+field.getName());
 				JFXValidator validator = new JFXValidator(true);
 				node.getValidators().clear();
 				node.getValidators().add(validator);
@@ -89,9 +89,9 @@ public class JFXFormModel extends FormModel
 		{
 			if(!hist.contains(validationError.getField())) {
 				Node node = context.getMainNode().lookup("#"+validationError.getField());
-				if(node != null && IFXTextInputControl.class.isAssignableFrom(node.getClass())) {
+				if(node != null && IFXValidatableControl.class.isAssignableFrom(node.getClass())) {
 					JFXValidator validator = new JFXValidator(false);
-					IFXTextInputControl field = (IFXTextInputControl) node;
+					IFXValidatableControl field = (IFXValidatableControl) node;
 					validator.autosize();
 					validator.setMessage(validationError.getMessage());
 					field.getValidators().clear();

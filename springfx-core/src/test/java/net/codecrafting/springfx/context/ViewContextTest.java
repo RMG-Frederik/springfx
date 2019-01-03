@@ -106,7 +106,7 @@ public class ViewContextTest
 	{
 		ViewContext context = new TestWithoutAnnotationController();
 		assertEquals("test_without_annotation", context.getViewName());
-		assertEquals("test_without_annotation", context.getViewTitle());
+		assertEquals("Test Without Annotation", context.getViewTitle());
 	}
 	
 	@Test
@@ -114,7 +114,7 @@ public class ViewContextTest
 	{
 		ViewContext context = new TestController();
 		assertEquals("test", context.getViewName());
-		assertTrue("viewTitle is not empty", context.getViewTitle().isEmpty());
+		assertEquals("Test", context.getViewTitle());
 	}
 	
 	@Test

@@ -276,20 +276,32 @@ public abstract class ViewContext implements Initializable
 			viewName = viewAnnotation.name();
 			viewTitle = viewAnnotation.title();
 		}
+		String contextName = this.getClass().getSimpleName();
 		if(viewName == null || viewName.length() == 0) {
-			String contextName = this.getClass().getSimpleName();
 			if(contextName.endsWith("Controller")) {
 				viewName = upperCamelToLowerUnderscore(contextName.replace("Controller", ""));
 			} else {
 				throw new IllegalStateException("Class name must ends with \"Controller\" or use ViewController annotation instead");
 			}			
 		}
-		if(viewTitle == null) viewTitle = viewName;
+		if(viewTitle == null || viewTitle.length() == 0) {
+			viewTitle = lowerUnderscoreToWordsCapitalize(upperCamelToLowerUnderscore(contextName.replace("Controller", "")));
+		}
 	}
 	
 	//Convert a UpperCamel to a lower_underscore string
 	private String upperCamelToLowerUnderscore(String str)
 	{
 		return str.replaceAll(UPPER_CAMEL_REGEX, UPPER_CAMEL_REPLACEMENT).toLowerCase();
+	}
+	
+	//Convert a lower_underscore to a Lower Underscore string
+	private String lowerUnderscoreToWordsCapitalize(String str)
+	{
+		String[] words = str.split("_");
+		for (int i = 0; i < words.length; i++) {
+			words[i] = words[i].substring(0, 1).toUpperCase() + words[i].substring(1);
+		}
+		return String.join(" ", words);
 	}
 }

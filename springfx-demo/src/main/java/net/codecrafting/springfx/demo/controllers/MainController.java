@@ -74,13 +74,13 @@ public class MainController extends StageContext
 	@Override
 	protected void onStart() 
 	{
-		
+		LOGGER.info("MainController startup");
 	}	
 	
 	@Override
 	public void setViewStageTitle(String title) 
 	{
-		
+		System.out.println(title);
 	}
 
 	@Override

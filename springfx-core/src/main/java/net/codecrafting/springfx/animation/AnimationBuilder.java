@@ -319,6 +319,16 @@ public class AnimationBuilder
 		transition.setInterpolator(DEFAULT_INTERPOLATOR);
 		return new AnimationNode(transition);
 	}
+	
+	public AnimationNode loop(final Node node)
+	{
+		ParallelTransition transition = getBaseTransition();
+		RotateTransition loop = transitionBuilder.getRotateTransition(node, 360);
+		loop.setInterpolator(EaseInterpolator.LINEAR);
+		loop.setCycleCount(Transition.INDEFINITE);
+		transition.getChildren().add(loop);
+		return new AnimationNode(transition);
+	}
 
 	public AnimationNode pulse(final Node node)
 	{

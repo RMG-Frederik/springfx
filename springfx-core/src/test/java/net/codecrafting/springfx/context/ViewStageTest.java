@@ -24,6 +24,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.testfx.util.WaitForAsyncUtils.asyncFx;
 import static org.testfx.util.WaitForAsyncUtils.waitFor;
+import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -470,6 +471,7 @@ public class ViewStageTest
 		waitFor(asyncFx(() -> {
 			viewStage.init(ContextCallController.class);
 		}));
+		waitForFxEvents();
 		assertEquals(CacheHint.QUALITY, viewStage.getNodeCacheHint());
 	}
 	
@@ -703,6 +705,7 @@ public class ViewStageTest
 		waitFor(asyncFx(() -> {
 			viewStage.init(ContextCallController.class);
 		}));
+		waitForFxEvents();
 		assertEquals(CacheHint.QUALITY, viewStage.getNodeCacheHint());
 	}
 	
@@ -719,6 +722,7 @@ public class ViewStageTest
 		waitFor(asyncFx(() -> {
 			viewStage.loadIntent(new Intent(null, ContextCallController.class));
 		}));
+		waitForFxEvents();
 		assertEquals(CacheHint.QUALITY, viewStage.getNodeCacheHint());
 	}
 	

@@ -16,10 +16,8 @@
  */
 package net.codecrafting.springfx.animation;
 
-import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.ParallelTransition;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -80,24 +78,24 @@ public class AnimationNode
 	
 	public AnimationNode setDuration(Duration duration)
 	{
-		Double rate = 1.0;
+		final Double rate;
 		Duration curDuration = transition.getTotalDuration();
 		if(duration.toMillis() > 0) {
 			rate = curDuration.toMillis()/duration.toMillis();
+		} else {
+			rate = 1d;
 		}
 		if(transition.getStatus() == Status.RUNNING) {
 			Duration curTime = transition.getCurrentTime();
 			transition.stop();
-			ObservableList<Animation> transitions = transition.getChildren();
-			for (Animation animation : transitions) {
+			transition.getChildren().forEach((animation) -> {
 				animation.setRate(rate);
-			}
+			});
 			transition.playFrom(curTime);
 		} else {
-			ObservableList<Animation> transitions = transition.getChildren();
-			for (Animation animation : transitions) {
+			transition.getChildren().forEach((animation) -> {
 				animation.setRate(rate);
-			}
+			});
 		}
 		return this;
 	}
