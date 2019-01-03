@@ -14,7 +14,9 @@ All files not explicitly mentioned below
     License: Apache 2.0
     License text: See below
 
-springfx-core/src/main/javanet/codecrafting/springfx/util/AsyncUtils.java
+springfx-core/src/test/java/net/codecrafting/springfx/util/AsyncUtilsTest.java
+springfx-core/src/test/java/net/codecrafting/springfx/util/AsyncUtilsFxTest.java
+springfx-core/src/main/java/net/codecrafting/springfx/util/AsyncUtils.java
     What: forked from TestFX
     Source URL: https://github.com/TestFX/TestFX
     License: EUPL

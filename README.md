@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/codecrafting-net/springfx/branch/master/graph/badge.svg)](https://codecov.io/gh/codecrafting-net/springfx)
 [![Maven Central](https://img.shields.io/maven-central/v/net.codecrafting/springfx-core.svg?label=maven&style=flat-square)](https://search.maven.org/#search|ga|1|net.codecrafting)
 [![Download](https://api.bintray.com/packages/codecrafting/maven/springfx-core/images/download.svg) ](https://bintray.com/codecrafting/maven/springfx-core/_latestVersion)
-[![license](https://img.shields.io/github/license/codecrafting-net/springfx.svg)](https://raw.githubusercontent.com/codecrafting-net/springfx/master/LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ![SpringFX](/config/springfx-logo.png)
 
@@ -22,7 +22,7 @@ SpringFX it's a small framework that allow you to use [Spring Boot][1] framework
 - Validation system for integration with Hibernate Validation.
 
 [1]: https://projects.spring.io/spring-boot/
-[2]: https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm#JFXST784 
+[2]: https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm#JFXST784
 [3]: https://daneden.github.io/animate.css/
 [4]: https://matthewlein.com/tools/ceaser
 
