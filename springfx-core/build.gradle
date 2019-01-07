@@ -20,12 +20,11 @@ javadoc {
     excludes            = ['META-INF/**']
 	description         = "Generates aggregated Javadocs"
 	title               = "SpringFX API (${project.version})"
-    options.tags        = ['defaultValue']
+    options.tags        = ['defaultValue', "default"]
     options.encoding    = "UTF-8"
     options.author      = true
     options.version     = true
     options.stylesheetFile project.file("src/javadoc/stylesheet.css")
     options.links       = ["https://docs.oracle.com/javase/8/docs/api/",
-    						"https://docs.oracle.com/javase/8/javafx/api/",
-    						"https://docs.spring.io/spring-boot/docs/${springBootVersion}/api/"]
+    						"https://docs.oracle.com/javase/8/javafx/api/"]
 }

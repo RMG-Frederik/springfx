@@ -216,7 +216,7 @@ public class ViewStage extends Stage
 	 * This cache it's useful to optimize performance for weak or non present GPU. On practice this will will 
 	 * indicate that on loading new views, the {@link ViewStage} will use {@link Node#setCache(boolean)} 
 	 * to {@literal true} and {@link #nodeCacheHint} value.
-	 * @param cacheNode the flag that indicates that loaded nodes will be cached
+	 * @param cacheHint the flag that indicates that loaded nodes will be cached
 	 */
 	public void setNodeCacheHint(CacheHint cacheHint) 
 	{

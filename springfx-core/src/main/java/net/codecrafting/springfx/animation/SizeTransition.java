@@ -39,6 +39,11 @@ public final class SizeTransition extends Transition
     private static final Region DEFAULT_REGION = null;
     private Region cachedRegion;
     
+    private double startW = Double.NaN;
+    private double startH = Double.NaN;
+    private double deltaW = Double.NaN;
+    private double deltaH = Double.NaN;
+    
     /**
      * The duration of this {@code SizeTransition}.
      * <p>
@@ -277,23 +282,70 @@ public final class SizeTransition extends Transition
     {
         final Region region = getRegion();
         return region;
-    }	
+    }
 	
     /**
      * {@inheritDoc}
+     * 
+     * In case of any from/to sizes is (NaN) the pref sizes will be used instead. 
+     * In case of pref sizes are {@link Region#USE_COMPUTED_SIZE} the region bounds will be used.
      */
 	@Override
 	protected void interpolate(double frac) 
 	{
+		if(cachedRegion == null) {
+	        cachedRegion = getTargetRegion();	
+		}
+		
         double _fromWidth = getFromWidth();
         double _toWidth = getToWidth();
         double _fromHeight = getFromHeight();
-        double _toHeight = getToHeight();	
-        double startW = (!Double.isNaN(_fromWidth)) ? _fromWidth : 0;
-        double startH = (!Double.isNaN(_fromHeight)) ? _fromHeight : 0;
-        double deltaW = (!Double.isNaN(_toWidth)) ? _toWidth - startW : 0;
-        double deltaH = (!Double.isNaN(_toHeight)) ? _toHeight - startH : 0;
-        cachedRegion = getTargetRegion();
+        double _toHeight = getToHeight();
+        
+        if(Double.isNaN(startW)) {
+            startW = _fromWidth;
+            if(Double.isNaN(_fromWidth)) {
+            	if(cachedRegion.getPrefWidth() == Region.USE_COMPUTED_SIZE) {
+            		startW = (! cachedRegion.isResizable()) ? cachedRegion.getBoundsInLocal().getWidth() : cachedRegion.getLayoutBounds().getWidth();
+            	} else {
+            		startW = cachedRegion.getPrefWidth();
+            	}
+            }	
+        }
+        
+        if(Double.isNaN(startH)) {
+            startH = _fromHeight;
+            if(Double.isNaN(_fromHeight)) {
+            	if(cachedRegion.getPrefHeight() == Region.USE_COMPUTED_SIZE) {
+            		startH = (! cachedRegion.isResizable()) ? cachedRegion.getBoundsInLocal().getHeight() : cachedRegion.getLayoutBounds().getHeight();
+            	} else {
+            		startH = cachedRegion.getPrefHeight();
+            	}
+            }	
+        }
+        
+        if(Double.isNaN(deltaW)) {
+            deltaW = _toWidth - startW;
+            if(Double.isNaN(_toWidth)) {
+            	if(cachedRegion.getPrefWidth() == Region.USE_COMPUTED_SIZE) {
+            		deltaW = (! cachedRegion.isResizable()) ? cachedRegion.getBoundsInLocal().getWidth() - startW : cachedRegion.getLayoutBounds().getWidth() - startW;
+            	} else {
+            		deltaW = cachedRegion.getPrefWidth() - startW;
+            	}
+            }	
+        }
+        
+        if(Double.isNaN(deltaH)) {
+            deltaH = _toHeight - startH;
+            if(Double.isNaN(_toHeight)) {
+            	if(cachedRegion.getPrefHeight() == Region.USE_COMPUTED_SIZE) {
+            		deltaH = (! cachedRegion.isResizable()) ? cachedRegion.getBoundsInLocal().getHeight() - startH : cachedRegion.getLayoutBounds().getHeight() - startH;
+            	} else {
+            		deltaH = cachedRegion.getPrefHeight() - startH;
+            	}
+            }	
+        }
+      
         cachedRegion.setPrefSize(startW + frac * deltaW, startH + frac * deltaH);
 	}
 }

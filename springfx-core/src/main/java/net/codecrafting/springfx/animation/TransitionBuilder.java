@@ -58,6 +58,7 @@ public class TransitionBuilder
 	{
 		double w,h;
 		TranslateTransition slide = new TranslateTransition(duration, node);
+		
 		if(!node.isResizable()) {
 			w = node.getBoundsInLocal().getWidth();
 			h = node.getBoundsInLocal().getHeight();

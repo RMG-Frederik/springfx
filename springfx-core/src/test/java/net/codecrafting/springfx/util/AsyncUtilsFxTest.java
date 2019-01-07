@@ -16,6 +16,11 @@
  */
 package net.codecrafting.springfx.util;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -29,11 +34,6 @@ import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
 import org.testfx.api.FxToolkit;
-
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class AsyncUtilsFxTest
 {

@@ -130,21 +130,14 @@ public class AnimationBuilder
 	//	FADE ANIMATIONS
 	/* ================================================================== */
 	
-	public AnimationNode fade(FadeTransition fade)
-	{
-		ParallelTransition transition = getBaseTransition();
-		transition.getChildren().add(fade);
-		return new AnimationNode(transition);
-	}
-	
 	public AnimationNode fadeIn(final Node node)
 	{
-		return fade(transitionBuilder.getFadeTransition(node, 0, 1));
+		return custom(transitionBuilder.getFadeTransition(node, 0, 1));
 	}
 	
 	public AnimationNode fadeOut(final Node node)
 	{
-		return fade(transitionBuilder.getFadeTransition(node, 1, 0));
+		return custom(transitionBuilder.getFadeTransition(node, 1, 0));
 	}
 	
 	public AnimationNode fadeInUp(final Node node)
@@ -207,21 +200,14 @@ public class AnimationBuilder
 	//	SCALE ANIMATIONS
 	/* ================================================================== */	
 	
-	public AnimationNode scale(ScaleTransition scale)
-	{
-		ParallelTransition transition = getBaseTransition();
-		transition.getChildren().addAll(scale);
-		return new AnimationNode(transition);
-	}
-	
 	public AnimationNode scaleUp(final Node node)
 	{
-		return scale(transitionBuilder.getScaleTransition(node, percentage, percentage, 1, 1));
+		return custom(transitionBuilder.getScaleTransition(node, percentage, percentage, 1, 1));
 	}
 	
 	public AnimationNode scaleDown(final Node node)
 	{
-		return scale(transitionBuilder.getScaleTransition(node, 1, 1, percentage, percentage));
+		return custom(transitionBuilder.getScaleTransition(node, 1, 1, percentage, percentage));
 	}
 	
 	public AnimationNode zoomIn(final Node node)
@@ -236,73 +222,68 @@ public class AnimationBuilder
 		ParallelTransition transition = getBaseTransition();
 		transition.getChildren().addAll(transitionBuilder.getFadeTransition(node, 1, 0), transitionBuilder.getScaleTransition(node, 1, 1, percentage, percentage));
 		return new AnimationNode(transition);
-	}	
+	}
+	
+	/* ================================================================== */
+	//	SKEW ANIMATIONS
+	/* ================================================================== */
+	
+	public AnimationNode skew(final Node node, double fromXAngle, double fromYAngle, double toXAngle, double toYAngle)
+	{
+		return custom(transitionBuilder.getSkewTransiotion(node, fromXAngle, fromYAngle, toXAngle, toYAngle));
+	}
 	
 	/* ================================================================== */
 	//	SIZE ANIMATIONS
 	/* ================================================================== */
 	
-	public AnimationNode size(SizeTransition size)
-	{
-		ParallelTransition transition = getBaseTransition();
-		transition.getChildren().addAll(size);
-		return new AnimationNode(transition);
-	}
-	
 	public AnimationNode sizeTo(final Region region, double toWidth, double toHeight)
 	{
-		return size(transitionBuilder.getSizeTransitionTo(region, toWidth, toHeight));
+		return custom(transitionBuilder.getSizeTransitionTo(region, toWidth, toHeight));
 	}
 	
 	/* ================================================================== */
 	//	SLIDE ANIMATIONS
 	/* ================================================================== */
 	
-	public AnimationNode slide(TranslateTransition slide)
-	{
-		ParallelTransition transition = getBaseTransition();
-		transition.getChildren().addAll(slide);
-		return new AnimationNode(transition);
-	}
-	
 	public AnimationNode slideInUp(final Node node)
 	{
-		return slide(transitionBuilder.getSlideTransitionPerc(node, 0, percentage, 0, 0));
+		return custom(transitionBuilder.getSlideTransitionPerc(node, 0, percentage, 0, 0));
 	}
 	
 	public AnimationNode slideInDown(final Node node)
 	{
-		return slide(transitionBuilder.getSlideTransitionPerc(node, 0, -percentage, 0, 0));
+		return custom(transitionBuilder.getSlideTransitionPerc(node, 0, -percentage, 0, 0));
 	}
 	
 	public AnimationNode slideInRight(final Node node)
 	{
-		return slide(transitionBuilder.getSlideTransitionPerc(node, percentage, 0, 0, 0));
+		return custom(transitionBuilder.getSlideTransitionPerc(node, percentage, 0, 0, 0));
 	}
 	
 	public AnimationNode slideInLeft(final Node node)
 	{
-		return slide(transitionBuilder.getSlideTransitionPerc(node, -percentage, 0, 0, 0));
+		return custom(transitionBuilder.getSlideTransitionPerc(node, -percentage, 0, 0, 0));
 	}
 	
 	public AnimationNode slideOutUp(final Node node)
 	{
-		return slide(transitionBuilder.getSlideTransitionPerc(node, 0, 0, 0, -percentage));
+		return custom(transitionBuilder.getSlideTransitionPerc(node, 0, 0, 0, -percentage));
 	}
 	
 	public AnimationNode slideOutDown(final Node node)
 	{
-		return slide(transitionBuilder.getSlideTransitionPerc(node, 0, 0, 0, percentage));
+		return custom(transitionBuilder.getSlideTransitionPerc(node, 0, 0, 0, percentage));
 	}
 	
 	public AnimationNode slideOutRight(final Node node)
 	{
-		return slide(transitionBuilder.getSlideTransitionPerc(node, 0, 0, -percentage, 0));
+		return custom(transitionBuilder.getSlideTransitionPerc(node, 0, 0, -percentage, 0));
 	}
 	
 	public AnimationNode slideOutLeft(final Node node)
 	{
-		return slide(transitionBuilder.getSlideTransitionPerc(node, 0, 0, percentage, 0));
+		return custom(transitionBuilder.getSlideTransitionPerc(node, 0, 0, percentage, 0));
 	}
 	
 	/* ================================================================== */

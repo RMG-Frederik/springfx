@@ -16,6 +16,8 @@
  */
 package net.codecrafting.springfx.util;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -38,8 +40,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableBooleanValue;
-
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * Provides static methods for handling execution on different threads. The
